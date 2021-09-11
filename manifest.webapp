@@ -1,15 +1,31 @@
 {
-  "name": "HelloWorldKaiOS",
-  "description": "A Hello World app",
+  "name": "HelloWorldCocos",
+  "description": "FashionRival",
   "launch_path": "/index.html",
+  "fullscreen": "true",
+  "type": "web",
   "icons": {
-    "16": "/icons/icon16x16.png",
-    "48": "/icons/icon48x48.png",
-    "60": "/icons/icon60x60.png",
-    "128": "/icons/icon128x128.png"
+    "16": "/56x56_Icon_Nitro_Street_Run_2.png",
+    "32": "/56x56_Icon_Nitro_Street_Run_2.png",
+    "48": "/84x84_Icon_Nitro_Street_Run_2.png",
+    "60": "/84x84_Icon_Nitro_Street_Run_2.png",
+    "128": "/84x84_Icon_Nitro_Street_Run_2.png"
   },
   "developer": {
-    "name": "Your name",
-    "url": "http://example.com"
+    "name": "Gameloft",
+	"url": "www.gameloft.com"
+  },
+  "permissions": {
+    "sms": {
+      "description": "Required for send sms"
+    },
+    "mobilenetwork" : {
+      "description": "Get phone information"
+    },
+    "systemXHR": {
+	"description": "Required to download podcasts."
+	},
+    "telephony": {},
+    "settings": { "access": "readonly" }
   }
 }
