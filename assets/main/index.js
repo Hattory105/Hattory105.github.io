@@ -990,9 +990,17 @@ window.__require = function e(t, n, r) {
         }
       },
       play: function play(clip, loop, volume, limitDBFS) {
-        var audioCtx = new AudioContext();
         var url = clip.nativeUrl;
+        for (var i = 0; i < this.playingList.length; i++) {
+          console.log("aaaaaaaa " + i + " " + this.playingList[i].getAudio().paused);
+          if (this.playingList[i].getAudio().paused && 0 == this.playingList[i].getAudio().currentTime) {
+            this.playingList[i].getAudio().src = url;
+            this.playingList[i].getAudio().play();
+            return i;
+          }
+        }
         var audio = new Audio(url);
+        var audioCtx = new AudioContext();
         var processor = audioCtx.createScriptProcessor(2048, 1, 1);
         var source;
         audio.addEventListener("canplaythrough", function() {
@@ -1015,7 +1023,7 @@ window.__require = function e(t, n, r) {
         processor.onaudioprocess = function(evt) {
           var input = evt.inputBuffer.getChannelData(0), len = input.length, aud = null, maxPCM = Math.abs(input[0]);
           null == aud && (aud = limiterAudio);
-          for (var i = 0; i < len; i++) Math.abs(input[i]) > maxPCM && (maxPCM = Math.abs(input[i]));
+          for (var _i3 = 0; _i3 < len; _i3++) Math.abs(input[_i3]) > maxPCM && (maxPCM = Math.abs(input[_i3]));
           aud.setMaxPCM(maxPCM);
         };
         return limiterAudio.getId();
@@ -1028,7 +1036,6 @@ window.__require = function e(t, n, r) {
           this.playingList[i].getAudio().pause();
           this.playingList[i].getAudio().currentTime = 0;
         }
-        this.playingList = [];
         this.seamlessAudioList = [];
         this.fadeAudioList = [];
       },
@@ -1138,7 +1145,7 @@ window.__require = function e(t, n, r) {
         this.markerTest = false;
         this.scenario = "";
         this.totalVolume = 0;
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1153,7 +1160,7 @@ window.__require = function e(t, n, r) {
         this.markerTest = false;
         this.scenario = "";
         this.totalVolume = 0;
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1172,7 +1179,7 @@ window.__require = function e(t, n, r) {
           console.log("Playing at " + _currentTime);
           this.audioTestDisplay.string = "Playing at " + _currentTime;
         } else {
-          if (this.playingList.length > 0) {
+          if ("Uncached all" != this.audioTestDisplay.string) {
             this.uncacheAll();
             this.audioTestDisplay.string = "Uncached all";
             return;
@@ -1189,7 +1196,7 @@ window.__require = function e(t, n, r) {
         this.markerTest = false;
         this.scenario = "";
         this.totalVolume = 0;
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1204,7 +1211,7 @@ window.__require = function e(t, n, r) {
         this.markerTest = false;
         this.scenario = "";
         this.totalVolume = 0;
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1218,7 +1225,7 @@ window.__require = function e(t, n, r) {
         this.fade = "";
         this.markerTest = false;
         this.scenario = "";
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1236,7 +1243,7 @@ window.__require = function e(t, n, r) {
         this.fade = "";
         this.markerTest = false;
         this.scenario = "";
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1254,7 +1261,7 @@ window.__require = function e(t, n, r) {
         this.fade = "";
         this.markerTest = false;
         this.scenario = "";
-        if (this.playingList.length > 0) {
+        if ("Uncached all" != this.audioTestDisplay.string) {
           this.uncacheAll();
           this.audioTestDisplay.string = "Uncached all";
           return;
@@ -1275,7 +1282,7 @@ window.__require = function e(t, n, r) {
         "A" != this.scenario && (this.step = -1);
         this.scenario = "A";
         if (this.step < 0 || 5 == this.step) {
-          if (this.playingList.length > 0) {
+          if ("Uncached all" != this.audioTestDisplay.string) {
             this.uncacheAll();
             this.audioTestDisplay.string = "Uncached all";
             return;
@@ -1294,7 +1301,7 @@ window.__require = function e(t, n, r) {
         "B" != this.scenario && (this.step = -1);
         this.scenario = "B";
         if (this.step < 0 || 5 == this.step) {
-          if (this.playingList.length > 0) {
+          if ("Uncached all" != this.audioTestDisplay.string) {
             this.uncacheAll();
             this.audioTestDisplay.string = "Uncached all";
             return;
@@ -1315,7 +1322,7 @@ window.__require = function e(t, n, r) {
         "C" != this.scenario && (this.step = -1);
         this.scenario = "C";
         if (this.step < 0 || 4 == this.step) {
-          if (this.playingList.length > 0) {
+          if ("Uncached all" != this.audioTestDisplay.string) {
             this.uncacheAll();
             this.audioTestDisplay.string = "Uncached all";
             return;
