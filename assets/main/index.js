@@ -991,13 +991,10 @@ window.__require = function e(t, n, r) {
       },
       play: function play(clip, loop, volume, limitDBFS) {
         var url = clip.nativeUrl;
-        for (var i = 0; i < this.playingList.length; i++) {
-          console.log("aaaaaaaa " + i + " " + this.playingList[i].getAudio().paused);
-          if (this.playingList[i].getAudio().paused && 0 == this.playingList[i].getAudio().currentTime) {
-            this.playingList[i].getAudio().src = url;
-            this.playingList[i].getAudio().play();
-            return i;
-          }
+        for (var i = 0; i < this.playingList.length; i++) if (this.playingList[i].getAudio().paused && 0 == this.playingList[i].getAudio().currentTime) {
+          this.playingList[i].getAudio().src = url;
+          this.playingList[i].getAudio().play();
+          return i;
         }
         var audio = new Audio(url);
         var audioCtx = new AudioContext();
@@ -1031,11 +1028,13 @@ window.__require = function e(t, n, r) {
       pause: function pause(id) {
         this.playingList[id].getAudio().pause();
       },
+      stop: function stop(id) {
+        this.playingList[id].getAudio().pause();
+        this.playingList[id].getAudio().currentTime = 0;
+        this.playingList[id].setFading(false);
+      },
       uncacheAll: function uncacheAll() {
-        for (var i = 0; i < this.playingList.length; i++) {
-          this.playingList[i].getAudio().pause();
-          this.playingList[i].getAudio().currentTime = 0;
-        }
+        for (var i = 0; i < this.playingList.length; i++) this.stop(i);
         this.seamlessAudioList = [];
         this.fadeAudioList = [];
       },
