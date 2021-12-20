@@ -234,11 +234,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").current_marker();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -256,11 +252,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").fade_in();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -278,11 +270,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").fade_out();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       }
     });
@@ -313,11 +301,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").limiter_negative_2_dBFS();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -335,11 +319,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").limiter_negative_5_dBFS();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -357,11 +337,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").limiter_0_dBFS();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -379,11 +355,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").normal_loop();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -401,11 +373,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").scenario_A_trigger();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -423,11 +391,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").scenario_B_trigger();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -445,11 +409,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").scenario_C_trigger();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -467,11 +427,7 @@ window.__require = function e(t, n, r) {
         this.node.on("touchstart", function() {
           this.parent.getComponent("sound_lib").seamless_loop();
         }, this.node);
-        this.node.on("touchmove", function(event) {
-          var delta = event.touch.getDelta();
-          this.x += delta.x;
-          this.y += delta.y;
-        }, this.node);
+        this.node.on("touchmove", function(event) {}, this.node);
         this.node.on("touchend", function() {}, this.node);
       },
       start: function start() {}
@@ -1272,6 +1228,7 @@ window.__require = function e(t, n, r) {
         this.play(self.clip_2, true, 1, 0);
         this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:2:5:50");
         this.playAtMarker(this.play(self.clip_4, true, 1, 0), "0:0:55:50");
+        this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:0:45:50");
         console.log("Limiter at -5 dBFS");
         this.audioTestDisplay.string = "Limiter at -5 dBFS";
       },
@@ -1307,7 +1264,7 @@ window.__require = function e(t, n, r) {
         this.play(self.clip_2, true, 1, 0);
         this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:2:5:50");
         this.playAtMarker(this.play(self.clip_4, true, 1, 0), "0:0:55:50");
-        this.playAtMarker(this.play(self.clip_1, true, 1, 0), "0:0:45:50");
+        this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:0:45:50");
         console.log("Limiter at 0 dBFS");
         this.audioTestDisplay.string = "Limiter at 0 dBFS";
       },
