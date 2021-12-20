@@ -1,1 +1,198 @@
-{"paths":{"0":["Sounds/Scenario-A",4],"1":["Sounds/Scenario-B",4],"2":["Sounds/HTML Audio",0],"3":["Sounds/Info about music files",1],"4":["Sounds/Loop",2],"5":["Sounds/M4A/Intro_A",2],"6":["Sounds/M4A/Intro_B",2],"7":["Sounds/M4A/Loop",2],"8":["Sounds/M4A/Outro_A",2],"9":["Sounds/M4A/Outro_B",2],"10":["Sounds/MP3/Intro_A",2],"11":["Sounds/MP3/Intro_B",2],"12":["Sounds/MP3/Loop",2],"13":["Sounds/MP3/Outro_A",2],"14":["Sounds/MP3/Outro_B_Test",2],"15":["Sounds/MP3/Outro_B",2],"16":["Sounds/MP3/Outro_C_Test",2],"17":["Sounds/MP3/Outro_C",2],"18":["Sounds/MP4/Intro_A",3],"19":["Sounds/MP4/Intro_B",3],"20":["Sounds/MP4/Loop",3],"21":["Sounds/MP4/Outro_A",3],"22":["Sounds/MP4/Outro_B",3],"23":["Sounds/OGG/Intro_A",2],"24":["Sounds/OGG/Intro_B",2],"25":["Sounds/OGG/Loop",2],"26":["Sounds/OGG/Outro_A",2],"27":["Sounds/OGG/Outro_B",2],"28":["Sounds/Scenario-A",5,1],"29":["Sounds/Scenario-B",5,1],"30":["Sounds/shadow_man",2],"31":["Sounds/Sounds",0],"32":["Sounds/spark_man",2],"33":["Sounds/spark_mandrill",2],"34":["Sounds/test_sfx",2]},"types":["cc.Asset","cc.TextAsset","cc.AudioClip","cc.VideoClip","cc.Texture2D","cc.SpriteFrame"],"uuids":["d5eZ6b+F5Ay58nrue5krgs","5aOMFaMHFOhrgbAhzHI3+j","27mMfJyqxP7K4M8xS32jhQ","760Y2gSgFIDoETGpfeST9V","7aWODkf6ZG/oj6/0fl5LbB","07wFWZp39C7Z5k5Q6xZcYI","83aFwF6x1Kw708UQJtWhdh","07eaL2ouBCXoLaM6dQfcHk","f0AeDnS0BItIkz3Pdv49Kt","b83FRd9uJFjLnumag/XlCc","3fmw9oJbNCDZDuP2UIzHZ4","f94PWVok9BSIIXGEyksdxq","0e3HClh+xPYKakcUqOhIdL","8885PCeBZAD4ROSdTE+GV3","aeVeyugcdA0phk6YaTkLLc","4aFq3jNVlDUK22WLBDbOqu","c8KCL/DVdBBqhfUGZNoJ4i","b8TtJQ0XNLNIaBH5cNtWl3","e1IR9huxFOMZgmsLroRwdA","aaS7Q1iiRIl5XaGM4uTF4E","33wZ20PNVLSbM6DmzaY2qS","fdK7UByFdADbR5+7FWsde2","7b0A2KLXRAYI9DVkyjswqE","556PEIh+VOTK2BMV3g8jIG","5cxGqlGY1JsbrIfD0KVj2P","e11Rcfc31KkJ8JjE6NFI2j","8a3jD6TtlDi59CYexwtz2I","cdh4/34+lJ/bp+eLNTZkRe","22sRBgg4xHO5juzvnyqBcR","08pKyyC85JTKDAnODNs0KR","45P18NkFtBZLUeRGu+X9Sh","efYyd6bp1IyYnLwVIS3gAy","3arZs4wYVITInWPVownPWM","4cD3rdofFHd5nQSFsdWoXB","efPxb5SkpNf7ZoTHs2b98s"],"scenes":{},"redirect":[],"deps":[],"packs":{"06fb0fb09":[1,0]},"name":"resources","importBase":"import","nativeBase":"native","debug":false,"isZip":false,"encrypted":false}
+{
+    "paths": {
+        "27mMfJyqxP7K4M8xS32jhQ": [
+            "Sounds/HTML Audio",
+            "cc.Asset"
+        ],
+        "760Y2gSgFIDoETGpfeST9V": [
+            "Sounds/Info about music files",
+            "cc.TextAsset"
+        ],
+        "7aWODkf6ZG/oj6/0fl5LbB": [
+            "Sounds/Loop",
+            "cc.AudioClip"
+        ],
+        "07wFWZp39C7Z5k5Q6xZcYI": [
+            "Sounds/M4A/Intro_A",
+            "cc.AudioClip"
+        ],
+        "83aFwF6x1Kw708UQJtWhdh": [
+            "Sounds/M4A/Intro_B",
+            "cc.AudioClip"
+        ],
+        "07eaL2ouBCXoLaM6dQfcHk": [
+            "Sounds/M4A/Loop",
+            "cc.AudioClip"
+        ],
+        "f0AeDnS0BItIkz3Pdv49Kt": [
+            "Sounds/M4A/Outro_A",
+            "cc.AudioClip"
+        ],
+        "b83FRd9uJFjLnumag/XlCc": [
+            "Sounds/M4A/Outro_B",
+            "cc.AudioClip"
+        ],
+        "3fmw9oJbNCDZDuP2UIzHZ4": [
+            "Sounds/MP3/Intro_A",
+            "cc.AudioClip"
+        ],
+        "f94PWVok9BSIIXGEyksdxq": [
+            "Sounds/MP3/Intro_B",
+            "cc.AudioClip"
+        ],
+        "0e3HClh+xPYKakcUqOhIdL": [
+            "Sounds/MP3/Loop",
+            "cc.AudioClip"
+        ],
+        "8885PCeBZAD4ROSdTE+GV3": [
+            "Sounds/MP3/Outro_A",
+            "cc.AudioClip"
+        ],
+        "4aFq3jNVlDUK22WLBDbOqu": [
+            "Sounds/MP3/Outro_B",
+            "cc.AudioClip"
+        ],
+        "aeVeyugcdA0phk6YaTkLLc": [
+            "Sounds/MP3/Outro_B_Test",
+            "cc.AudioClip"
+        ],
+        "b8TtJQ0XNLNIaBH5cNtWl3": [
+            "Sounds/MP3/Outro_C",
+            "cc.AudioClip"
+        ],
+        "c8KCL/DVdBBqhfUGZNoJ4i": [
+            "Sounds/MP3/Outro_C_Test",
+            "cc.AudioClip"
+        ],
+        "e1IR9huxFOMZgmsLroRwdA": [
+            "Sounds/MP4/Intro_A",
+            "cc.VideoClip"
+        ],
+        "aaS7Q1iiRIl5XaGM4uTF4E": [
+            "Sounds/MP4/Intro_B",
+            "cc.VideoClip"
+        ],
+        "33wZ20PNVLSbM6DmzaY2qS": [
+            "Sounds/MP4/Loop",
+            "cc.VideoClip"
+        ],
+        "fdK7UByFdADbR5+7FWsde2": [
+            "Sounds/MP4/Outro_A",
+            "cc.VideoClip"
+        ],
+        "7b0A2KLXRAYI9DVkyjswqE": [
+            "Sounds/MP4/Outro_B",
+            "cc.VideoClip"
+        ],
+        "556PEIh+VOTK2BMV3g8jIG": [
+            "Sounds/OGG/Intro_A",
+            "cc.AudioClip"
+        ],
+        "5cxGqlGY1JsbrIfD0KVj2P": [
+            "Sounds/OGG/Intro_B",
+            "cc.AudioClip"
+        ],
+        "e11Rcfc31KkJ8JjE6NFI2j": [
+            "Sounds/OGG/Loop",
+            "cc.AudioClip"
+        ],
+        "8a3jD6TtlDi59CYexwtz2I": [
+            "Sounds/OGG/Outro_A",
+            "cc.AudioClip"
+        ],
+        "cdh4/34+lJ/bp+eLNTZkRe": [
+            "Sounds/OGG/Outro_B",
+            "cc.AudioClip"
+        ],
+        "d5eZ6b+F5Ay58nrue5krgs": [
+            "Sounds/Scenario-A",
+            "cc.Texture2D"
+        ],
+        "22sRBgg4xHO5juzvnyqBcR": [
+            "Sounds/Scenario-A",
+            "cc.SpriteFrame",
+            1
+        ],
+        "5aOMFaMHFOhrgbAhzHI3+j": [
+            "Sounds/Scenario-B",
+            "cc.Texture2D"
+        ],
+        "08pKyyC85JTKDAnODNs0KR": [
+            "Sounds/Scenario-B",
+            "cc.SpriteFrame",
+            1
+        ],
+        "efYyd6bp1IyYnLwVIS3gAy": [
+            "Sounds/Sounds",
+            "cc.Asset"
+        ],
+        "45P18NkFtBZLUeRGu+X9Sh": [
+            "Sounds/shadow_man",
+            "cc.AudioClip"
+        ],
+        "3arZs4wYVITInWPVownPWM": [
+            "Sounds/spark_man",
+            "cc.AudioClip"
+        ],
+        "4cD3rdofFHd5nQSFsdWoXB": [
+            "Sounds/spark_mandrill",
+            "cc.AudioClip"
+        ],
+        "efPxb5SkpNf7ZoTHs2b98s": [
+            "Sounds/test_sfx",
+            "cc.AudioClip"
+        ]
+    },
+    "uuids": [
+        "27mMfJyqxP7K4M8xS32jhQ",
+        "760Y2gSgFIDoETGpfeST9V",
+        "7aWODkf6ZG/oj6/0fl5LbB",
+        "07wFWZp39C7Z5k5Q6xZcYI",
+        "83aFwF6x1Kw708UQJtWhdh",
+        "07eaL2ouBCXoLaM6dQfcHk",
+        "f0AeDnS0BItIkz3Pdv49Kt",
+        "b83FRd9uJFjLnumag/XlCc",
+        "3fmw9oJbNCDZDuP2UIzHZ4",
+        "f94PWVok9BSIIXGEyksdxq",
+        "0e3HClh+xPYKakcUqOhIdL",
+        "8885PCeBZAD4ROSdTE+GV3",
+        "aeVeyugcdA0phk6YaTkLLc",
+        "4aFq3jNVlDUK22WLBDbOqu",
+        "c8KCL/DVdBBqhfUGZNoJ4i",
+        "b8TtJQ0XNLNIaBH5cNtWl3",
+        "e1IR9huxFOMZgmsLroRwdA",
+        "aaS7Q1iiRIl5XaGM4uTF4E",
+        "33wZ20PNVLSbM6DmzaY2qS",
+        "fdK7UByFdADbR5+7FWsde2",
+        "7b0A2KLXRAYI9DVkyjswqE",
+        "556PEIh+VOTK2BMV3g8jIG",
+        "5cxGqlGY1JsbrIfD0KVj2P",
+        "e11Rcfc31KkJ8JjE6NFI2j",
+        "8a3jD6TtlDi59CYexwtz2I",
+        "cdh4/34+lJ/bp+eLNTZkRe",
+        "d5eZ6b+F5Ay58nrue5krgs",
+        "22sRBgg4xHO5juzvnyqBcR",
+        "5aOMFaMHFOhrgbAhzHI3+j",
+        "08pKyyC85JTKDAnODNs0KR",
+        "45P18NkFtBZLUeRGu+X9Sh",
+        "efYyd6bp1IyYnLwVIS3gAy",
+        "3arZs4wYVITInWPVownPWM",
+        "4cD3rdofFHd5nQSFsdWoXB",
+        "efPxb5SkpNf7ZoTHs2b98s"
+    ],
+    "scenes": {},
+    "redirect": [],
+    "deps": [],
+    "packs": {
+        "06fb0fb09": [
+            "5aOMFaMHFOhrgbAhzHI3+j",
+            "d5eZ6b+F5Ay58nrue5krgs"
+        ]
+    },
+    "name": "resources",
+    "importBase": "import",
+    "nativeBase": "native",
+    "debug": true,
+    "isZip": false,
+    "encrypted": false
+}
