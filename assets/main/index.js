@@ -865,7 +865,8 @@ window.__require = function e(t, n, r) {
             limitDBFS: 0,
             maxPCM: 0,
             audio: null,
-            fading: false
+            fading: false,
+            available: true
           },
           getId: function getId() {
             return this.id;
@@ -896,6 +897,12 @@ window.__require = function e(t, n, r) {
           },
           setFading: function setFading(value) {
             this.fading = value;
+          },
+          isAvailable: function isAvailable() {
+            return this.available;
+          },
+          setAvailable: function setAvailable(value) {
+            this.available = value;
           }
         });
         this.playingList = [];
@@ -965,8 +972,8 @@ window.__require = function e(t, n, r) {
               this.debug_1.string = "";
               this.debug_2.string = "";
             }
-            this.debug_1.string += "Audio " + i + " at " + this.playingList[i].getAudio().currentTime + "\n";
-            if (!this.playingList[i].getAudio().paused && this.playingList[i].getAudio().currentTime > 0 && !this.playingList[i].isFading()) {
+            this.debug_1.string += "Audio slot " + i + " at " + this.playingList[i].getAudio().currentTime + "\n";
+            if (!this.playingList[i].getAudio().paused && this.playingList[i].getAudio().currentTime > 0) {
               this.debug_2.string += "Audio " + i + " maxPCM: " + this.playingList[i].getMaxPCM() + "\n";
               totalMaxPCM += this.playingList[i].getMaxPCM();
               numOfPlaying += 1;
@@ -977,22 +984,34 @@ window.__require = function e(t, n, r) {
           0 != totalMaxPCM && (totalDBFS = 20 * Math.log10(totalMaxPCM * Math.sqrt(2)));
           var newVolume = 0;
           var currentDBFS = totalDBFS - .8 * numOfPlaying;
-          if (currentDBFS > this.totalLimiter) for (var _i = 0; _i < this.playingList.length; _i++) if (!this.playingList[_i].getAudio().paused && this.playingList[_i].getAudio().currentTime > 0) {
+          if (currentDBFS > this.totalLimiter) for (var _i = 0; _i < this.playingList.length; _i++) if (!this.playingList[_i].getAudio().paused && this.playingList[_i].getAudio().currentTime > 0 && !this.playingList[_i].isFading()) {
             newVolume = this.playingList[_i].getAudio().volume - this.limitRate;
             newVolume > 0 && (this.playingList[_i].getAudio().volume = newVolume);
           }
-        } else for (var _i2 = 0; _i2 < this.playingList.length; _i2++) if (!this.playingList[_i2].getAudio().paused && this.playingList[_i2].getAudio().currentTime > 0 && !this.playingList[_i2].isFading()) {
-          var dBFS = 20 * Math.log10(this.playingList[_i2].getMaxPCM() * Math.sqrt(2)) - .8;
-          if (dBFS > this.playingList[_i2].getLimitDBFS()) {
-            var _newVolume = this.playingList[_i2].getAudio().volume -= this.limitRate;
-            _newVolume > 0 && (this.playingList[_i2].getAudio().volume = _newVolume);
+        } else for (var _i2 = 0; _i2 < this.playingList.length; _i2++) {
+          if (0 == _i2) {
+            this.debug_1.string = "";
+            this.debug_2.string = "";
+          }
+          this.debug_1.string += "Audio slot " + _i2 + " at " + this.playingList[_i2].getAudio().currentTime + "\n";
+          if (!this.playingList[_i2].getAudio().paused && this.playingList[_i2].getAudio().currentTime > 0) {
+            this.debug_2.string += "Audio " + _i2 + " maxPCM: " + this.playingList[_i2].getMaxPCM() + "\n";
+            var dBFS = 20 * Math.log10(this.playingList[_i2].getMaxPCM() * Math.sqrt(2)) - .8;
+            if (!this.playingList[_i2].isFading() && dBFS > this.playingList[_i2].getLimitDBFS()) {
+              var _newVolume = this.playingList[_i2].getAudio().volume -= this.limitRate;
+              _newVolume > 0 && (this.playingList[_i2].getAudio().volume = _newVolume);
+            }
           }
         }
       },
       play: function play(clip, loop, volume, limitDBFS) {
         var url = clip.nativeUrl;
-        for (var i = 0; i < this.playingList.length; i++) if (this.playingList[i].getAudio().paused && 0 == this.playingList[i].getAudio().currentTime) {
+        for (var i = 0; i < this.playingList.length; i++) if (this.playingList[i].isAvailable()) {
           this.playingList[i].getAudio().src = url;
+          this.playingList[i].getAudio().loop = loop;
+          this.playingList[i].getAudio().volume = volume;
+          this.playingList[i].setLimitDBFS(limitDBFS);
+          this.playingList[i].setAvailable(false);
           this.playingList[i].getAudio().play();
           return i;
         }
@@ -1015,6 +1034,7 @@ window.__require = function e(t, n, r) {
         limiterAudio.setId(this.playingList.length);
         limiterAudio.setAudio(audio);
         limiterAudio.setLimitDBFS(limitDBFS);
+        limiterAudio.setAvailable(false);
         this.playingList.push(limiterAudio);
         var str = this.getFormat(limiterAudio.getId());
         processor.onaudioprocess = function(evt) {
@@ -1032,11 +1052,15 @@ window.__require = function e(t, n, r) {
         this.playingList[id].getAudio().pause();
         this.playingList[id].getAudio().currentTime = 0;
         this.playingList[id].setFading(false);
+        this.playingList[id].setAvailable(true);
       },
       uncacheAll: function uncacheAll() {
         for (var i = 0; i < this.playingList.length; i++) this.stop(i);
         this.seamlessAudioList = [];
         this.fadeAudioList = [];
+        this.setTotalLimiter(-999);
+        this.debug_1.string = "Debug_1";
+        this.debug_2.string = "Debug_2";
       },
       getFormat: function getFormat(id) {
         var formatStr = this.playingList[id].getAudio().src;
@@ -1462,10 +1486,7 @@ window.__require = function e(t, n, r) {
           this.step += 1;
         } else if (4 == this.step) {
           if (this.playingList[this.preId].getAudio().volume > 0) this.audioTestDisplay.string = "Scenario B: Loop at " + this.getCurrentTimeMarker(this.preId) + " fading out until marker (0:0:0:888) of Outro B\nScenario B: Outro B at " + this.getCurrentTimeMarker(this.id) + "\nGame call detected at " + this.gameCallMarker + " and Outro B triggered on next beat " + this.timeInSecToMarker(this.displayNextBeat / 1e3); else {
-            if (!this.playingList[this.preId].getAudio().paused) {
-              this.pause(this.preId);
-              this.playingList[this.preId].getAudio().currentTime = 0;
-            }
+            this.playingList[this.preId].isAvailable() || this.stop(this.preId);
             this.audioTestDisplay.string = "Loop finished fading out at marker (0:0:0:888)\nScenario B: Outro B at " + this.getCurrentTimeMarker(this.id) + "\nGame call detected at " + this.gameCallMarker + " and Outro B triggered on next beat " + this.timeInSecToMarker(this.displayNextBeat / 1e3);
           }
           this.playingList[this.id].getAudio().paused && this.playingList[this.id].getAudio().currentTime >= this.playingList[this.id].getAudio().duration && (this.step += 1);
@@ -1484,10 +1505,7 @@ window.__require = function e(t, n, r) {
           this.step += 1;
         } else if (3 == this.step) {
           if (this.playingList[this.preId].getAudio().volume > 0) this.audioTestDisplay.string = "Scenario C: Loop at " + this.getCurrentTimeMarker(this.preId) + " fading out until next " + (Math.round((this.displayNextBeat - this.nextBeatAfterGCInMilSec) / 444.444) + 1) + " beat(s) " + this.timeInSecToMarker(this.displayNextBeat / 1e3) + "\nScenario C: Outro C at " + this.getCurrentTimeMarker(this.id) + "\nGame call detected at " + this.gameCallMarker + " and Outro C triggered at " + this.timeInSecToMarker(this.triggerPoint / 1e3); else {
-            if (!this.playingList[this.preId].getAudio().paused) {
-              this.pause(this.preId);
-              this.playingList[this.preId].getAudio().currentTime = 0;
-            }
+            this.playingList[this.preId].isAvailable() || this.stop(this.preId);
             this.audioTestDisplay.string = "Loop finished fading out after " + (Math.round((this.displayNextBeat - this.nextBeatAfterGCInMilSec) / 444.444) + 1) + " beat(s) " + this.timeInSecToMarker(this.displayNextBeat / 1e3) + "\nScenario C: Outro B at " + this.getCurrentTimeMarker(this.id) + "\nGame call detected at " + this.gameCallMarker + " and Outro C triggered at " + this.timeInSecToMarker(this.triggerPoint / 1e3);
           }
           this.playingList[this.id].getAudio().paused && this.playingList[this.id].getAudio().currentTime >= this.playingList[this.id].getAudio().duration && (this.step += 1);

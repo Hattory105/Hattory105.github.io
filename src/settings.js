@@ -1,5 +1,5 @@
 window._CCSettings = {
-    platform: "web-desktop",
+    platform: "web-mobile",
     groupList: [
         "default"
     ],
