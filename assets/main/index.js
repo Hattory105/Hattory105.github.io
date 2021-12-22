@@ -1122,14 +1122,12 @@ window.__require = function e(t, n, r) {
           var newVolume = this.fadeAudioList[i].getAudioSrc().volume + this.fadeAudioList[i].getFadeRate();
           this.fadeAudioList[i].getFadeRate() > 0 ? newVolume > this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume()) : this.fadeAudioList[i].getFadeRate() < 0 && newVolume < this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume());
           this.fadeAudioList[i].getAudioSrc().volume = newVolume;
-          console.log("Volume at " + (new Date().getTime() - this.fadeAudioList[i].getFadeCheckTime()) + " " + this.fadeAudioList[i].getAudioSrc().volume);
           if (this.fadeAudioList[i].getAudioSrc().volume == this.fadeAudioList[i].getEndVolume()) {
             this.fadeAudioList[i].getAudio().setFading(false);
             this.fadeAudioList.splice(i, 1);
             i--;
           }
         }
-        this.fadeAudioList.length > 0 && ("in" == this.fade ? this.audioTestDisplay.string = "Fade in in " + Math.round(this.idleTime(this.id, 2e4, 0) / 1e3) + " secs" : "out" == this.fade && (this.audioTestDisplay.string = "Fade out in " + Math.round(this.idleTime(this.id, 15e3, 0) / 1e3) + " secs"));
       },
       getFPS: function getFPS() {
         if (new Date().getTime() - this.startTime >= 1e3) {
@@ -1138,6 +1136,7 @@ window.__require = function e(t, n, r) {
           this.startTime = new Date().getTime();
         }
         this.frameCount += 1;
+        this.audioTestDisplay.string = this.fps;
       },
       markerToTimeInSec: function markerToTimeInSec(marker) {
         var timeArray = marker.split(":");
