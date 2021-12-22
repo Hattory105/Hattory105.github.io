@@ -1118,11 +1118,22 @@ window.__require = function e(t, n, r) {
       },
       fadeProcess: function fadeProcess() {
         for (var i = 0; i < this.fadeAudioList.length; i++) if (this.fadeAudioList[i].getAudioSrc().volume != this.fadeAudioList[i].getEndVolume()) {
+          this.audioTestDisplay.string = "013";
           this.updateFadeRate(this.fadeAudioList[i]);
+          this.audioTestDisplay.string = "014";
           var newVolume = this.fadeAudioList[i].getAudioSrc().volume + this.fadeAudioList[i].getFadeRate();
-          this.fadeAudioList[i].getFadeRate() > 0 ? newVolume > this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume()) : this.fadeAudioList[i].getFadeRate() < 0 && newVolume < this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume());
+          this.audioTestDisplay.string = "015";
+          if (this.fadeAudioList[i].getFadeRate() > 0) {
+            this.audioTestDisplay.string = "016";
+            newVolume > this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume());
+          } else if (this.fadeAudioList[i].getFadeRate() < 0) {
+            this.audioTestDisplay.string = "017";
+            newVolume < this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume());
+          }
           this.fadeAudioList[i].getAudioSrc().volume = newVolume;
+          this.audioTestDisplay.string = "018";
           if (this.fadeAudioList[i].getAudioSrc().volume == this.fadeAudioList[i].getEndVolume()) {
+            this.audioTestDisplay.string = "019";
             this.fadeAudioList[i].getAudio().setFading(false);
             this.fadeAudioList.splice(i, 1);
             i--;
@@ -1136,7 +1147,6 @@ window.__require = function e(t, n, r) {
           this.startTime = new Date().getTime();
         }
         this.frameCount += 1;
-        this.audioTestDisplay.string = this.fps;
       },
       markerToTimeInSec: function markerToTimeInSec(marker) {
         var timeArray = marker.split(":");
