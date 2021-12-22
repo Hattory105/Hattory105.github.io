@@ -787,6 +787,10 @@ window.__require = function e(t, n, r) {
         debug_2: {
           default: null,
           type: cc.Label
+        },
+        debug_3: {
+          default: null,
+          type: cc.Label
         }
       },
       onLoad: function onLoad() {
@@ -909,6 +913,7 @@ window.__require = function e(t, n, r) {
         this.startTime = new Date().getTime();
         this.fps = 0;
         this.frameCount = 0;
+        this.useLimiter = false;
         this.totalVolume = 0;
         this.totalLimiter = -999;
         this.audioList = [];
@@ -963,21 +968,30 @@ window.__require = function e(t, n, r) {
       getTotalLimiter: function getTotalLimiter() {
         return this.totalLimiter;
       },
+      debug: function debug() {
+        for (var i = 0; i < this.audioSlotList.length; i++) {
+          if (0 == i) {
+            this.debug_1.string = "";
+            this.debug_2.string = "";
+            this.debug_3.string = "";
+          }
+          this.debug_1.string += "Audio slot " + i + " at " + this.audioSlotList[i].getAudio().currentTime + "\n";
+          if (!this.audioSlotList[i].getAudio().paused && this.audioSlotList[i].getAudio().currentTime > 0) {
+            this.debug_2.string += "Audio " + i + " maxPCM: " + this.audioSlotList[i].getMaxPCM() + "\n";
+            this.debug_3.string += "Audio " + i + " volume: " + this.audioSlotList[i].getAudio().volume + "\n";
+          }
+        }
+      },
+      setUseLimiter: function setUseLimiter(value) {
+        this.useLimiter = value;
+      },
       setLimiterAuto: function setLimiterAuto() {
-        if (this.audioSlotList.length > 0) if (this.totalLimiter > -999) {
+        if (this.useLimiter && this.audioSlotList.length > 0) if (this.totalLimiter > -999) {
           var totalMaxPCM = 0;
           var numOfPlaying = 0;
-          for (var i = 0; i < this.audioSlotList.length; i++) {
-            if (0 == i) {
-              this.debug_1.string = "";
-              this.debug_2.string = "";
-            }
-            this.debug_1.string += "Audio slot " + i + " at " + this.audioSlotList[i].getAudio().currentTime + "\n";
-            if (!this.audioSlotList[i].getAudio().paused && this.audioSlotList[i].getAudio().currentTime > 0) {
-              this.debug_2.string += "Audio " + i + " maxPCM: " + this.audioSlotList[i].getMaxPCM() + "\n";
-              totalMaxPCM += this.audioSlotList[i].getMaxPCM();
-              numOfPlaying += 1;
-            }
+          for (var i = 0; i < this.audioSlotList.length; i++) if (!this.audioSlotList[i].getAudio().paused && this.audioSlotList[i].getAudio().currentTime > 0) {
+            totalMaxPCM += this.audioSlotList[i].getMaxPCM();
+            numOfPlaying += 1;
           }
           if (0 == numOfPlaying) return;
           var totalDBFS = -999;
@@ -988,19 +1002,11 @@ window.__require = function e(t, n, r) {
             newVolume = this.audioSlotList[_i].getAudio().volume - this.limitRate;
             newVolume > 0 && (this.audioSlotList[_i].getAudio().volume = newVolume);
           }
-        } else for (var _i2 = 0; _i2 < this.audioSlotList.length; _i2++) {
-          if (0 == _i2) {
-            this.debug_1.string = "";
-            this.debug_2.string = "";
-          }
-          this.debug_1.string += "Audio slot " + _i2 + " at " + this.audioSlotList[_i2].getAudio().currentTime + "\n";
-          if (!this.audioSlotList[_i2].getAudio().paused && this.audioSlotList[_i2].getAudio().currentTime > 0) {
-            this.debug_2.string += "Audio " + _i2 + " maxPCM: " + this.audioSlotList[_i2].getMaxPCM() + "\n";
-            var dBFS = 20 * Math.log10(this.audioSlotList[_i2].getMaxPCM() * Math.sqrt(2)) - .8;
-            if (!this.audioSlotList[_i2].isFading() && dBFS > this.audioSlotList[_i2].getLimitDBFS()) {
-              var _newVolume = this.audioSlotList[_i2].getAudio().volume -= this.limitRate;
-              _newVolume > 0 && (this.audioSlotList[_i2].getAudio().volume = _newVolume);
-            }
+        } else for (var _i2 = 0; _i2 < this.audioSlotList.length; _i2++) if (!this.audioSlotList[_i2].getAudio().paused && this.audioSlotList[_i2].getAudio().currentTime > 0) {
+          var dBFS = 20 * Math.log10(this.audioSlotList[_i2].getMaxPCM() * Math.sqrt(2)) - .8;
+          if (!this.audioSlotList[_i2].isFading() && dBFS > this.audioSlotList[_i2].getLimitDBFS()) {
+            var _newVolume = this.audioSlotList[_i2].getAudio().volume -= this.limitRate;
+            _newVolume > 0 && (this.audioSlotList[_i2].getAudio().volume = _newVolume);
           }
         }
       },
@@ -1018,21 +1024,6 @@ window.__require = function e(t, n, r) {
         this.audioTestDisplay.string = "001";
         var audio = new Audio(url);
         this.audioTestDisplay.string = "002";
-        var AudioContext = window.AudioContext || window.webkitAudioContext;
-        var audioCtx = new AudioContext();
-        this.audioTestDisplay.string = "003";
-        var processor = audioCtx.createScriptProcessor(2048, 1, 1);
-        this.audioTestDisplay.string = "004";
-        var source;
-        audio.addEventListener("canplaythrough", function() {
-          if (void 0 == source) {
-            source = audioCtx.createMediaElementSource(audio);
-            source.connect(processor);
-            source.connect(audioCtx.destination);
-            processor.connect(audioCtx.destination);
-          }
-        }, false);
-        this.audioTestDisplay.string = "010";
         audio.loop = loop;
         audio.volume = volume;
         audio.play();
@@ -1043,13 +1034,30 @@ window.__require = function e(t, n, r) {
         audioSlot.setAvailable(false);
         this.audioSlotList.push(audioSlot);
         var str = this.getFormat(audioSlot.getId());
-        this.audioTestDisplay.string = "011";
-        processor.onaudioprocess = function(evt) {
-          var input = evt.inputBuffer.getChannelData(0), len = input.length, aud = null, maxPCM = Math.abs(input[0]);
-          null == aud && (aud = audioSlot);
-          for (var _i3 = 0; _i3 < len; _i3++) Math.abs(input[_i3]) > maxPCM && (maxPCM = Math.abs(input[_i3]));
-          aud.setMaxPCM(maxPCM);
-        };
+        if (this.useLimiter) {
+          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          var audioCtx = new AudioContext();
+          this.audioTestDisplay.string = "003";
+          var processor = audioCtx.createScriptProcessor(2048, 1, 1);
+          this.audioTestDisplay.string = "004";
+          var source;
+          audio.addEventListener("canplaythrough", function() {
+            if (void 0 == source) {
+              source = audioCtx.createMediaElementSource(audio);
+              source.connect(processor);
+              source.connect(audioCtx.destination);
+              processor.connect(audioCtx.destination);
+            }
+          }, false);
+          this.audioTestDisplay.string = "010";
+          this.audioTestDisplay.string = "011";
+          processor.onaudioprocess = function(evt) {
+            var input = evt.inputBuffer.getChannelData(0), len = input.length, aud = null, maxPCM = Math.abs(input[0]);
+            null == aud && (aud = audioSlot);
+            for (var _i3 = 0; _i3 < len; _i3++) Math.abs(input[_i3]) > maxPCM && (maxPCM = Math.abs(input[_i3]));
+            aud.setMaxPCM(maxPCM);
+          };
+        }
         this.audioTestDisplay.string = "012";
         return audioSlot.getId();
       },
@@ -1524,6 +1532,7 @@ window.__require = function e(t, n, r) {
         this.scenarioA();
         this.scenarioB();
         this.scenarioC();
+        this.debug();
       }
     });
     cc._RF.pop();
