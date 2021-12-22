@@ -1018,6 +1018,7 @@ window.__require = function e(t, n, r) {
         this.audioTestDisplay.string = "001";
         var audio = new Audio(url);
         this.audioTestDisplay.string = "002";
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
         var audioCtx = new AudioContext();
         this.audioTestDisplay.string = "003";
         var processor = audioCtx.createScriptProcessor(2048, 1, 1);
