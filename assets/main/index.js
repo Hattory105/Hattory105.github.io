@@ -1266,7 +1266,6 @@ window.__require = function e(t, n, r) {
         this.play(self.clip_2, true, 1, 0);
         this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:2:5:50");
         this.playAtMarker(this.play(self.clip_4, true, 1, 0), "0:0:55:50");
-        this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:0:45:50");
         console.log("Limiter at -5 dBFS");
         this.audioTestDisplay.string = "Limiter at -5 dBFS";
       },
@@ -1284,7 +1283,6 @@ window.__require = function e(t, n, r) {
         this.play(self.clip_2, true, 1, 0);
         this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:2:5:50");
         this.playAtMarker(this.play(self.clip_4, true, 1, 0), "0:0:55:50");
-        this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:0:45:50");
         console.log("Limiter at -5 dBFS");
         this.audioTestDisplay.string = "Limiter at -2 dBFS";
       },
@@ -1302,7 +1300,6 @@ window.__require = function e(t, n, r) {
         this.play(self.clip_2, true, 1, 0);
         this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:2:5:50");
         this.playAtMarker(this.play(self.clip_4, true, 1, 0), "0:0:55:50");
-        this.playAtMarker(this.play(self.clip_3, true, 1, 0), "0:0:45:50");
         console.log("Limiter at 0 dBFS");
         this.audioTestDisplay.string = "Limiter at 0 dBFS";
       },
