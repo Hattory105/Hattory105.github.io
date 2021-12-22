@@ -914,6 +914,7 @@ window.__require = function e(t, n, r) {
         this.fps = 0;
         this.frameCount = 0;
         this.useLimiter = false;
+        this.AudioContext = window.AudioContext || window.webkitAudioContext;
         this.totalVolume = 0;
         this.totalLimiter = -999;
         this.audioList = [];
@@ -960,6 +961,7 @@ window.__require = function e(t, n, r) {
         this.gameCallMarker = 0;
       },
       setTotalLimiter: function setTotalLimiter(threshold) {
+        this.useLimiter = true;
         this.totalLimiter = threshold;
       },
       setVolumeRate: function setVolumeRate(rate) {
@@ -969,7 +971,7 @@ window.__require = function e(t, n, r) {
         return this.totalLimiter;
       },
       debug: function debug() {
-        for (var i = 0; i < this.audioSlotList.length; i++) {
+        if ("Uncached all" != this.audioTestDisplay.string) for (var i = 0; i < this.audioSlotList.length; i++) {
           if (0 == i) {
             this.debug_1.string = "";
             this.debug_2.string = "";
@@ -1021,9 +1023,7 @@ window.__require = function e(t, n, r) {
           this.audioSlotList[i].getAudio().play();
           return i;
         }
-        this.audioTestDisplay.string = "001";
         var audio = new Audio(url);
-        this.audioTestDisplay.string = "002";
         audio.loop = loop;
         audio.volume = volume;
         audio.play();
@@ -1035,11 +1035,8 @@ window.__require = function e(t, n, r) {
         this.audioSlotList.push(audioSlot);
         var str = this.getFormat(audioSlot.getId());
         if (this.useLimiter) {
-          var AudioContext = window.AudioContext || window.webkitAudioContext;
-          var audioCtx = new AudioContext();
-          this.audioTestDisplay.string = "003";
+          var audioCtx = new this.AudioContext();
           var processor = audioCtx.createScriptProcessor(2048, 1, 1);
-          this.audioTestDisplay.string = "004";
           var source;
           audio.addEventListener("canplaythrough", function() {
             if (void 0 == source) {
@@ -1049,7 +1046,6 @@ window.__require = function e(t, n, r) {
               processor.connect(audioCtx.destination);
             }
           }, false);
-          this.audioTestDisplay.string = "010";
           this.audioTestDisplay.string = "011";
           processor.onaudioprocess = function(evt) {
             var input = evt.inputBuffer.getChannelData(0), len = input.length, aud = null, maxPCM = Math.abs(input[0]);
@@ -1058,7 +1054,6 @@ window.__require = function e(t, n, r) {
             aud.setMaxPCM(maxPCM);
           };
         }
-        this.audioTestDisplay.string = "012";
         return audioSlot.getId();
       },
       pause: function pause(id) {
@@ -1077,6 +1072,7 @@ window.__require = function e(t, n, r) {
         this.setTotalLimiter(-999);
         this.debug_1.string = "Debug_1";
         this.debug_2.string = "Debug_2";
+        this.debug_3.string = "Debug_3";
       },
       getFormat: function getFormat(id) {
         var formatStr = this.audioSlotList[id].getAudio().src;
@@ -1120,7 +1116,6 @@ window.__require = function e(t, n, r) {
         for (var i = 0; i < this.fadeAudioList.length; i++) if (this.fadeAudioList[i].getAudioSrc().volume != this.fadeAudioList[i].getEndVolume()) {
           this.updateFadeRate(this.fadeAudioList[i]);
           var newVolume = this.fadeAudioList[i].getAudioSrc().volume + this.fadeAudioList[i].getFadeRate();
-          this.audioTestDisplay.string = "Cur Vol: " + this.fadeAudioList[i].getAudioSrc().volume + ", Rate: " + this.fadeAudioList[i].getFadeRate();
           this.fadeAudioList[i].getFadeRate() > 0 ? newVolume > this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume()) : this.fadeAudioList[i].getFadeRate() < 0 && newVolume < this.fadeAudioList[i].getEndVolume() && (newVolume = this.fadeAudioList[i].getEndVolume());
           this.fadeAudioList[i].getAudioSrc().volume = newVolume;
           if (this.fadeAudioList[i].getAudioSrc().volume == this.fadeAudioList[i].getEndVolume()) {
@@ -1129,6 +1124,7 @@ window.__require = function e(t, n, r) {
             i--;
           }
         }
+        this.fadeAudioList.length > 0 && ("in" == this.fade ? this.audioTestDisplay.string = "Fade in in " + Math.round(this.idleTime(this.id, 2e4, 0) / 1e3) + " secs" : "out" == this.fade && (this.audioTestDisplay.string = "Fade out in " + Math.round(this.idleTime(this.id, 15e3, 0) / 1e3) + " secs"));
       },
       getFPS: function getFPS() {
         if (new Date().getTime() - this.startTime >= 1e3) {
