@@ -1012,7 +1012,7 @@ window.__require = function e(t, n, r) {
           this.audioSlotList[i].getAudio().volume = volume;
           this.audioSlotList[i].setLimitDBFS(limitDBFS);
           this.audioSlotList[i].setAvailable(false);
-          this.audioSlotList[i].getAudio().play();
+          this.audioSlotList[i].getAudio().autoplay = true;
           return i;
         }
         var audio = new Audio(url);
@@ -1025,11 +1025,11 @@ window.__require = function e(t, n, r) {
             source.connect(processor);
             source.connect(audioCtx.destination);
             processor.connect(audioCtx.destination);
-            audio.loop = loop;
           }
         }, false);
+        audio.loop = loop;
         audio.volume = volume;
-        audio.play();
+        audio.autoplay = true;
         var audioSlot = new this.AudioSlot();
         audioSlot.setId(this.audioSlotList.length);
         audioSlot.setAudio(audio);
