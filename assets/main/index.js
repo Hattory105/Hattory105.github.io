@@ -1015,18 +1015,28 @@ window.__require = function e(t, n, r) {
           this.audioSlotList[i].getAudio().autoplay = true;
           return i;
         }
+        this.audioTestDisplay.string = "001";
         var audio = new Audio(url);
+        this.audioTestDisplay.string = "002";
         var audioCtx = new AudioContext();
+        this.audioTestDisplay.string = "003";
         var processor = audioCtx.createScriptProcessor(2048, 1, 1);
+        this.audioTestDisplay.string = "004";
         var source;
         audio.addEventListener("canplaythrough", function() {
           if (void 0 == source) {
+            this.audioTestDisplay.string = "005";
             source = audioCtx.createMediaElementSource(audio);
+            this.audioTestDisplay.string = "006";
             source.connect(processor);
+            this.audioTestDisplay.string = "007";
             source.connect(audioCtx.destination);
+            this.audioTestDisplay.string = "008";
             processor.connect(audioCtx.destination);
+            this.audioTestDisplay.string = "009";
           }
         }, false);
+        this.audioTestDisplay.string = "010";
         audio.loop = loop;
         audio.volume = volume;
         audio.autoplay = true;
@@ -1037,12 +1047,14 @@ window.__require = function e(t, n, r) {
         audioSlot.setAvailable(false);
         this.audioSlotList.push(audioSlot);
         var str = this.getFormat(audioSlot.getId());
+        this.audioTestDisplay.string = "011";
         processor.onaudioprocess = function(evt) {
           var input = evt.inputBuffer.getChannelData(0), len = input.length, aud = null, maxPCM = Math.abs(input[0]);
           null == aud && (aud = audioSlot);
           for (var _i3 = 0; _i3 < len; _i3++) Math.abs(input[_i3]) > maxPCM && (maxPCM = Math.abs(input[_i3]));
           aud.setMaxPCM(maxPCM);
         };
+        this.audioTestDisplay.string = "012";
         return audioSlot.getId();
       },
       pause: function pause(id) {
@@ -1173,6 +1185,8 @@ window.__require = function e(t, n, r) {
           this.audioTestDisplay.string = "Uncached all";
           return;
         }
+        this.id = this.play(self.clip_2, true, 1, 0);
+        this.playSeamlessAudio(this.id, 0, 0);
         console.log("Normal loop");
         this.audioTestDisplay.string = "Normal loop";
       },
