@@ -1012,7 +1012,7 @@ window.__require = function e(t, n, r) {
           this.audioSlotList[i].getAudio().volume = volume;
           this.audioSlotList[i].setLimitDBFS(limitDBFS);
           this.audioSlotList[i].setAvailable(false);
-          this.audioSlotList[i].getAudio().autoplay = true;
+          this.audioSlotList[i].getAudio().play();
           return i;
         }
         this.audioTestDisplay.string = "001";
@@ -1035,7 +1035,7 @@ window.__require = function e(t, n, r) {
         this.audioTestDisplay.string = "010";
         audio.loop = loop;
         audio.volume = volume;
-        audio.autoplay = true;
+        audio.play();
         var audioSlot = new this.AudioSlot();
         audioSlot.setId(this.audioSlotList.length);
         audioSlot.setAudio(audio);
