@@ -1026,15 +1026,10 @@ window.__require = function e(t, n, r) {
         var source;
         audio.addEventListener("canplaythrough", function() {
           if (void 0 == source) {
-            this.audioTestDisplay.string = "005";
             source = audioCtx.createMediaElementSource(audio);
-            this.audioTestDisplay.string = "006";
             source.connect(processor);
-            this.audioTestDisplay.string = "007";
             source.connect(audioCtx.destination);
-            this.audioTestDisplay.string = "008";
             processor.connect(audioCtx.destination);
-            this.audioTestDisplay.string = "009";
           }
         }, false);
         this.audioTestDisplay.string = "010";
