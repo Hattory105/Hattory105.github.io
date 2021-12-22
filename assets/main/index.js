@@ -1173,8 +1173,6 @@ window.__require = function e(t, n, r) {
           this.audioTestDisplay.string = "Uncached all";
           return;
         }
-        this.id = this.play(self.clip_2, true, 1, 0);
-        this.playSeamlessAudio(this.id, 0, 0);
         console.log("Normal loop");
         this.audioTestDisplay.string = "Normal loop";
       },
