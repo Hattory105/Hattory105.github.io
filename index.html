@@ -1,90 +1,87 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
+    <body>
+        <h1>WebSocket client html</h1>
+        <label>You need to launch app Android to create WebSocket Server</label><br>
+        <label>Then getting information on your Android device</label><br><br>
+        <label for="hostAddress">Host Address:</label>
+        <input type="text" id="hostAddress" name="hostAddress" value="192.168.0.144"><br><br>
+        <label for="port">Port:</label>
+        <input type="text" id="port" name="port" value="12345"><br><br>
+        <input type="button" id="connect" onclick="connectServer()" value="Connect"><br><br><br>
+        <script>
+            
+            let connected = 0;
+            //let count = 0;
+            //const ws = new WebSocket("ws://localhost:8082");
+            let ws;
 
-  <title>Cocos Creator | ChibiRunner</title>
+            function connectServer() {
+                let host = document.getElementById("hostAddress").value;
+                let port = document.getElementById("port").value;
+                //ws = new WebSocket("ws://192.168.0.144:8082");
+                let hostPortWS = "ws://" + host + ":" + port;
+                console.log("hostPortWS: " + hostPortWS);
 
-  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
-  <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+                ws = new WebSocket(hostPortWS);
 
-  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="format-detection" content="telephone=no">
+                ws.addEventListener("open", () => {
+                    console.log("We are connected!");
+                    //ws.send("Hey, how's it going?");
+                    connected = 1;
 
-  <!-- force webkit on 360 -->
-  <meta name="renderer" content="webkit"/>
-  <meta name="force-rendering" content="webkit"/>
-  <!-- force edge on IE -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="msapplication-tap-highlight" content="no">
+                    //Disable and show some buttons
+                    document.getElementById("btnUp").disabled = false;
+                    document.getElementById("btnLeft").disabled = false;
+                    document.getElementById("btnRight").disabled = false;
+                    document.getElementById("btnDown").disabled = false;
+                    document.getElementById("lbldata").style.display = "block";
+                    document.getElementById("data").style.display = "block";
+                    document.getElementById("btnData").style.display = "block";
+                    document.getElementById("connect").setAttribute("disabled", true);
+                    document.getElementById("hostAddress").setAttribute("disabled", true);
+                    document.getElementById("port").setAttribute("disabled", true);
+                })
 
-  <!-- force full screen on some browser -->
-  <meta name="full-screen" content="yes"/>
-  <meta name="x5-fullscreen" content="true"/>
-  <meta name="360-fullscreen" content="true"/>
-  
-  <!-- force screen orientation on some browser -->
-  <meta name="screen-orientation" content="landscape"/>
-  <meta name="x5-orientation" content="landscape">
+                ws.addEventListener("message", e => {
+                    console.log(e);
+                    //console.log(e.data);
+                    //console.log(e.origin);
+                });
 
-  <!--fix fireball/issues/3568 -->
-  <!--<meta name="browsermode" content="application">-->
-  <meta name="x5-page-mode" content="app">
+                ws.addEventListener("close", e => {
+                    console.log(e);
+                    connected = 0;
+                    //count = 0;
+                });
 
-  <!--<link rel="apple-touch-icon" href=".png" />-->
-  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+                ws.addEventListener("error", e => {
+                    console.log(e);
+                });
+            }
 
-  <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
-  <link rel="icon" href="favicon.ico"/>
-</head>
-<body>
-  <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
-  <div id="splash">
-    <div class="progress-bar stripes">
-      <span style="width: 0%"></span>
-    </div>
-  </div>
+            function sendData(text) {
+                if(connected == 1) {
+                    //count++;
+                    //ws.send("Send data time " + count);
+                    let data;
+                    if(text == undefined || text == null || text == "") {
+                        data = document.getElementById("data").value;
+                    } else {
+                        data = text;
+                    }
 
-<script src="src/settings.js" charset="utf-8"></script>
+                    ws.send(data);
+                }
+            }
+        </script>
 
-<script src="main.js" charset="utf-8"></script>
-
-<script type="text/javascript">
-(function () {
-    // open web debugger console
-    if (typeof VConsole !== 'undefined') {
-        window.vConsole = new VConsole();
-    }
-
-    var debug = window._CCSettings.debug;
-    var splash = document.getElementById('splash');
-    splash.style.display = 'block';
-
-    function loadScript (moduleName, cb) {
-      function scriptLoaded () {
-          document.body.removeChild(domScript);
-          domScript.removeEventListener('load', scriptLoaded, false);
-          cb && cb();
-      };
-      var domScript = document.createElement('script');
-      domScript.async = true;
-      domScript.src = moduleName;
-      domScript.addEventListener('load', scriptLoaded, false);
-      document.body.appendChild(domScript);
-    }
-
-    loadScript(debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js', function () {
-      if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
-        loadScript(debug ? 'physics.js' : 'physics-min.js', window.boot);
-      }
-      else {
-        window.boot();
-      }
-    });
-})();
-</script>
-</body>
+        <label id="lblGuide">Control your game/app:</label><br><br>
+        <input type="button" id="btnUp" onclick="sendData('Up')" value="Up" disabled><br><br>
+        <input type="button" id="btnLeft" onclick="sendData('Left')" value="Left" disabled>
+        <input type="button" id="btnRight" onclick="sendData('Right')" value="Right" disabled><br><br>
+        <input type="button" id="btnDown" onclick="sendData('Down')" value="Down" disabled><br><br><br>
+        <label for="data" id="lbldata" style="display: none;">Input text:</label>
+        <input type="text" id="data" name="data" value="hello 123" style="display: none;"><br>
+        <input type="button" id="btnData" onclick="sendData()" value="Send Text" style="display: none;">
+    </body>
 </html>
