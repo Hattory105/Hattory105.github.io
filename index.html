@@ -19,7 +19,7 @@
                 let host = document.getElementById("hostAddress").value;
                 let port = document.getElementById("port").value;
                 //ws = new WebSocket("ws://192.168.0.144:8082");
-                let hostPortWS = "ws://" + host + ":" + port;
+                let hostPortWS = "wss://" + host + ":" + port;
                 console.log("hostPortWS: " + hostPortWS);
 
                 ws = new WebSocket(hostPortWS);
