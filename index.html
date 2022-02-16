@@ -1,15 +1,24 @@
-<html>
+<!DOCTYPE html>
+ <html>
     <body>
         <h1>WebSocket client html</h1>
         <label>You need to launch app Android to create WebSocket Server</label><br>
         <label>Then getting information on your Android device</label><br><br>
         <label for="hostAddress">Host Address:</label>
-        <input type="text" id="hostAddress" name="hostAddress" value="192.168.0.144"><br><br>
+        <input type="text" id="hostAddress" name="hostAddress" value="192.168.0.180"><br><br>
         <label for="port">Port:</label>
         <input type="text" id="port" name="port" value="12345"><br><br>
-        <input type="button" id="connect" onclick="connectServer()" value="Connect"><br><br><br>
-        <script>
-            
+
+        <!--Method: http / https-->
+        <label>Please method:</label><br>
+        <input type="radio" id="http" name="fav_method" value="ws" checked>
+        <label for="http">http</label><br>
+        <input type="radio" id="https" name="fav_method" value="wss">
+        <label for="https">https</label><br><br>
+
+        <input type="button" id="connect" onclick="connectServer()" value="Connect"><br><br>
+
+        <script>            
             let connected = 0;
             //let count = 0;
             //const ws = new WebSocket("ws://localhost:8082");
@@ -19,7 +28,12 @@
                 let host = document.getElementById("hostAddress").value;
                 let port = document.getElementById("port").value;
                 //ws = new WebSocket("ws://192.168.0.144:8082");
-                let hostPortWS = "wss://" + host + ":" + port;
+                let hostPortWS;
+                if(document.getElementById("http").checked == true) {
+                    hostPortWS = "ws://" + host + ":" + port;
+                } else {
+                    hostPortWS = "wss://" + host + ":" + port;
+                }
                 console.log("hostPortWS: " + hostPortWS);
 
                 ws = new WebSocket(hostPortWS);
@@ -30,10 +44,6 @@
                     connected = 1;
 
                     //Disable and show some buttons
-                    document.getElementById("btnUp").disabled = false;
-                    document.getElementById("btnLeft").disabled = false;
-                    document.getElementById("btnRight").disabled = false;
-                    document.getElementById("btnDown").disabled = false;
                     document.getElementById("lbldata").style.display = "block";
                     document.getElementById("data").style.display = "block";
                     document.getElementById("btnData").style.display = "block";
@@ -59,29 +69,46 @@
                 });
             }
 
-            function sendData(text) {
+            function sendData() {
                 if(connected == 1) {
                     //count++;
                     //ws.send("Send data time " + count);
-                    let data;
-                    if(text == undefined || text == null || text == "") {
-                        data = document.getElementById("data").value;
-                    } else {
-                        data = text;
-                    }
-
+                    let data = document.getElementById("data").value;
                     ws.send(data);
                 }
             }
+			
+			function sendAction(a) {
+                if(connected == 1) {
+                    let action = a;
+                    ws.send(action);
+                }
+            }
         </script>
+		<!-- <link rel="stylesheet" href="script/style.css" /> -->
+        
 
-        <label id="lblGuide">Control your game/app:</label><br><br>
-        <input type="button" id="btnUp" onclick="sendData('Up')" value="Up" disabled><br><br>
-        <input type="button" id="btnLeft" onclick="sendData('Left')" value="Left" disabled>
-        <input type="button" id="btnRight" onclick="sendData('Right')" value="Right" disabled><br><br>
-        <input type="button" id="btnDown" onclick="sendData('Down')" value="Down" disabled><br><br><br>
-        <label for="data" id="lbldata" style="display: none;">Input text:</label>
-        <input type="text" id="data" name="data" value="hello 123" style="display: none;"><br>
-        <input type="button" id="btnData" onclick="sendData()" value="Send Text" style="display: none;">
+        <label for="data" id="lbldata" style="display: none;">Send data:</label>
+        <input type="text" id="data" name="data" value="data 1" style="display: none;"><br>
+        <input type="button" id="btnData" onclick="sendData()" value="Send Data" style="display: none;">
+        <div align="left">
+            <table width="120" border="0">
+              <tr>
+                <td>&nbsp;</td>
+                <td><button onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><button onClick="sendAction(1)"><img src="images/left.png" width="60dp" height="60dp" /> </button></td>
+                <td></td>
+                <td><button onClick="sendAction(3)"><img src="images/right.png" width="60dp" height="60dp" /></button></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><button onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp" /> </button></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+        </div>        
     </body>
 </html>
