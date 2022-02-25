@@ -84,6 +84,17 @@
                     ws.send(action);
                 }
             }
+			
+            function mouseDown(a) {
+                console.log("mouseDown: " + a);
+                document.getElementById("myText").innerText += "\n" + "mouseDown: " + a;
+            }
+			
+            function mouseUp(a) {
+                console.log("mouseUp: " + a);
+                document.getElementById("myText").innerText += "\n" + "mouseUp: " + a;
+            }
+
         </script>
 		<!-- <link rel="stylesheet" href="script/style.css" /> -->
         
@@ -95,7 +106,8 @@
             <table width="120" border="0">
               <tr>
                 <td>&nbsp;</td>
-                <td><button onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td>
+                <!-- <td><button onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td> -->
+                <td><button id="myUp" onmousedown="mouseDown('up')" onmouseup="mouseUp('up')" onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
@@ -105,10 +117,11 @@
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td><button onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp" /> </button></td>
+                <td><button  id="myDown" onmousedown="mouseDown('down')" onmouseup="mouseUp('down')" onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp" /> </button></td>
                 <td>&nbsp;</td>
               </tr>
             </table>
         </div>        
+        <label id="myText">Input:</label>
     </body>
 </html>
