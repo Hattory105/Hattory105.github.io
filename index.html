@@ -1,5 +1,16 @@
 <!DOCTYPE html>
  <html>
+    <style>
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        } 
+    </style>
+
     <body oncontextmenu="return false;" onselectstart="return false;">
         <h1>WebSocket client html</h1>
         <label>You need to launch app Android to create WebSocket Server</label><br>
@@ -95,6 +106,19 @@
                 document.getElementById("myText").innerText += "\n" + "ontouchend: " + a;
             }
 
+            // document.oncontextmenu = function(e){
+            //     var evt = new Object({keyCode:93});
+            //     stopEvent(e);
+            //     keyboardUp(evt);
+            // }
+
+            // function stopEvent(event){
+            //     if(event.preventDefault != undefined)
+            //         event.preventDefault();
+            //     if(event.stopPropagation != undefined)
+            //         event.stopPropagation();
+            // }
+
         </script>
 		<!-- <link rel="stylesheet" href="script/style.css" /> -->
         
@@ -122,6 +146,6 @@
               </tr>
             </table>
         </div>        
-        <label id="myText">Touch 2:</label>
+        <label id="myText">Touch 3:</label>
     </body>
 </html>
