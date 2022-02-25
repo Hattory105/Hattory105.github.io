@@ -1,6 +1,6 @@
 <!DOCTYPE html>
  <html>
-    <body>
+    <body oncontextmenu="return false;" onselectstart="return false;">
         <h1>WebSocket client html</h1>
         <label>You need to launch app Android to create WebSocket Server</label><br>
         <label>Then getting information on your Android device</label><br><br>
@@ -107,17 +107,17 @@
               <tr>
                 <td>&nbsp;</td>
                 <!-- <td><button onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td> -->
-                <td><button id="myUp" ontouchstart="touchStart('up')" ontouchend="touchEnd('up')" onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" oncontextmenu="return false;" onselectstart="return false;"/></button></td>
+                <td><button id="myUp" ontouchstart="touchStart('up')" ontouchend="touchEnd('up')" onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp"/></button></td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td><button id="myLeft" ontouchstart="touchStart('left')" ontouchend="touchEnd('left')" onClick="sendAction(1)"><img src="images/left.png" width="60dp" height="60dp" oncontextmenu="return false;" onselectstart="return false;"/> </button></td>
+                <td><button id="myLeft" ontouchstart="touchStart('left')" ontouchend="touchEnd('left')" onClick="sendAction(1)"><img src="images/left.png" width="60dp" height="60dp"/> </button></td>
                 <td></td>
-                <td><button id="myRight" ontouchstart="touchStart('right')" ontouchend="touchEnd('right')" onClick="sendAction(3)"><img src="images/right.png" width="60dp" height="60dp" oncontextmenu="return false;" onselectstart="return false;"/></button></td>
+                <td><button id="myRight" ontouchstart="touchStart('right')" ontouchend="touchEnd('right')" onClick="sendAction(3)"><img src="images/right.png" width="60dp" height="60dp"/></button></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td><button  id="myDown" ontouchstart="touchStart('down')" ontouchend="touchEnd('down')" onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp" oncontextmenu="return false;" onselectstart="return false;"/> </button></td>
+                <td><button  id="myDown" ontouchstart="touchStart('down')" ontouchend="touchEnd('down')" onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp"/> </button></td>
                 <td>&nbsp;</td>
               </tr>
             </table>
