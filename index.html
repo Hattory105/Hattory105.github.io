@@ -112,15 +112,17 @@
             //     }
             // }, false);
 
-            // function toggleFullScreen() {
-            //     if(!document.fullscreenElement) {
-            //         document.documentElement.requestFullscreen();
-            //     } else {
-            //         if(document.exitFullscreen) {
-            //             document.exitFullscreen();
-            //         }
-            //     }
-            // }
+            function toggleFullScreen() {
+                if(!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                    document.getElementById("btnFullScreen").value = "Exit Full Screen";
+                } else {
+                    if(document.exitFullscreen) {
+                        document.exitFullscreen();
+                        document.getElementById("btnFullScreen").value = "Full Screen";
+                    }
+                }
+            }
 
             // document.oncontextmenu = function(e){
             //     var evt = new Object({keyCode:93});
@@ -162,6 +164,7 @@
               </tr>
             </table>
         </div>        
-        <label id="myText">Touch 5:</label>
+        <br><input type="button" id="btnFullScreen" onclick="toggleFullScreen()" value="Full Screen"><br><br>
+        <label id="myText">Touch 6:</label>
     </body>
 </html>
