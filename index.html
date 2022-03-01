@@ -112,15 +112,38 @@
             //     }
             // }, false);
 
+            var isFullScreen = false;
+            var elem = document.documentElement;
+
             function toggleFullScreen() {
-                if(!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                    document.getElementById("btnFullScreen").value = "Exit Full Screen";
-                } else {
-                    if(document.exitFullscreen) {
-                        document.exitFullscreen();
-                        document.getElementById("btnFullScreen").value = "Full Screen";
+                if(isFullScreen == false) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                        isFullScreen = true;
+                    } else if (elem.webkitRequestFullscreen) { /* Safari */
+                        elem.webkitRequestFullscreen();
+                        isFullScreen = true;
+                    } else if (elem.msRequestFullscreen) { /* IE11 */
+                        elem.msRequestFullscreen();
+                        isFullScreen = true;
                     }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                        isFullScreen = false;
+                    } else if (document.webkitExitFullscreen) { /* Safari */
+                        document.webkitExitFullscreen();
+                        isFullScreen = false;
+                    } else if (document.msExitFullscreen) { /* IE11 */
+                        document.msExitFullscreen();
+                        isFullScreen = false;
+                    }
+                }
+
+                if(isFullScreen == false) {
+                    document.getElementById("btnFullScreen").value = "Full Screen";
+                } else {
+                    document.getElementById("btnFullScreen").value = "Exit Full Screen";
                 }
             }
 
@@ -136,6 +159,9 @@
             //     if(event.stopPropagation != undefined)
             //         event.stopPropagation();
             // }
+            function clearText() {
+                document.getElementById("myText").innerText = "Touch: ";
+            }
 
         </script>
 		<!-- <link rel="stylesheet" href="script/style.css" /> -->
@@ -165,6 +191,7 @@
             </table>
         </div>        
         <br><input type="button" id="btnFullScreen" onclick="toggleFullScreen()" value="Full Screen"><br><br>
-        <label id="myText">Touch 6:</label>
+        <input type="button" id="btnClearText" onclick="clearText()" value="Clear Text"><br><br>
+        <label id="myText">Touch 7:</label>
     </body>
 </html>
