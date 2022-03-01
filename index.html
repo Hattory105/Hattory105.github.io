@@ -10,9 +10,8 @@
             user-select: none;
         } 
     </style>
-
-    <!-- <body oncontextmenu="return false;" onselectstart="return false;"> -->
-    <body>
+    <body oncontextmenu="return false;" onselectstart="return false;">
+        
         <h1>WebSocket client html</h1>
         <label>You need to launch app Android to create WebSocket Server</label><br>
         <label>Then getting information on your Android device</label><br><br>
@@ -107,6 +106,22 @@
                 document.getElementById("myText").innerText += "\n" + "ontouchend: " + a;
             }
 
+            // document.addEventListener("keydown", function(e) {
+            //     if(e.key == "Enter") {
+            //         toggleFullScreen();
+            //     }
+            // }, false);
+
+            // function toggleFullScreen() {
+            //     if(!document.fullscreenElement) {
+            //         document.documentElement.requestFullscreen();
+            //     } else {
+            //         if(document.exitFullscreen) {
+            //             document.exitFullscreen();
+            //         }
+            //     }
+            // }
+
             // document.oncontextmenu = function(e){
             //     var evt = new Object({keyCode:93});
             //     stopEvent(e);
@@ -147,6 +162,6 @@
               </tr>
             </table>
         </div>        
-        <label id="myText">Touch 4:</label>
+        <label id="myText">Touch 5:</label>
     </body>
 </html>
