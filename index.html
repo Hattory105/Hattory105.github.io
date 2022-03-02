@@ -16,7 +16,7 @@
 			}
 		</style>
 	</head>
-	<body onresize="resizeCanvas()">
+	<body onresize="resizeCanvas()" onload="drawGamepad()">
         <img src="images/MAU.png" id="imgGamepad" style="display: none;">
 		<canvas id="mainCanvas">
 		</canvas>
@@ -191,7 +191,7 @@
             document.addEventListener("DOMContentLoaded", startup);
             function startup() {
                 console.log("startup: ");
-                drawGamepad();
+                //drawGamepad();
                 var el = document.getElementById("mainCanvas");
                 el.addEventListener("touchstart", handleStart, false);
                 el.addEventListener("touchend", handleEnd, false);
