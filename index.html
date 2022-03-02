@@ -79,6 +79,7 @@
             var gamepadButtonDynamic = [];
             var imgGamepadWidth = WIDTH;
             var imgGamepadHeight = HEIGHT;
+            var imgGamepadOffY = 0;
 
             function updateGamepad() {
                 let scale_w = imgGamepadWidth / 1920;
@@ -87,13 +88,13 @@
                 for(i = 0; i < gamepadDirectionOrigin.length; i = i + 4) {
                     gamepadDirectionDynamic[i] = gamepadDirectionOrigin[i] * scale_w;
                     gamepadDirectionDynamic[i + 2] = gamepadDirectionOrigin[i + 2] * scale_w;
-                    gamepadDirectionDynamic[i + 1] = gamepadDirectionOrigin[i + 1] * scale_h;
+                    gamepadDirectionDynamic[i + 1] = (gamepadDirectionOrigin[i + 1] * scale_h) + imgGamepadOffY;
                     gamepadDirectionDynamic[i + 3] = gamepadDirectionOrigin[i + 3] * scale_h;
                 }
 
                 for(i = 0; i < gamepadButtonOrigin.length; i = i + 3) {
                     gamepadButtonDynamic[i] = gamepadButtonOrigin[i] * scale_w;
-                    gamepadButtonDynamic[i + 1] = gamepadButtonOrigin[i + 1] * scale_h;
+                    gamepadButtonDynamic[i + 1] = (gamepadButtonOrigin[i + 1] * scale_h) + imgGamepadOffY;
                     if(scale_w < scale_h) {
                         gamepadButtonDynamic[i + 2] = gamepadButtonOrigin[i + 2] * scale_w;
                     } else {
@@ -176,7 +177,12 @@
                 let el = document.getElementById("mainCanvas");
                 let ctx = el.getContext("2d");
                 console.log("imgGamepad: " + imgGamepad);
-                ctx.drawImage(imgGamepad, 0, 0, imgGamepadWidth, imgGamepadHeight);
+                if(WIDTH < HEIGHT) { //portrait
+                    imgGamepadOffY = (HEIGHT / 2) - (imgGamepadHeight / 2);
+                } else {
+                    imgGamepadOffY = 0;
+                }
+                ctx.drawImage(imgGamepad, 0, imgGamepadOffY, imgGamepadWidth, imgGamepadHeight);
 
                 updateGamepad();
             }
