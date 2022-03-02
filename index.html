@@ -1,197 +1,338 @@
-<!DOCTYPE html>
- <html>
-    <style>
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        } 
-    </style>
-    <body oncontextmenu="return false;" onselectstart="return false;">
-        
-        <!-- <h1>WebSocket client html</h1>
-        <label>You need to launch app Android to create WebSocket Server</label><br>
-        <label>Then getting information on your Android device</label><br><br>
-        <label for="hostAddress">Host Address:</label>
-        <input type="text" id="hostAddress" name="hostAddress" value="192.168.0.180"><br><br>
-        <label for="port">Port:</label>
-        <input type="text" id="port" name="port" value="12345"><br><br>
-
-        
-        <label>Please method:</label><br>
-        <input type="radio" id="http" name="fav_method" value="ws" checked>
-        <label for="http">http</label><br>
-        <input type="radio" id="https" name="fav_method" value="wss">
-        <label for="https">https</label><br><br>
-
-        <input type="button" id="connect" onclick="connectServer()" value="Connect"><br><br> -->
-
-        <script>            
-            let connected = 0;
-            //let count = 0;
-            //const ws = new WebSocket("ws://localhost:8082");
-            let ws;
-
-            function connectServer() {
-                let host = document.getElementById("hostAddress").value;
-                let port = document.getElementById("port").value;
-                //ws = new WebSocket("ws://192.168.0.144:8082");
-                let hostPortWS;
-                if(document.getElementById("http").checked == true) {
-                    hostPortWS = "ws://" + host + ":" + port;
-                } else {
-                    hostPortWS = "wss://" + host + ":" + port;
-                }
-                console.log("hostPortWS: " + hostPortWS);
-
-                ws = new WebSocket(hostPortWS);
-
-                ws.addEventListener("open", () => {
-                    console.log("We are connected!");
-                    //ws.send("Hey, how's it going?");
-                    connected = 1;
-
-                    //Disable and show some buttons
-                    document.getElementById("lbldata").style.display = "block";
-                    document.getElementById("data").style.display = "block";
-                    document.getElementById("btnData").style.display = "block";
-                    document.getElementById("connect").setAttribute("disabled", true);
-                    document.getElementById("hostAddress").setAttribute("disabled", true);
-                    document.getElementById("port").setAttribute("disabled", true);
-                })
-
-                ws.addEventListener("message", e => {
-                    console.log(e);
-                    //console.log(e.data);
-                    //console.log(e.origin);
-                });
-
-                ws.addEventListener("close", e => {
-                    console.log(e);
-                    connected = 0;
-                    //count = 0;
-                });
-
-                ws.addEventListener("error", e => {
-                    console.log(e);
-                });
-            }
-
-            function sendData() {
-                if(connected == 1) {
-                    //count++;
-                    //ws.send("Send data time " + count);
-                    let data = document.getElementById("data").value;
-                    ws.send(data);
-                }
-            }
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Full Screen Canvas Example</title>
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<style>
+			html, body {
+				width: 100%;
+                height: 100%;
+                margin: 0px;
+                border: 0;
+                overflow: hidden; /*  Disable scrollbars */
+                display: block;  /* No floating content on sides */
+			}
+		</style>
+	</head>
+	<body onresize="resizeCanvas()">
+        <img src="images/MAU.png" id="imgGamepad" style="display: none;">
+		<canvas id="mainCanvas">
+		</canvas>
+		<script>
+			(function () {
+				canvas = document.getElementById('mainCanvas');
+				ctx = canvas.getContext("2d");
+				
+				canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+				WIDTH	= canvas.width;
+				HEIGHT	= canvas.height;
+				
+				clearScreen();
+                // drawScreenSize();
+                //drawGamepad();
+			})();
 			
-			function sendAction(a) {
-                if(connected == 1) {
-                    let action = a;
-                    ws.send(action);
+			function resizeCanvas() {
+				canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+				
+				WIDTH = canvas.width;
+				HEIGHT = canvas.height;
+				
+				clearScreen();
+                drawGamepad();
+                drawScreenSize();
+			}
+			
+			function clearScreen() {
+				var grd = ctx.createLinearGradient(0,0,0,180);
+				grd.addColorStop(0,"#6666ff");
+				grd.addColorStop(1,"#aaaacc");
+
+				ctx.fillStyle = grd;
+				ctx.fillRect(  0, 0, WIDTH, HEIGHT );
+			}
+
+            var gamepadDirectionOrigin = [
+                200, 230, 130, 120, //left: x,y,w,h
+                450, 230, 130, 120, //right: x,y,w,h
+                330, 100, 120, 130, //up: x,y,w,h
+                330, 350, 120, 130, //down: x,y,w,h
+                28, 458, 115, 224, //L: x,y,w,h
+                1773, 458, 115, 224 //R: x,y,w,h
+            ];
+
+            var gamepadButtonOrigin = [
+                1282, 314, 113, //X: x,y,Radius
+                1467, 161, 113, //Y: x,y,Radius
+                1467, 473, 113, //A: x,y,Radius
+                1650, 314, 113, //B: x,y,Radius
+                965, 570, 90, //Back: x,y,Radius
+                582, 805, 132, //AxisLeft: x,y,Radius
+                1330, 805, 132, //AxisRight: x,y,Radius
+            ];
+
+            var gamepadDirectionDynamic = [];
+            var gamepadButtonDynamic = [];
+            var imgGamepadWidth = WIDTH;
+            var imgGamepadHeight = HEIGHT;
+
+            function updateGamepad() {
+                let scale_w = imgGamepadWidth / 1920;
+                let scale_h = imgGamepadHeight / 1080;
+                let i = 0;
+                for(i = 0; i < gamepadDirectionOrigin.length; i = i + 4) {
+                    gamepadDirectionDynamic[i] = gamepadDirectionOrigin[i] * scale_w;
+                    gamepadDirectionDynamic[i + 2] = gamepadDirectionOrigin[i + 2] * scale_w;
+                    gamepadDirectionDynamic[i + 1] = gamepadDirectionOrigin[i + 1] * scale_h;
+                    gamepadDirectionDynamic[i + 3] = gamepadDirectionOrigin[i + 3] * scale_h;
                 }
-            }
-			
-            function touchStart(a) {
-                console.log("ontouchstart: " + a);
-                document.getElementById("myText").innerText += "\n" + "ontouchstart: " + a;
-            }
-			
-            function touchEnd(a) {
-                console.log("ontouchend: " + a);
-                document.getElementById("myText").innerText += "\n" + "ontouchend: " + a;
-            }
 
-            // document.addEventListener("keydown", function(e) {
-            //     if(e.key == "Enter") {
-            //         toggleFullScreen();
-            //     }
-            // }, false);
-
-            var isFullScreen = false;
-            var elem = document.documentElement;
-
-            function toggleFullScreen() {
-                if(isFullScreen == false) {
-                    if (elem.requestFullscreen) {
-                        elem.requestFullscreen();
-                        isFullScreen = true;
-                    } else if (elem.webkitRequestFullscreen) { /* Safari */
-                        elem.webkitRequestFullscreen();
-                        isFullScreen = true;
-                    } else if (elem.msRequestFullscreen) { /* IE11 */
-                        elem.msRequestFullscreen();
-                        isFullScreen = true;
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                        isFullScreen = false;
-                    } else if (document.webkitExitFullscreen) { /* Safari */
-                        document.webkitExitFullscreen();
-                        isFullScreen = false;
-                    } else if (document.msExitFullscreen) { /* IE11 */
-                        document.msExitFullscreen();
-                        isFullScreen = false;
+                for(i = 0; i < gamepadButtonOrigin.length; i = i + 3) {
+                    gamepadButtonDynamic[i] = gamepadButtonOrigin[i] * scale_w;
+                    gamepadButtonDynamic[i + 1] = gamepadButtonOrigin[i + 1] * scale_h;
+                    if(scale_w < scale_h) {
+                        gamepadButtonDynamic[i + 2] = gamepadButtonOrigin[i + 2] * scale_w;
+                    } else {
+                        gamepadButtonDynamic[i + 2] = gamepadButtonOrigin[i + 2] * scale_h;
                     }
                 }
+            }
 
-                if(isFullScreen == false) {
-                    document.getElementById("btnFullScreen").value = "Full Screen";
-                } else {
-                    document.getElementById("btnFullScreen").value = "Exit Full Screen";
+            function checkPointInRect(x, y, rect_x, rect_y, rect_w, rect_h) {
+                if(x < rect_x || x > rect_x + rect_w || y < rect_y || y > rect_y + rect_h) {
+                    return false;
+                }
+                return true;
+            }
+
+            function checkPointInArc(x, y, xArc, yArc, rArc) {
+                let d = rArc - Math.sqrt((x - xArc) * (x - xArc) + (y - yArc) * (y - yArc));
+                if(d < 0) {
+                    return false;
+                }
+                return true;
+            }
+
+            function checkGamepad(typetouch, x, y, x2, y2) {
+                if(typetouch == "touchmove") {
+                    if(checkPointInArc(x2, y2, gamepadButtonDynamic[15], gamepadButtonDynamic[16], gamepadButtonDynamic[17] * 1.7) == true) {
+                        if(x < x2) {
+                            log(typetouch, "AxisLeft -> right");
+                        } else {
+                            log(typetouch, "AxisLeft -> left");
+                        }
+                    } else if(checkPointInArc(x2, y2, gamepadButtonDynamic[18], gamepadButtonDynamic[19], gamepadButtonDynamic[20] * 1.7) == true) {
+                        if(x < x2) {
+                            log(typetouch, "AxisRight -> right");
+                        } else {
+                            log(typetouch, "AxisRight -> left");
+                        }
+                    }
+                    return;
+                }
+
+                if(checkPointInRect(x, y, gamepadDirectionDynamic[0], gamepadDirectionDynamic[1], gamepadDirectionDynamic[2], gamepadDirectionDynamic[3]) == true) {
+                    log(typetouch, "LEFT");
+                } else if(checkPointInRect(x, y, gamepadDirectionDynamic[4], gamepadDirectionDynamic[5], gamepadDirectionDynamic[6], gamepadDirectionDynamic[7]) == true) {
+                    log(typetouch, "RIGHT");
+                } else if(checkPointInRect(x, y, gamepadDirectionDynamic[8], gamepadDirectionDynamic[9], gamepadDirectionDynamic[10], gamepadDirectionDynamic[11]) == true) {
+                    log(typetouch, "UP");
+                } else if(checkPointInRect(x, y, gamepadDirectionDynamic[12], gamepadDirectionDynamic[13], gamepadDirectionDynamic[14], gamepadDirectionDynamic[15]) == true) {
+                    log(typetouch, "DOWN");
+                } else if(checkPointInRect(x, y, gamepadDirectionDynamic[16], gamepadDirectionDynamic[17], gamepadDirectionDynamic[18], gamepadDirectionDynamic[19]) == true) {
+                    log(typetouch, "L");
+                } else if(checkPointInRect(x, y, gamepadDirectionDynamic[20], gamepadDirectionDynamic[21], gamepadDirectionDynamic[22], gamepadDirectionDynamic[23]) == true) {
+                    log(typetouch, "R");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[0], gamepadButtonDynamic[1], gamepadButtonDynamic[2]) == true) {
+                    log(typetouch, "X");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[3], gamepadButtonDynamic[4], gamepadButtonDynamic[5]) == true) {
+                    log(typetouch, "Y");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[6], gamepadButtonDynamic[7], gamepadButtonDynamic[8]) == true) {
+                    log(typetouch, "A");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[9], gamepadButtonDynamic[10], gamepadButtonDynamic[11]) == true) {
+                    log(typetouch, "B");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[12], gamepadButtonDynamic[13], gamepadButtonDynamic[14]) == true) {
+                    log(typetouch, "Back");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[15], gamepadButtonDynamic[16], gamepadButtonDynamic[17]) == true) {
+                    log(typetouch, "AxisLeft");
+                } else if(checkPointInArc(x, y, gamepadButtonDynamic[18], gamepadButtonDynamic[19], gamepadButtonDynamic[20]) == true) {
+                    log(typetouch, "AxisRight");
                 }
             }
 
-            // document.oncontextmenu = function(e){
-            //     var evt = new Object({keyCode:93});
-            //     stopEvent(e);
-            //     keyboardUp(evt);
-            // }
+            function drawGamepad() {
+                imgGamepadWidth = WIDTH;
+                imgGamepadHeight = HEIGHT;
+                if(WIDTH < HEIGHT) {
+                    imgGamepadHeight = imgGamepadWidth * (1080 / 1920);
+                }
+                console.log("imgGamepadWidth: " + imgGamepadWidth);
+                console.log("imgGamepadHeight: " + imgGamepadHeight);
+                let imgGamepad = document.getElementById("imgGamepad");
+                let el = document.getElementById("mainCanvas");
+                let ctx = el.getContext("2d");
+                console.log("imgGamepad: " + imgGamepad);
+                ctx.drawImage(imgGamepad, 0, 0, imgGamepadWidth, imgGamepadHeight);
 
-            // function stopEvent(event){
-            //     if(event.preventDefault != undefined)
-            //         event.preventDefault();
-            //     if(event.stopPropagation != undefined)
-            //         event.stopPropagation();
-            // }
-            function clearText() {
-                document.getElementById("myText").innerText = "Touch: ";
+                updateGamepad();
             }
 
-        </script>
-		<!-- <link rel="stylesheet" href="script/style.css" /> -->
-        
+            function drawScreenSize() {
+                ctx.textBaseline = "top";
+                ctx.fillStyle = 'white';
+                ctx.fillText("SCR_W: " + WIDTH, 0, 0);
+                ctx.fillText("SCR_H: " + HEIGHT, 0, 30);
+            }
 
-        <label for="data" id="lbldata" style="display: none;">Send data:</label>
-        <input type="text" id="data" name="data" value="data 1" style="display: none;"><br>
-        <input type="button" id="btnData" onclick="sendData()" value="Send Data" style="display: none;">
-        <div align="left">
-            <table width="120" border="0">
-              <tr>
-                <td>&nbsp;</td>
-                <!-- <td><button onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp" /></button></td> -->
-                <td><button id="myUp" ontouchstart="touchStart('up')" ontouchend="touchEnd('up')" onClick="sendAction(2)"> <img src="images/up.png" width="60dp" height="60dp"/></button></td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td><button id="myLeft" ontouchstart="touchStart('left')" ontouchend="touchEnd('left')" onClick="sendAction(1)"><img src="images/left.png" width="60dp" height="60dp"/> </button></td>
-                <td></td>
-                <td><button id="myRight" ontouchstart="touchStart('right')" ontouchend="touchEnd('right')" onClick="sendAction(3)"><img src="images/right.png" width="60dp" height="60dp"/></button></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td><button  id="myDown" ontouchstart="touchStart('down')" ontouchend="touchEnd('down')" onClick="sendAction(4)"><img src="images/down.png" width="60dp" height="60dp"/> </button></td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
-        </div>        
-        <br><input type="button" id="btnFullScreen" onclick="toggleFullScreen()" value="Full Screen"><br><br>
-        <input type="button" id="btnClearText" onclick="clearText()" value="Clear Text"><br><br>
-        <label id="myText">Touch 7:</label>
-    </body>
+            document.addEventListener("DOMContentLoaded", startup);
+            function startup() {
+                console.log("startup: ");
+                drawGamepad();
+                var el = document.getElementById("mainCanvas");
+                el.addEventListener("touchstart", handleStart, false);
+                el.addEventListener("touchend", handleEnd, false);
+                el.addEventListener("touchcancel", handleCancel, false);
+                el.addEventListener("touchmove", handleMove, false);
+            }
+
+            var ongoingTouches = [];
+
+            function handleStart(evt) {
+                evt.preventDefault();
+                log("touchstart");
+                console.log("touchstart.");
+                var el = document.getElementById("mainCanvas");
+                var ctx = el.getContext("2d");
+                var touches = evt.changedTouches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    //log("touchstart, x: " + touches[i].pageX + ", y: " + touches[i].pageY);
+                    checkGamepad("touchstart", touches[i].pageX, touches[i].pageY);
+                    console.log("touchstart:" + i + "...");
+                    ongoingTouches.push(copyTouch(touches[i]));
+                    var color = colorForTouch(touches[i]);
+                    ctx.beginPath();
+                    ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                    console.log("touchstart:" + i + ".");
+                }
+            }
+
+            function handleMove(evt) {
+                evt.preventDefault();
+                //log("touchmove");
+                var el = document.getElementById("mainCanvas");
+                var ctx = el.getContext("2d");
+                var touches = evt.changedTouches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    var color = colorForTouch(touches[i]);
+                    var idx = ongoingTouchIndexById(touches[i].identifier);
+
+                    if (idx >= 0) {
+                        console.log("continuing touch "+idx);
+                        ctx.beginPath();
+                        console.log("ctx.moveTo(" + ongoingTouches[idx].pageX + ", " + ongoingTouches[idx].pageY + ");");
+                        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+                        console.log("ctx.lineTo(" + touches[i].pageX + ", " + touches[i].pageY + ");");
+                        ctx.lineTo(touches[i].pageX, touches[i].pageY);
+                        checkGamepad("touchmove", ongoingTouches[idx].pageX, ongoingTouches[idx].pageY, touches[i].pageX, touches[i].pageY);
+                        ctx.lineWidth = 4;
+                        ctx.strokeStyle = color;
+                        ctx.stroke();
+
+                        ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+                        console.log(".");
+                    } else {
+                        console.log("can't figure out which touch to continue");
+                    }
+                }
+            }
+
+            function handleEnd(evt) {
+                evt.preventDefault();
+                log("touchend");
+                var el = document.getElementById("mainCanvas");
+                var ctx = el.getContext("2d");
+                var touches = evt.changedTouches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    checkGamepad("touchend", touches[i].pageX, touches[i].pageY);
+                    var color = colorForTouch(touches[i]);
+                    var idx = ongoingTouchIndexById(touches[i].identifier);
+
+                    if (idx >= 0) {
+                        ctx.lineWidth = 4;
+                        ctx.fillStyle = color;
+                        ctx.beginPath();
+                        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+                        ctx.lineTo(touches[i].pageX, touches[i].pageY);
+                        ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
+                        ongoingTouches.splice(idx, 1);  // remove it; we're done
+                    } else {
+                        console.log("can't figure out which touch to end");
+                    }
+                }
+            }
+
+            function handleCancel(evt) {
+                evt.preventDefault();
+                log("touchcancel");
+                console.log("touchcancel.");
+                var touches = evt.changedTouches;
+
+                for (var i = 0; i < touches.length; i++) {
+                    var idx = ongoingTouchIndexById(touches[i].identifier);
+                    ongoingTouches.splice(idx, 1);  // remove it; we're done
+                }
+            }
+
+            function colorForTouch(touch) {
+                var r = touch.identifier % 16;
+                var g = Math.floor(touch.identifier / 3) % 16;
+                var b = Math.floor(touch.identifier / 7) % 16;
+                r = r.toString(16); // make it a hex digit
+                g = g.toString(16); // make it a hex digit
+                b = b.toString(16); // make it a hex digit
+                var color = "#" + r + g + b;
+                console.log("color for touch with identifier " + touch.identifier + " = " + color);
+                return color;
+            }
+
+            function copyTouch({ identifier, pageX, pageY }) {
+                return { identifier, pageX, pageY };
+            }
+
+            function ongoingTouchIndexById(idToFind) {
+                for (var i = 0; i < ongoingTouches.length; i++) {
+                    var id = ongoingTouches[i].identifier;
+
+                    if (id == idToFind) {
+                    return i;
+                    }
+                }
+                return -1;    // not found
+            }
+
+            function log(typetouch, msg) {
+                if(msg == null || msg == undefined) {
+                    msg = "";
+                }
+                var el = document.getElementById("mainCanvas");
+                var ctx = el.getContext("2d");
+                ctx.font = "20px Arial";
+                ctx.fillStyle = 'white';
+                ctx.fillRect(WIDTH/2 - 150, 0, 300, 30);
+                ctx.fillStyle = 'red';
+                ctx.textAlign = "center";
+                ctx.textBaseline = "top";
+                ctx.fillText(typetouch + " " + msg, WIDTH / 2, 5);
+            }
+		</script>
+	</body>
 </html>
