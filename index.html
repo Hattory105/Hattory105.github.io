@@ -1,4 +1,9 @@
  <html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="google" content="notranslate">
+		<meta name="apple-mobile-web-app-capable" content="yes">				
+	</head>
     <body oncontextmenu="return false;" onselectstart="return false" overscroll-behavior-y: contain;>
 		<div>
 			<div >
@@ -8,10 +13,18 @@
 				<input type="button" id="connect" onclick="connectServer()" value="Connect">
 				<label for="data" id="lbldata" style="display: none;">Send data:</label>
 				<input type="text" id="data" name="data" value="data 1" style="display: none;"><br>
-				<input type="button" id="btnData" onclick="sendData()" value="Send Data" style="display: none;"><br>
-				
+				<input type="button" id="btnData" onclick="sendData()" value="Send Data" style="display: none;"><br>				
 			</div>			
-			<div><input type="button" id="btnFullScreen" onclick="toggleFullScreen()" value="Full Screen"></div>			
+			<div>
+				<input type="button" id="btnFullScreen" onclick="toggleFullScreen()" value="Full Screen">
+				<!-- <div id="container" style="width: 25%; float:left" align="left">				 -->
+				<!-- <p id="orientation-status"></p> -->
+				<!-- <div id="buttons-container"> -->
+					<!-- <button id="btnLockLandscape">Lock to Landscape Mode</button> -->
+					<!-- <button id="btnUnlockLandscape">Unlock</button> -->
+				<!-- </div>				 -->
+			</div>
+			</div>			
 		</div>       
 		
 		<div>
@@ -22,17 +35,17 @@
 			   <table width="120" border="0">
 				  <tr>
 					<td>&nbsp;</td>
-					<td><button class="arrow" ontouchstart="sendAction(7)" ontouchend="sendAction(70)"> <img src="images/buttonY.png" width="60dp" height="60dp" /></button></td>
+					<td><button class="arrow" ontouchstart="sendAction(53)" ontouchend="sendAction(530)"> <img src="images/buttonY.png" width="60dp" height="60dp" /></button></td>
 					<td>&nbsp;</td>
 				  </tr>
 				  <tr>
-					<td><button class="arrow" ontouchstart="sendAction(6)" ontouchend="sendAction(60)"><img src="images/buttonX.png" width="60dp" height="60dp" /> </button></td>
+					<td><button class="arrow" ontouchstart="sendAction(52)" ontouchend="sendAction(520)"><img src="images/buttonX.png" width="60dp" height="60dp" /> </button></td>
 					<td></td>
-					<td><button class="arrow" ontouchstart="sendAction(9)" ontouchend="sendAction(90)"><img src="images/buttonB.png" width="60dp" height="60dp" /></button></td>
+					<td><button class="arrow" ontouchstart="sendAction(30)" ontouchend="sendAction(300)"><img src="images/buttonB.png" width="60dp" height="60dp" /></button></td>
 				  </tr>
 				  <tr>
 					<td>&nbsp;</td>
-					<td><button class="arrow" ontouchstart="sendAction(8)" ontouchend="sendAction(80)"><img src="images/buttonA.png" width="60dp" height="60dp" /> </button></td>
+					<td><button class="arrow" ontouchstart="sendAction(29)" ontouchend="sendAction(290)"><img src="images/buttonA.png" width="60dp" height="60dp" /> </button></td>
 					<td>&nbsp;</td>
 				  </tr>
 				</table>
@@ -112,26 +125,47 @@
 				];
 			}			
 			//----------------- Action -----------------//
+			function doAction(code) {
+			}
 			
 			function doLeft() {
 				console.log("do Left");
-				sendAction(1);
+				sendAction(21);
+			}
+			
+			function doLeftRelease() {
+				console.log("do Left Release");
+				sendAction(210);
 			}
 			
 			function doRight() {
 				console.log("do Right");
-				sendAction(3);
+				sendAction(22);
+			}
+			
+			function doRightRelease() {
+				console.log("do Right Release");
+				sendAction(220);
 			}
 			
 			function doUp() {
 				console.log("do Up");
-				sendAction(2);
+				sendAction(19);
+			}
+			function doUpRelease() {
+				console.log("do Up Release");
+				sendAction(190);
 			}
 			
 			function doDown() {
 				console.log("do Down");
-				sendAction(4);
+				sendAction(20);
 			}
+			function doDownRelease() {
+				console.log("do Down Release");
+				sendAction(200);
+			}
+			
 		
 			function arrowDisactiveAll() {
 				for (var i=0; i<3; i++) {
@@ -218,9 +252,7 @@
 			function handleMove(event) {				
 				var el = document.getElementById("dpadCanvas");
 				var x = event.changedTouches[0].pageX - el.getBoundingClientRect().left;
-				var y = event.changedTouches[0].pageY - el.getBoundingClientRect().top;								
-				//var x = event.touches[0].clientX - el.getBoundingClientRect().left;
-				//var y = event.touches[0].clientY - el.getBoundingClientRect().top;	
+				var y = event.changedTouches[0].pageY - el.getBoundingClientRect().top;												
 				
 				if (x <= arrowW) {					
 					if (y <= arrowH) {						
@@ -229,7 +261,7 @@
 						if (!dpadArea[1][0].active) {
 							drawDpad(1);
 							arrowDisactive(1,0);
-							doLeft(1);
+							doLeft();
 							//console.log("doLeft - Active");						
 						}
 					} else {
@@ -240,7 +272,7 @@
 						if (!dpadArea[0][1].active) {
 							drawDpad(2);
 							arrowDisactive(0,1);
-							doUp(2);							
+							doUp();							
 							//console.log("Up - Active");
 						}
 					} else if ((y > arrowH) && (y < arrowH*2)) {						
@@ -249,7 +281,7 @@
 						if (!dpadArea[2][1].active) {
 							drawDpad(4);
 							arrowDisactive(2,1);
-							doDown(4);
+							doDown();
 							//console.log("Down  - Active");
 						}
 					}
@@ -260,7 +292,7 @@
 						if (!dpadArea[1][2].active) {
 							drawDpad(3);
 							arrowDisactive(1,2);							
-							doRight(3);
+							doRight();
 							//console.log("Right - Active");							
 						}
 					} else {						
@@ -271,8 +303,50 @@
 			
 			function handleEnd(event) {				
 				dpadHolding = false;
-				arrowDisactiveAll();
 				drawDpad(0);
+				
+				var el = document.getElementById("dpadCanvas");
+				var x = event.changedTouches[0].pageX - el.getBoundingClientRect().left;
+				var y = event.changedTouches[0].pageY - el.getBoundingClientRect().top;				
+				
+				if (x <= arrowW) {					
+					if (y <= arrowH) {						
+					} else if ((y > arrowH) && (y <= arrowH*2)) {						
+						if (dpadArea[1][0].active) {
+							doLeftRelease();
+							console.log("doLeft - Release");
+						}
+					} else {
+						//console.log("Left & Down  - Active");						
+					}
+				} else if ((x > arrowW) && (x <= arrowW*2)) {
+					if (y <= arrowH) {					
+						if (dpadArea[0][1].active) {							
+							doUpRelease();
+							console.log("Up - Release");
+						}
+					} else if ((y > arrowH) && (y < arrowH*2)) {						
+						//console.log("Middle - Active");						
+					} else {						
+						if (dpadArea[2][1].active) {							
+							doDownRelease();
+							console.log("Down  - Release");
+						}
+					}
+				} else if ((x > arrowW*2) && (x < arrowW*3)) {					
+					if (y <= arrowH) {						
+						//console.log("Right & Up  - Active");						
+					} else if ((y > arrowH) && (y <= arrowH*2)) {						
+						if (dpadArea[1][2].active) {							
+							doRightRelease();
+							console.log("Right - Release");
+						}
+					} else {						
+						//console.log("Right & Down - Active");						
+					}
+				}
+				
+				arrowDisactiveAll();
 			}
 			
 			function handleCancel(event) {
@@ -385,7 +459,7 @@
 			}			
 			
 			function drawDpad(arrow) {
-				console.log("call drawDpad");
+				//console.log("call drawDpad");
 				var c = document.getElementById("dpadCanvas");
 				var ctx = c.getContext("2d");
 				var img = new Image();				
@@ -408,13 +482,14 @@
 		
 		<style type="text/css">
 			html {
-				height: 100%;
+				height: 100%;				
 			}
 			body {
 				margin: 0px;
 				background-color: #FFFFFF;
 				height: 100%;
-				width: 100%;
+				width: 100%;	
+				touch-action: none;				
 			}
 			#container {
 				
@@ -434,18 +509,7 @@
 				margin: 2px 0;
 				color: white;
 			}
-			<!-- button { -->
-				<!-- background-color: white; -->
-				<!-- border: 1px solid #336699; -->
-				<!-- color: #336699; -->
-				<!-- width: 240px; -->
-				<!-- padding: 2px; -->
-				<!-- display: block; -->
-				<!-- margin-left: auto; -->
-				<!-- margin-right: auto; -->
-				<!-- font-weight: 700; -->
-				<!-- outline: none; -->
-			<!-- } -->
+			
 			#btnLockLandscape {				
 			}
 
