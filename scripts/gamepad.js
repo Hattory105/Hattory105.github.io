@@ -23,25 +23,25 @@ var enableGamepad = false;
 
 var gamepadBtn = [
     //object infor, x, y, w, h
-    {imgIDHL: "", imgID: "imgBGDPad", draw: true, touchEnable: false, name: "dpad_pos_bg", x: 155, y: 60, w: 462, h: 462},
-    {imgIDHL: "", imgID: "imgDPadNormal", draw: true, touchEnable: false, name: "dpad_pos", x: 200, y: 100, w: 380, h: 380},
-    {imgIDHL: "imgDPadLeft", imgID: "", draw: false, touchEnable: true, name: "dpad_left", keyCode: KEYCODE_DPAD_LEFT, x: 200, y: 230, w: 130, h: 120},
-    {imgIDHL: "imgDPadRight", imgID: "", draw: false, touchEnable: true, name: "dpad_right", keyCode: KEYCODE_DPAD_RIGHT, x: 450, y: 230, w: 130, h: 120},
-    {imgIDHL: "imgDPadUp", imgID: "", draw: false, touchEnable: true, name: "dpad_up", keyCode: KEYCODE_DPAD_UP, x: 330, y: 100, w: 120, h: 130},
-    {imgIDHL: "imgDPadDown", imgID: "", draw: false, touchEnable: true, name: "dpad_down", keyCode: KEYCODE_DPAD_DOWN, x: 330, y: 350, w: 120, h: 130},
-    {imgIDHL: "imgLHL", imgID: "imgL", draw: true, touchEnable: true, name: "trigger_l", keyCode: KEYCODE_BUTTON_L1, x: 28, y: 458, w: 115, h: 224},
-    {imgIDHL: "imgRHL", imgID: "imgR", draw: true, touchEnable: true, name: "trigger_r", keyCode: KEYCODE_BUTTON_R1, x: 1773, y: 458, w: 115, h: 224},
+    {isHighLight: false, imgIDHL: "", imgID: "imgBGDPad", draw: true, touchEnable: false, name: "dpad_pos_bg", x: 155, y: 60, w: 462, h: 462},
+    {isHighLight: false, imgIDHL: "", imgID: "imgDPadNormal", draw: true, touchEnable: false, name: "dpad_pos", x: 200, y: 100, w: 380, h: 380},
+    {isHighLight: false, imgIDHL: "imgDPadLeft", imgID: "", draw: false, touchEnable: true, name: "dpad_left", keyCode: KEYCODE_DPAD_LEFT, x: 200, y: 230, w: 130, h: 120},
+    {isHighLight: false, imgIDHL: "imgDPadRight", imgID: "", draw: false, touchEnable: true, name: "dpad_right", keyCode: KEYCODE_DPAD_RIGHT, x: 450, y: 230, w: 130, h: 120},
+    {isHighLight: false, imgIDHL: "imgDPadUp", imgID: "", draw: false, touchEnable: true, name: "dpad_up", keyCode: KEYCODE_DPAD_UP, x: 330, y: 100, w: 120, h: 130},
+    {isHighLight: false, imgIDHL: "imgDPadDown", imgID: "", draw: false, touchEnable: true, name: "dpad_down", keyCode: KEYCODE_DPAD_DOWN, x: 330, y: 350, w: 120, h: 130},
+    {isHighLight: false, imgIDHL: "imgLHL", imgID: "imgL", draw: true, touchEnable: true, name: "trigger_l", keyCode: KEYCODE_BUTTON_L1, x: 28, y: 458, w: 115, h: 224},
+    {isHighLight: false, imgIDHL: "imgRHL", imgID: "imgR", draw: true, touchEnable: true, name: "trigger_r", keyCode: KEYCODE_BUTTON_R1, x: 1773, y: 458, w: 115, h: 224},
 
     //Keycode for press/release, touch enable?, name, x, y, w, h, xR, yR
-    {imgIDHL: "imgXHL", imgID: "imgX", draw: true, touchEnable: true, name: "button_x", keyCode: KEYCODE_BUTTON_X, x: 1168, y: 204, w: 224, h: 224, xR: 1280, yR: 316},
-    {imgIDHL: "imgYHL", imgID: "imgY", draw: true, touchEnable: true, name: "button_y", keyCode: KEYCODE_BUTTON_Y, x: 1355, y: 48, w: 224, h: 224, xR: 1467, yR: 160},
-    {imgIDHL: "imgAHL", imgID: "imgA", draw: true, touchEnable: true, name: "button_a", keyCode: KEYCODE_BUTTON_A, x: 1355, y: 360, w: 224, h: 224, xR: 1467, yR: 472},
-    {imgIDHL: "imgBHL", imgID: "imgB", draw: true, touchEnable: true, name: "button_b", keyCode: KEYCODE_BUTTON_B, x: 1536, y: 204, w: 224, h: 224, xR: 1648, yR: 316},
-    {imgIDHL: "imgBackHL", imgID: "imgBack", draw: true, touchEnable: true, name: "button_back", keyCode: KEYCODE_BUTTON_SELECT, x: 870, y: 480, w: 180, h: 180, xR: 960, yR: 570},
-    {imgIDHL: "", imgID: "imgBGMove", draw: true, touchEnable: false, name: "button_axis_left_bg", x: 350, y: 570, w: 464, h: 464, xR: 582, yR: 802},
-    {imgIDHL: "", imgID: "imgBGMove", draw: true, touchEnable: false, name: "button_axis_right_bg", x: 1096, y: 570, w: 464, h: 464, xR: 1328, yR: 802},
-    {imgIDHL: "", imgID: "imgControll", draw: true, touchEnable: false, name: "button_axis_left", keyCode: 0, x: 449, y: 669, w: 266, h: 266, xR: 582, yR: 802},
-    {imgIDHL: "", imgID: "imgControll", draw: true, touchEnable: false, name: "button_axis_right", keyCode: 0, x: 1195, y: 669, w: 266, h: 266, xR: 1328, yR: 802},
+    {isHighLight: false, imgIDHL: "imgXHL", imgID: "imgX", draw: true, touchEnable: true, name: "button_x", keyCode: KEYCODE_BUTTON_X, x: 1168, y: 204, w: 224, h: 224, xR: 1280, yR: 316},
+    {isHighLight: false, imgIDHL: "imgYHL", imgID: "imgY", draw: true, touchEnable: true, name: "button_y", keyCode: KEYCODE_BUTTON_Y, x: 1355, y: 48, w: 224, h: 224, xR: 1467, yR: 160},
+    {isHighLight: false, imgIDHL: "imgAHL", imgID: "imgA", draw: true, touchEnable: true, name: "button_a", keyCode: KEYCODE_BUTTON_A, x: 1355, y: 360, w: 224, h: 224, xR: 1467, yR: 472},
+    {isHighLight: false, imgIDHL: "imgBHL", imgID: "imgB", draw: true, touchEnable: true, name: "button_b", keyCode: KEYCODE_BUTTON_B, x: 1536, y: 204, w: 224, h: 224, xR: 1648, yR: 316},
+    {isHighLight: false, imgIDHL: "imgBackHL", imgID: "imgBack", draw: true, touchEnable: true, name: "button_back", keyCode: KEYCODE_BUTTON_SELECT, x: 870, y: 480, w: 180, h: 180, xR: 960, yR: 570},
+    {isHighLight: false, imgIDHL: "", imgID: "imgBGMove", draw: true, touchEnable: false, name: "button_axis_left_bg", x: 350, y: 570, w: 464, h: 464, xR: 582, yR: 802},
+    {isHighLight: false, imgIDHL: "", imgID: "imgBGMove", draw: true, touchEnable: false, name: "button_axis_right_bg", x: 1096, y: 570, w: 464, h: 464, xR: 1328, yR: 802},
+    {isHighLight: false, imgIDHL: "", imgID: "imgControll", draw: true, touchEnable: false, name: "button_axis_left", keyCode: 0, x: 449, y: 669, w: 266, h: 266, xR: 582, yR: 802},
+    {isHighLight: false, imgIDHL: "", imgID: "imgControll", draw: true, touchEnable: false, name: "button_axis_right", keyCode: 0, x: 1195, y: 669, w: 266, h: 266, xR: 1328, yR: 802},
 ];
 
 var gamepadBtnScaled = [];
@@ -61,14 +61,14 @@ function checkPointInArc(x, y, xArc, yArc, rArc) {
     return true;
 }
 
-//Update postion gamepad when canvas change size, ex: portrait -> landscape, landscape -> portrait
-function updateGamepadScale() {
-    let scale_w = imgGamepadWidth / 1920;
-    let scale_h = imgGamepadHeight / 1080;
-    
-    //Clone and scale
+var initedGamepadBtnScaled = 0; 
+function initGamepadBtnScaled() {
+    if(initedGamepadBtnScaled == 1)
+        return;
+        initedGamepadBtnScaled = 1;
     for(let i = 0; i < gamepadBtn.length; i++) {
         gamepadBtnScaled[i] = {};
+        gamepadBtnScaled[i].isHighLight = gamepadBtn[i].isHighLight;
         gamepadBtnScaled[i].imgID = gamepadBtn[i].imgID;
         gamepadBtnScaled[i].imgIDHL = gamepadBtn[i].imgIDHL;
         gamepadBtnScaled[i].draw = gamepadBtn[i].draw;
@@ -77,6 +77,27 @@ function updateGamepadScale() {
         if(gamepadBtn[i]["keyCode"] != null) {
             gamepadBtnScaled[i].keyCode = gamepadBtn[i].keyCode;
         }
+        gamepadBtnScaled[i].x = gamepadBtn[i].x;
+        gamepadBtnScaled[i].y = gamepadBtn[i].y;
+        gamepadBtnScaled[i].w = gamepadBtn[i].w;
+        gamepadBtnScaled[i].h = gamepadBtn[i].h;
+        if(gamepadBtn[i]["xR"] != null) {
+            gamepadBtnScaled[i].xR = gamepadBtn[i].xR;
+        }
+        if(gamepadBtn[i]["yR"] != null) {
+            gamepadBtnScaled[i].yR = gamepadBtn[i].yR;
+        }
+    }
+}
+
+//Update postion gamepad when canvas change size, ex: portrait -> landscape, landscape -> portrait
+function updateGamepadScale() {
+    initGamepadBtnScaled();
+    let scale_w = imgGamepadWidth / 1920;
+    let scale_h = imgGamepadHeight / 1080;
+    
+    //Clone and scale
+    for(let i = 0; i < gamepadBtn.length; i++) {
         gamepadBtnScaled[i].x = gamepadBtn[i].x * scale_w;
         gamepadBtnScaled[i].y = gamepadBtn[i].y * scale_h + imgGamepadOffY;
         gamepadBtnScaled[i].w = gamepadBtn[i].w * scale_w;
@@ -91,7 +112,7 @@ function updateGamepadScale() {
 }
 
 //Draw
-function drawGamepad() {
+function drawGamepad(ctx) {
     imgGamepadWidth = WIDTH;
     imgGamepadHeight = imgGamepadWidth / 1920 * 1080;
     if(imgGamepadHeight > HEIGHT) {
@@ -101,26 +122,41 @@ function drawGamepad() {
         imgGamepadOffY = HEIGHT / 2 - imgGamepadHeight / 2;
     }
     updateGamepadScale();
-    drawGamepadBackground();
-    drawGamepadItems();
+    drawGamepadBackground(ctx);
+    drawGamepadItems(ctx);
 }
 
-function drawGamepadBackground() {
+function drawGamepadBackground(ctx) {
     ctx.fillStyle = '#080D11';
     ctx.fillRect(0, imgGamepadOffY, imgGamepadWidth, imgGamepadHeight);
 }
 
-function drawGamepadItems() {
+function drawGamepadItems(ctx) {
     let item;
     for(let i = 0; i < gamepadBtnScaled.length; i++) {
         item = gamepadBtnScaled[i];
         if(item.draw == true) {
-            ctx.drawImage(document.getElementById(item.imgID), item.x, item.y, item.w, item.h);
+            // console.log("isHighLight: " + item.isHighLight);
+            // console.log("imgID: " + item.imgID);
+            if(item.isHighLight == false) {
+                if(item.imgID != "") {
+                    ctx.drawImage(document.getElementById(item.imgID), item.x, item.y, item.w, item.h);
+                }
+            } else {
+                if(item.imgIDHL != "") {
+                    if(item.name == "dpad_left" || item.name == "dpad_right" || item.name == "dpad_up" || item.name == "dpad_down") {
+                        let posDraw = gamepadBtnScaled[1];
+                        ctx.drawImage(document.getElementById(item.imgIDHL), posDraw.x, posDraw.y, posDraw.w, posDraw.h);
+                    } else {
+                        ctx.drawImage(document.getElementById(item.imgIDHL), item.x, item.y, item.w, item.h);
+                    }
+                }
+            }
         }
     }
 }
 
-function checkGamepad(typetouch, x, y, x2, y2) {
+function checkGamepad(ctx, typetouch, x, y, x2, y2) {
     if(typetouch == "touchstart" || typetouch == "touchend") { //similar with Key Press
         let item, i;
         let xTouch = x, yTouch = y; //for touchstart
@@ -134,13 +170,13 @@ function checkGamepad(typetouch, x, y, x2, y2) {
                 if(item["xR"] != null && item["yR"] != null) { //button Arc as: X, Y, A, B, Back, Axis Left/Right
                     if(checkPointInArc(xTouch, yTouch, item.xR, item.yR, item.w < item.h ? item.w / 2 : item.h / 2) == true) {
                         log(typetouch, item.keyCode, item.name);
-                        drawGamepadItem(typetouch, item);
+                        drawGamepadItem(ctx, typetouch, item);
                         
                     }
                 } else { //button rect as: left/right/up/down, Trigger L/R
                     if(checkPointInRect(xTouch, yTouch, item.x, item.y, item.w, item.h) == true) {
                         log(typetouch, item.keyCode, item.name);
-                        drawGamepadItem(typetouch, item);
+                        drawGamepadItem(ctx, typetouch, item);
                     }
                 }
             }
@@ -148,7 +184,7 @@ function checkGamepad(typetouch, x, y, x2, y2) {
     }
 }
 
-function drawGamepadItem(typetouch, item) {
+function drawGamepadItem(ctx, typetouch, item) {
     let imgIDDraw = item.imgID;
     let itemDraw = item;
     if(typetouch == "touchstart") {
@@ -158,17 +194,41 @@ function drawGamepadItem(typetouch, item) {
         return;
     }
 
+    // if(item.name == "dpad_left" || item.name == "dpad_right" || item.name == "dpad_up" || item.name == "dpad_down") {
+    //     //Use x, y, w, h of imgDPadNormal
+    //     itemDraw = gamepadBtnScaled[1];
+    //     if(typetouch == "touchend") {
+    //         imgIDDraw = gamepadBtnScaled[1].imgID;
+    //     }
+    //     //Draw dpad bg:
+    //     let itemDpadBG = gamepadBtnScaled[0];
+    //     ctx.drawImage(document.getElementById(itemDpadBG.imgID), itemDpadBG.x, itemDpadBG.y, itemDpadBG.w, itemDpadBG.h);    
+    // }
     if(item.name == "dpad_left" || item.name == "dpad_right" || item.name == "dpad_up" || item.name == "dpad_down") {
-        //Use x, y, w, h of imgDPadNormal
-        itemDraw = gamepadBtnScaled[1];
         if(typetouch == "touchend") {
-            imgIDDraw = gamepadBtnScaled[1].imgID;
+            item.isHighLight = false;
+            item.draw = false;
+            return;
+        } else if(typetouch == "touchstart") {
+            itemDraw = gamepadBtnScaled[1];
         }
-        //Draw dpad bg:
-        let itemDpadBG = gamepadBtnScaled[0];
-        ctx.drawImage(document.getElementById(itemDpadBG.imgID), itemDpadBG.x, itemDpadBG.y, itemDpadBG.w, itemDpadBG.h);    
     }
     ctx.drawImage(document.getElementById(imgIDDraw), itemDraw.x, itemDraw.y, itemDraw.w, itemDraw.h);
+
+    //Update status:
+    item.draw = true;
+    console.log("drawGamepadItem, typetouch: " + typetouch);
+    if(typetouch == "touchstart") {
+        if(item.imgIDHL != "") {
+            item.isHighLight = true;
+            console.log("drawGamepadItem, set isHighLight = " + item.isHighLight);
+        }
+    } else if (typetouch == "touchend") {
+        if(item.imgIDHL != "") {
+            item.isHighLight = false;
+            console.log("drawGamepadItem, set isHighLight = " + item.isHighLight);
+        }
+    }
 }
 
 function onTestGamepad() {

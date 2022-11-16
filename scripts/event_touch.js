@@ -19,7 +19,7 @@ function handleStart(evt) {
     var touches = evt.changedTouches;
 
     for (var i = 0; i < touches.length; i++) {
-        checkGamepad("touchstart", touches[i].pageX, touches[i].pageY);
+        checkGamepad(ctx, "touchstart", touches[i].pageX, touches[i].pageY);
         ongoingTouches.push(copyTouch(touches[i].identifier, touches[i].pageX, touches[i].pageY, touches[i].pageX, touches[i].pageY));
 
         // var color = colorForTouch(touches[i]);
@@ -68,7 +68,7 @@ function handleEnd(evt) {
         var idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
-            checkGamepad("touchend", touches[i].pageX, touches[i].pageY, ongoingTouches[idx].pageXStart, ongoingTouches[idx].pageYStart);
+            checkGamepad(ctx, "touchend", touches[i].pageX, touches[i].pageY, ongoingTouches[idx].pageXStart, ongoingTouches[idx].pageYStart);
 
             // ctx.lineWidth = 4;
             // ctx.fillStyle = color;
