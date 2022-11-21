@@ -18,6 +18,7 @@ const KEYCODE_BUTTON_B = 30;
 var imgGamepadWidth = WIDTH;
 var imgGamepadHeight = HEIGHT;
 var imgGamepadOffY = 0;
+var imgGamepadOffX = 0;
 
 var enableGamepad = false;
 
@@ -46,19 +47,47 @@ var gamepadBtn = [
 
 var gamepadBtnScaled = [];
 
+var isStyleAirConsole = true;
+
 function checkPointInRect(x, y, rect_x, rect_y, rect_w, rect_h) {
+    if(isPortrait() == true) {
+        let x_backup = rect_x;
+        rect_x = WIDTH - rect_y - rect_h;
+        rect_y = x_backup;
+        let w_backup = rect_w;
+        rect_w = rect_h;
+        rect_h = w_backup;
+    }
     if(x < rect_x || x > rect_x + rect_w || y < rect_y || y > rect_y + rect_h) {
         return false;
     }
     return true;
 }
 
+function isPortrait() {
+    let isPortrait = HEIGHT > WIDTH ? true : false;
+    return isPortrait;
+}
+
 function checkPointInArc(x, y, xArc, yArc, rArc) {
-    let d = rArc - Math.sqrt((x - xArc) * (x - xArc) + (y - yArc) * (y - yArc));
-    if(d < 0) {
-        return false;
+    if(isStyleAirConsole == false) {
+        let d = rArc - Math.sqrt((x - xArc) * (x - xArc) + (y - yArc) * (y - yArc));
+        if(d < 0) {
+            return false;
+        }
+        return true;
+    } else {
+        if(isPortrait() == true) {
+            let x_backup = xArc;
+            xArc = WIDTH - yArc;
+            yArc = x_backup;
+        }
+        let d = rArc - Math.sqrt((x - xArc) * (x - xArc) + (y - yArc) * (y - yArc));
+        if(d < 0) {
+            return false;
+        }
+        return true;
     }
-    return true;
 }
 
 var initedGamepadBtnScaled = 0; 
@@ -95,6 +124,13 @@ function updateGamepadScale() {
     initGamepadBtnScaled();
     let scale_w = imgGamepadWidth / 1920;
     let scale_h = imgGamepadHeight / 1080;
+
+    // if(isStyleAirConsole == true) {
+    //     let w_new = imgGamepadWidth > imgGamepadHeight ? imgGamepadWidth : imgGamepadHeight;
+    //     let h_new = imgGamepadHeight < imgGamepadWidth ? imgGamepadHeight : imgGamepadWidth;
+    //     scale_w = w_new / 1920;
+    //     scale_h = h_new / 1080;
+    // }
     
     //Clone and scale
     for(let i = 0; i < gamepadBtn.length; i++) {
@@ -113,13 +149,40 @@ function updateGamepadScale() {
 
 //Draw
 function drawGamepad(ctx) {
-    imgGamepadWidth = WIDTH;
-    imgGamepadHeight = imgGamepadWidth / 1920 * 1080;
-    if(imgGamepadHeight > HEIGHT) {
-        imgGamepadHeight = HEIGHT;
-        imgGamepadOffY = 0;
+    if(isStyleAirConsole == false) {
+        imgGamepadWidth = WIDTH;
+        imgGamepadHeight = imgGamepadWidth / 1920 * 1080;
+        if(imgGamepadHeight > HEIGHT) {
+            imgGamepadHeight = HEIGHT;
+            imgGamepadOffY = 0;
+        } else {
+            imgGamepadOffY = HEIGHT / 2 - imgGamepadHeight / 2;
+        }
+        imgGamepadOffX = 0;
     } else {
-        imgGamepadOffY = HEIGHT / 2 - imgGamepadHeight / 2;
+        let w_new =  WIDTH > HEIGHT ? WIDTH : HEIGHT;;
+        let h_new = HEIGHT < WIDTH ? HEIGHT : WIDTH;
+        imgGamepadWidth = w_new;
+        imgGamepadHeight = imgGamepadWidth / 1920 * 1080;
+        if(imgGamepadHeight > h_new) {
+            imgGamepadHeight = h_new;
+            imgGamepadOffY = 0;
+        } else {
+            imgGamepadOffY = h_new / 2 - imgGamepadHeight / 2;
+        }
+
+        // let isPortrait = HEIGHT > WIDTH ? true : false;
+        // if(isPortrait == false) {
+        //     if(imgGamepadHeight > HEIGHT) {
+        //         imgGamepadHeight = HEIGHT;
+        //         imgGamepadOffY = 0;
+        //     } else {
+        //         imgGamepadOffY = HEIGHT / 2 - imgGamepadHeight / 2;
+        //     }
+        //     imgGamepadOffX = 0;
+        // } else {
+
+        // }
     }
     updateGamepadScale();
     drawGamepadBackground(ctx);
@@ -128,7 +191,16 @@ function drawGamepad(ctx) {
 
 function drawGamepadBackground(ctx) {
     ctx.fillStyle = '#080D11';
-    ctx.fillRect(0, imgGamepadOffY, imgGamepadWidth, imgGamepadHeight);
+    if(isStyleAirConsole == false) {
+        ctx.fillRect(0, imgGamepadOffY, imgGamepadWidth, imgGamepadHeight);
+    } else {
+        let isPortrait = HEIGHT > WIDTH ? true : false;
+        if(isPortrait == false) {
+            ctx.fillRect(0, imgGamepadOffY, imgGamepadWidth, imgGamepadHeight);
+        } else {
+            ctx.fillRect(WIDTH - imgGamepadHeight - imgGamepadOffY, 0, imgGamepadHeight, imgGamepadWidth);
+        }
+    }
 }
 
 function drawGamepadItems(ctx) {
@@ -140,18 +212,43 @@ function drawGamepadItems(ctx) {
             // console.log("imgID: " + item.imgID);
             if(item.isHighLight == false) {
                 if(item.imgID != "") {
-                    ctx.drawImage(document.getElementById(item.imgID), item.x, item.y, item.w, item.h);
+                    // ctx.drawImage(document.getElementById(item.imgID), item.x, item.y, item.w, item.h);
+                    drawImageOption(ctx, item.imgID, item.x, item.y, item.w, item.h);
                 }
             } else {
                 if(item.imgIDHL != "") {
                     if(item.name == "dpad_left" || item.name == "dpad_right" || item.name == "dpad_up" || item.name == "dpad_down") {
                         let posDraw = gamepadBtnScaled[1];
-                        ctx.drawImage(document.getElementById(item.imgIDHL), posDraw.x, posDraw.y, posDraw.w, posDraw.h);
+                        // ctx.drawImage(document.getElementById(item.imgIDHL), posDraw.x, posDraw.y, posDraw.w, posDraw.h);
+                        drawImageOption(ctx, item.imgIDHL, posDraw.x, posDraw.y, posDraw.w, posDraw.h);
                     } else {
-                        ctx.drawImage(document.getElementById(item.imgIDHL), item.x, item.y, item.w, item.h);
+                        // ctx.drawImage(document.getElementById(item.imgIDHL), item.x, item.y, item.w, item.h);
+                        drawImageOption(ctx, item.imgIDHL, item.x, item.y, item.w, item.h);
                     }
                 }
             }
+        }
+    }
+}
+
+function drawImageOption(ctx, imageID, posX, posY, imageW, imageH) {
+    if(isStyleAirConsole == false) {
+        ctx.drawImage(document.getElementById(imageID), posX, posY, imageW, imageH);
+    } else {
+        //draw support on both portrait and landscape
+        let isPortrait = HEIGHT > WIDTH ? true : false;
+        if(isPortrait == false) {
+            ctx.drawImage(document.getElementById(imageID), posX, posY, imageW, imageH);
+        } else {
+            ctx.save();
+
+            let newPosX = WIDTH - posY;
+            let newPosY = posX;
+            ctx.translate(newPosX, newPosY);
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.drawImage(document.getElementById(imageID), 0, 0, imageW, imageH);
+
+            ctx.restore();
         }
     }
 }
@@ -213,7 +310,8 @@ function drawGamepadItem(ctx, typetouch, item) {
             itemDraw = gamepadBtnScaled[1];
         }
     }
-    ctx.drawImage(document.getElementById(imgIDDraw), itemDraw.x, itemDraw.y, itemDraw.w, itemDraw.h);
+    // ctx.drawImage(document.getElementById(imgIDDraw), itemDraw.x, itemDraw.y, itemDraw.w, itemDraw.h);
+    drawImageOption(ctx, imgIDDraw, itemDraw.x, itemDraw.y, itemDraw.w, itemDraw.h);
 
     //Update status:
     item.draw = true;
