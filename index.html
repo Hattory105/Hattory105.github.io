@@ -29,9 +29,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/WebGL.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGL.data.gz",
-        frameworkUrl: buildUrl + "/WebGL.framework.js.gz",
-        codeUrl: buildUrl + "/WebGL.wasm.gz",
+        dataUrl: buildUrl + "/WebGL.data",
+        frameworkUrl: buildUrl + "/WebGL.framework.js",
+        codeUrl: buildUrl + "/WebGL.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "gameloft",
         productName: "WVG_SampleApp_Unity",
@@ -45,14 +45,15 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var mobileWarning = document.querySelector("#unity-mobile-warning");
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
-        mobileWarning.style.display = "block";
-        setTimeout(() => {
-          mobileWarning.style.display = "none";
-        }, 5000);
-      } else {
+      <!-- if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) { -->
+        <!-- container.className = "unity-mobile"; -->
+        <!-- config.devicePixelRatio = 1; -->
+        <!-- mobileWarning.style.display = "block"; -->
+        <!-- setTimeout(() => { -->
+          <!-- mobileWarning.style.display = "none"; -->
+        <!-- }, 5000); -->
+      <!-- } else { -->
+	  {
         canvas.style.width = "960px";
         canvas.style.height = "600px";
       }
