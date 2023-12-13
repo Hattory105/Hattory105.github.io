@@ -41476,6 +41476,8 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.C2WebSocket.prototype.acts.Send,
 	cr.plugins_.C2WebSocket.prototype.cnds.OnMessage,
 	cr.plugins_.C2WebSocket.prototype.exps.MessageText,
+	cr.plugins_.C2WebSocket.prototype.cnds.OnError,
+	cr.plugins_.C2WebSocket.prototype.cnds.IsSupported,
 	cr.system_object.prototype.exps.loadingprogress,
 	cr.plugins_.Browser.prototype.acts.setContentViewHTML5Page,
 	cr.plugins_.Browser.prototype.exps.GetContentViewHTML5Page,
