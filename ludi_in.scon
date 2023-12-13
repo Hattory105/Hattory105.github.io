@@ -1,0 +1,238 @@
+{
+	"entity": [
+		{
+			"animation": [
+				{
+					"gline": [],
+					"id": 0,
+					"interval": 100,
+					"length": 600,
+					"looping": "false",
+					"mainline": {
+						"key": [
+							{
+								"bone_ref": [],
+								"id": 0,
+								"object_ref": [
+									{
+										"abs_a": 1,
+										"abs_angle": 0,
+										"abs_pivot_x": 0,
+										"abs_pivot_y": 1,
+										"abs_scale_x": 1,
+										"abs_scale_y": 1,
+										"abs_x": -934.52507,
+										"abs_y": -270.79328,
+										"file": 4,
+										"folder": 0,
+										"id": 0,
+										"key": 0,
+										"name": "ludigames_med",
+										"timeline": "0",
+										"z_index": "0"
+									}
+								]
+							},
+							{
+								"bone_ref": [],
+								"id": 1,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 1,
+										"timeline": "0",
+										"z_index": "0"
+									}
+								],
+								"time": 340
+							},
+							{
+								"bone_ref": [],
+								"id": 2,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 2,
+										"timeline": "0",
+										"z_index": "0"
+									}
+								],
+								"time": 426
+							}
+						]
+					},
+					"name": "Logo IN",
+					"timeline": [
+						{
+							"id": 0,
+							"key": [
+								{
+									"id": 0,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -934.52507,
+										"y": 270.79328
+									},
+									"spin": 0
+								},
+								{
+									"c1": 0.995261,
+									"c2": 0.995261,
+									"curve_type": "cubic",
+									"id": 1,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -231.67925,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 340
+								},
+								{
+									"curve_type": "instant",
+									"id": 2,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -252.67925,
+										"y": 270.79328
+									},
+									"time": 426
+								}
+							],
+							"name": "ludigames_med",
+							"obj": 0
+						}
+					]
+				}
+			],
+			"character_map": [],
+			"id": 0,
+			"name": "entity_000",
+			"obj_info": [
+				{
+					"frames": [
+						{
+							"file": 4,
+							"folder": 0
+						}
+					],
+					"name": "entity_000_ludigames_med",
+					"realname": "ludigames_med",
+					"type": "sprite"
+				}
+			]
+		}
+	],
+	"folder": [
+		{
+			"file": [
+				{
+					"height": 1024,
+					"id": 0,
+					"name": "bg.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 768
+				},
+				{
+					"height": 1024,
+					"id": 1,
+					"name": "white bg.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 768
+				},
+				{
+					"height": 1400,
+					"id": 2,
+					"name": "safe.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 1400
+				},
+				{
+					"height": 577,
+					"id": 3,
+					"name": "FX Smoke Nitro 1.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 2417
+				},
+				{
+					"height": 146,
+					"id": 4,
+					"name": "LUdi.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 516
+				},
+				{
+					"height": 210,
+					"id": 5,
+					"name": "NSR2_gfx_items_car_police.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 100
+				},
+				{
+					"height": 175,
+					"id": 6,
+					"name": "f1.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 7,
+					"name": "f2.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 8,
+					"name": "f3.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 9,
+					"name": "f4.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 10,
+					"name": "f5.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 11,
+					"name": "f6.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				}
+			],
+			"id": 0
+		}
+	],
+	"generator": "BrashMonkey Spriter",
+	"generator_version": "r9",
+	"scon_version": "1.0"
+}

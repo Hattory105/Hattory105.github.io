@@ -1,0 +1,971 @@
+{
+	"entity": [
+		{
+			"animation": [
+				{
+					"gline": [],
+					"id": 0,
+					"interval": 100,
+					"length": 1200,
+					"looping": "false",
+					"mainline": {
+						"key": [
+							{
+								"bone_ref": [],
+								"id": 0,
+								"object_ref": [
+									{
+										"abs_a": 1,
+										"abs_angle": 0,
+										"abs_pivot_x": 0,
+										"abs_pivot_y": 1,
+										"abs_scale_x": 1,
+										"abs_scale_y": 1,
+										"abs_x": -253.67925,
+										"abs_y": -270.79328,
+										"file": 4,
+										"folder": 0,
+										"id": 0,
+										"key": 0,
+										"name": "ludigames_med",
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"abs_a": 1,
+										"abs_angle": 270,
+										"abs_pivot_x": 0,
+										"abs_pivot_y": 1,
+										"abs_scale_x": 1,
+										"abs_scale_y": 1,
+										"abs_x": -424.53143,
+										"abs_y": -236.66329,
+										"file": 5,
+										"folder": 0,
+										"id": 1,
+										"key": 0,
+										"name": "NSR2_GFX_Car-Viper",
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"abs_a": 1,
+										"abs_angle": 270,
+										"abs_pivot_x": 0,
+										"abs_pivot_y": 1,
+										"abs_scale_x": 1,
+										"abs_scale_y": 1,
+										"abs_x": -398.277581,
+										"abs_y": -305.02203,
+										"file": 6,
+										"folder": 0,
+										"id": 2,
+										"key": 0,
+										"name": "f1_000",
+										"timeline": "2",
+										"z_index": "2"
+									}
+								]
+							},
+							{
+								"bone_ref": [],
+								"id": 1,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 1,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 1,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 1,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 67
+							},
+							{
+								"bone_ref": [],
+								"id": 2,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 2,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 2,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 2,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 140
+							},
+							{
+								"bone_ref": [],
+								"id": 3,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 3,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 3,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 3,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 217
+							},
+							{
+								"bone_ref": [],
+								"id": 4,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 4,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 4,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 4,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 280
+							},
+							{
+								"bone_ref": [],
+								"id": 5,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 5,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 5,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 5,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 377
+							},
+							{
+								"bone_ref": [],
+								"id": 6,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 6,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 6,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 6,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 478
+							},
+							{
+								"bone_ref": [],
+								"id": 7,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 7,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 7,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 7,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 579
+							},
+							{
+								"bone_ref": [],
+								"id": 8,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 8,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 8,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 8,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 681
+							},
+							{
+								"bone_ref": [],
+								"id": 9,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 9,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 9,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 9,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 781
+							},
+							{
+								"bone_ref": [],
+								"id": 10,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 10,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 10,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 10,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 879
+							},
+							{
+								"bone_ref": [],
+								"id": 11,
+								"object_ref": [
+									{
+										"id": 0,
+										"key": 11,
+										"timeline": "0",
+										"z_index": "0"
+									},
+									{
+										"id": 1,
+										"key": 11,
+										"timeline": "1",
+										"z_index": "1"
+									},
+									{
+										"id": 2,
+										"key": 11,
+										"timeline": "2",
+										"z_index": "2"
+									}
+								],
+								"time": 980
+							}
+						]
+					},
+					"name": "Logo OUT",
+					"timeline": [
+						{
+							"id": 0,
+							"key": [
+								{
+									"c1": 0.995261,
+									"c2": 0.995261,
+									"curve_type": "cubic",
+									"id": 0,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -253.67925,
+										"y": 270.79328
+									},
+									"spin": 0
+								},
+								{
+									"id": 1,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -267.39066,
+										"y": 270.793279
+									},
+									"spin": 0,
+									"time": 67
+								},
+								{
+									"id": 2,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -232.67925,
+										"y": 270.793277
+									},
+									"spin": 0,
+									"time": 140
+								},
+								{
+									"id": 3,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -123.26459,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 217
+								},
+								{
+									"id": 4,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": -49.57143,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 280
+								},
+								{
+									"id": 5,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 50.73401,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 377
+								},
+								{
+									"id": 6,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 147.97166,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 478
+								},
+								{
+									"id": 7,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 232.31988,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 579
+								},
+								{
+									"id": 8,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 334.70879,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 681
+								},
+								{
+									"id": 9,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 458.77805,
+										"y": 270.79328
+									},
+									"spin": 0,
+									"time": 781
+								},
+								{
+									"curve_type": "instant",
+									"id": 10,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 383.16526,
+										"y": 270.79328
+									},
+									"time": 879
+								},
+								{
+									"curve_type": "instant",
+									"id": 11,
+									"object": {
+										"angle": 0,
+										"file": 4,
+										"folder": 0,
+										"x": 383.16526,
+										"y": 270.79328
+									},
+									"time": 980
+								}
+							],
+							"name": "ludigames_med",
+							"obj": 0
+						},
+						{
+							"id": 1,
+							"key": [
+								{
+									"id": 0,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -424.53143,
+										"y": 236.66329
+									},
+									"spin": 0
+								},
+								{
+									"id": 1,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -373.571776,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 67
+								},
+								{
+									"id": 2,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -320.51789,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 140
+								},
+								{
+									"id": 3,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -212.149138,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 217
+								},
+								{
+									"id": 4,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -122.81814,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 280
+								},
+								{
+									"id": 5,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": -11.86092,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 377
+								},
+								{
+									"id": 6,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 99.45459,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 478
+								},
+								{
+									"id": 7,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 194.73974,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 579
+								},
+								{
+									"id": 8,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 303.13472,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 681
+								},
+								{
+									"id": 9,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 416.3525,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 781
+								},
+								{
+									"id": 10,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 525.52188,
+										"y": 236.66329
+									},
+									"spin": 0,
+									"time": 879
+								},
+								{
+									"curve_type": "instant",
+									"id": 11,
+									"object": {
+										"angle": 270,
+										"file": 5,
+										"folder": 0,
+										"x": 599.22102,
+										"y": 236.66329
+									},
+									"time": 980
+								}
+							],
+							"name": "NSR2_GFX_Car-Viper",
+							"obj": 1
+						},
+						{
+							"id": 2,
+							"key": [
+								{
+									"id": 0,
+									"object": {
+										"angle": 270,
+										"file": 6,
+										"folder": 0,
+										"x": -398.277581,
+										"y": 305.02203
+									},
+									"spin": 0
+								},
+								{
+									"id": 1,
+									"object": {
+										"angle": 270,
+										"file": 10,
+										"folder": 0,
+										"x": -347.82096,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 67
+								},
+								{
+									"id": 2,
+									"object": {
+										"angle": 270,
+										"file": 10,
+										"folder": 0,
+										"x": -295.0853,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 140
+								},
+								{
+									"id": 3,
+									"object": {
+										"angle": 270,
+										"file": 7,
+										"folder": 0,
+										"x": -188.3581,
+										"y": 305.022026
+									},
+									"spin": 0,
+									"time": 217
+								},
+								{
+									"id": 4,
+									"object": {
+										"angle": 270,
+										"file": 8,
+										"folder": 0,
+										"x": -97.555947,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 280
+								},
+								{
+									"id": 5,
+									"object": {
+										"angle": 270,
+										"file": 9,
+										"folder": 0,
+										"x": 12.694494,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 377
+								},
+								{
+									"id": 6,
+									"object": {
+										"angle": 270,
+										"file": 10,
+										"folder": 0,
+										"x": 123.834952,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 478
+								},
+								{
+									"id": 7,
+									"object": {
+										"angle": 270,
+										"file": 11,
+										"folder": 0,
+										"x": 219.41091,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 579
+								},
+								{
+									"id": 8,
+									"object": {
+										"angle": 270,
+										"file": 6,
+										"folder": 0,
+										"x": 327.73231,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 681
+								},
+								{
+									"id": 9,
+									"object": {
+										"angle": 270,
+										"file": 7,
+										"folder": 0,
+										"x": 439.35122,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 781
+								},
+								{
+									"id": 10,
+									"object": {
+										"angle": 270,
+										"file": 9,
+										"folder": 0,
+										"x": 548.38814,
+										"y": 305.02203
+									},
+									"spin": 0,
+									"time": 879
+								},
+								{
+									"curve_type": "instant",
+									"id": 11,
+									"object": {
+										"angle": 270,
+										"file": 7,
+										"folder": 0,
+										"x": 606.11991,
+										"y": 305.02203
+									},
+									"time": 980
+								}
+							],
+							"name": "f1_000",
+							"obj": 2
+						}
+					]
+				}
+			],
+			"character_map": [],
+			"id": 0,
+			"name": "entity_000",
+			"obj_info": [
+				{
+					"frames": [
+						{
+							"file": 4,
+							"folder": 0
+						}
+					],
+					"name": "entity_000_ludigames_med",
+					"realname": "ludigames_med",
+					"type": "sprite"
+				},
+				{
+					"frames": [
+						{
+							"file": 5,
+							"folder": 0
+						}
+					],
+					"name": "entity_000_NSR2_GFX_Car-Viper",
+					"realname": "NSR2_GFX_Car-Viper",
+					"type": "sprite"
+				},
+				{
+					"frames": [
+						{
+							"file": 6,
+							"folder": 0
+						},
+						{
+							"file": 10,
+							"folder": 0
+						},
+						{
+							"file": 7,
+							"folder": 0
+						},
+						{
+							"file": 8,
+							"folder": 0
+						},
+						{
+							"file": 9,
+							"folder": 0
+						},
+						{
+							"file": 11,
+							"folder": 0
+						}
+					],
+					"name": "entity_000_f1_000",
+					"realname": "f1_000",
+					"type": "sprite"
+				}
+			]
+		}
+	],
+	"folder": [
+		{
+			"file": [
+				{
+					"height": 1024,
+					"id": 0,
+					"name": "bg.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 768
+				},
+				{
+					"height": 1024,
+					"id": 1,
+					"name": "white bg.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 768
+				},
+				{
+					"height": 1400,
+					"id": 2,
+					"name": "safe.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 1400
+				},
+				{
+					"height": 577,
+					"id": 3,
+					"name": "FX Smoke Nitro 1.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 2417
+				},
+				{
+					"height": 146,
+					"id": 4,
+					"name": "LUdi.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 516
+				},
+				{
+					"height": 210,
+					"id": 5,
+					"name": "NSR2_gfx_items_car_police.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 100
+				},
+				{
+					"height": 175,
+					"id": 6,
+					"name": "f1.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 7,
+					"name": "f2.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 8,
+					"name": "f3.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 9,
+					"name": "f4.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 10,
+					"name": "f5.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				},
+				{
+					"height": 175,
+					"id": 11,
+					"name": "f6.png",
+					"pivot_x": 0,
+					"pivot_y": 1,
+					"width": 227
+				}
+			],
+			"id": 0
+		}
+	],
+	"generator": "BrashMonkey Spriter",
+	"generator_version": "r9",
+	"scon_version": "1.0"
+}
