@@ -21715,6 +21715,7 @@ cr.plugins_.C2WebSocket = function(runtime)
 	{
 		this.type = type;
 		this.runtime = type.runtime;
+		this.triggerKey = 0;
 	};
 	var instanceProto = pluginProto.Instance.prototype;
 	var isSupported = (typeof WebSocket !== "undefined");
@@ -21765,6 +21766,27 @@ cr.plugins_.C2WebSocket = function(runtime)
 	{
 		return isSupported;
 	};
+	Cnds.prototype.OnKeyDown = function (key)
+	{
+		console.log("trung.lyhoang, OnKeyDown, key: " + key);
+		console.log("trung.lyhoang, OnKeyDown, this.triggerKey: " + this.triggerKey);
+		let ret = key == this.triggerKey;
+		console.log("trung.lyhoang, OnKeyDown, ret: " + ret);
+		return (key == this.triggerKey);
+	};
+	Cnds.prototype.OnKeyUp = function (key)
+	{
+		console.log("trung.lyhoang, OnKeyUp, key: " + key);
+		console.log("trung.lyhoang, OnKeyUp, this.triggerKey: " + this.triggerKey);
+		let ret = key == this.triggerKey;
+		console.log("trung.lyhoang, OnKeyUp, ret: " + ret);
+		return (key == this.triggerKey);
+	};
+	Cnds.prototype.OnAnyKey = function ()
+	{
+		console.log("trung.lyhoang, OnAnyKey");
+		return true;
+	};
 	pluginProto.cnds = new Cnds();
 	function Acts() {};
 	Acts.prototype.Connect = function (url_, requireProtocol_)
@@ -21812,6 +21834,29 @@ cr.plugins_.C2WebSocket = function(runtime)
 		this.ws.onmessage = function (msg_) {
 			self.messageText = msg_.data || "";
 			self.runtime.trigger(cr.plugins_.C2WebSocket.prototype.cnds.OnMessage, self);
+			console.log("trung.lyhoang, message data: " + msg_.data);
+			const myArray = self.messageText.split(";");
+			if(myArray.length > 0) {
+				console.log("trung.lyhoang, myArray.length: " + myArray.length);
+				console.log("trung.lyhoang, myArray[0]: " + myArray[0]);
+				if(myArray[0] == "KeyDown") {
+					self.triggerKey = myArray[1];
+					console.log("trung.lyhoang, self.triggerKey KeyDown: " + self.triggerKey);
+					self.runtime.trigger(cr.plugins_.C2WebSocket.prototype.cnds.OnKeyDown, self);
+					self.runtime.trigger(cr.plugins_.C2WebSocket.prototype.cnds.OnAnyKey, self);
+				} else if(myArray[0] == "KeyUp") {
+					self.triggerKey = myArray[1];
+					console.log("trung.lyhoang, self.triggerKey KeyUp: " + self.triggerKey);
+					self.runtime.trigger(cr.plugins_.C2WebSocket.prototype.cnds.OnKeyUp, self);
+					self.runtime.trigger(cr.plugins_.C2WebSocket.prototype.cnds.OnAnyKey, self);
+				} else if(myArray[0] == "Ping") {
+					console.log("trung.lyhoang, self.triggerKey Ping, will send Pong");
+					self.ws.send("Pong");
+				} else if(myArray[0] == "Pong") {
+					console.log("trung.lyhoang, self.triggerKey Pong, will send Ping");
+					self.ws.send("Ping");
+				}
+			}
 		};
 	};
 	Acts.prototype.Close = function ()
@@ -21820,6 +21865,12 @@ cr.plugins_.C2WebSocket = function(runtime)
 			this.ws.close();
 	};
 	Acts.prototype.Send = function (msg_)
+	{
+		if (!this.ws || this.ws.readyState !== 1 /* OPEN */)
+			return;
+		this.ws.send(msg_);
+	};
+	Acts.prototype.KeyUp = function (msg_)
 	{
 		if (!this.ws || this.ws.readyState !== 1 /* OPEN */)
 			return;
@@ -41140,25 +41191,25 @@ cr.behaviors.destroy = function(runtime)
 }());
 cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr,
+	cr.plugins_.Audio,
 	cr.plugins_.Button,
 	cr.plugins_.Browser,
-	cr.plugins_.Audio,
 	cr.plugins_.GenerateEnemy,
 	cr.plugins_.Keyboard,
-	cr.plugins_.Function,
 	cr.plugins_.gamepad,
 	cr.plugins_.ThePathOfEnemy,
-	cr.plugins_.System1,
-	cr.plugins_.Sprite,
+	cr.plugins_.Function,
+	cr.plugins_.Spriter,
 	cr.plugins_.Touch,
-	cr.plugins_.Levels,
+	cr.plugins_.Sprite,
+	cr.plugins_.Spritefont2,
+	cr.plugins_.System1,
 	cr.plugins_.Text,
 	cr.plugins_.TiledBg,
-	cr.plugins_.Spriter,
-	cr.plugins_.Spritefont2,
+	cr.plugins_.Levels,
 	cr.plugins_.Language,
-	cr.plugins_.WebStorage,
 	cr.plugins_.UserData,
+	cr.plugins_.WebStorage,
 	cr.plugins_.C2WebSocket,
 	cr.behaviors.Anchor,
 	cr.behaviors.Sin,
@@ -41411,6 +41462,7 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Language.prototype.acts.changeLanguage,
 	cr.plugins_.Levels.prototype.exps.GetMaxUnlockedLevel,
 	cr.plugins_.Sprite.prototype.cnds.IsOutsideLayout,
+	cr.plugins_.C2WebSocket.prototype.cnds.OnKeyDown,
 	cr.plugins_.WebStorage.prototype.exps.LocalValue,
 	cr.plugins_.Arr.prototype.cnds.CompareXYZ,
 	cr.plugins_.Arr.prototype.exps.Width,
@@ -41471,9 +41523,9 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.System1.prototype.exps.progress_value,
 	cr.plugins_.Spriter.prototype.acts.setAnimation,
 	cr.plugins_.Spriter.prototype.acts.setOpacity,
+	cr.plugins_.C2WebSocket.prototype.cnds.OnAnyKey,
 	cr.plugins_.C2WebSocket.prototype.acts.Connect,
 	cr.plugins_.C2WebSocket.prototype.cnds.IsOpen,
-	cr.plugins_.C2WebSocket.prototype.acts.Send,
 	cr.plugins_.C2WebSocket.prototype.cnds.OnMessage,
 	cr.plugins_.C2WebSocket.prototype.exps.MessageText,
 	cr.system_object.prototype.exps.loadingprogress,
