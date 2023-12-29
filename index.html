@@ -1,238 +1,162 @@
-﻿<!DOCTYPE html>
-<html manifest="offline.appcache">
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>NitroStreet Run 2</title>
-	
-	<!-- Standardised web app manifest -->
-	<link rel="manifest" href="appmanifest.json" />
-	
-	<!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link type="image/x-icon" href="icon-128.png" rel="shortcut icon" />
-	<link rel="apple-touch-icon" sizes="256x256" href="icon-256.png" />
-	<meta name="HandheldFriendly" content="true" />
-	
-	<!-- Chrome for Android web app tags -->
-	<meta name="mobile-web-app-capable" content="yes" />
-	<link rel="shortcut icon" sizes="256x256" href="icon-256.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <div style="display: flex">
+      <div style="margin-right: 100px;">
+        <textarea
+          name="txtContent"
+          id="txtContent"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <button id="send">Send Data</button>
+      </div>
+    </div>
+    <div>
+      <pre id="txtDataTitle">Nội dung nhận:</pre>
+      <pre style="color:red;" id="txtData">null</pre>
+    </div>
 
-    <!-- All margins and padding must be zero for the canvas to fill the screen. -->
-	<style type="text/css">
-		* {
-			padding: 0;
-			margin: 0;
-		}
-		html, body {
-			background: #000;
-			color: #fff;
-			overflow: hidden;
-			touch-action: none;
-			-ms-touch-action: none;
-		}
-		canvas {
-			touch-action-delay: none;
-			touch-action: none;
-			-ms-touch-action: none;
-			-webkit-transform: translateZ(0);
-			-moz-transform: translateZ(0);
-			-ms-transform: translateZ(0);
-			-o-transform: translateZ(0);
-			transform: translateZ(0);
-		}
-    </style>
-	
+    <br />
+    <br />
+    <br />
+    <div style="display: flex">
+      <div style="margin-right: 100px">
+        <p>Connection String Local - Send to Remote:</p>
+        <textarea name="txtCreate" id="txtCreate" cols="30" rows="3"></textarea>
+      </div>
+    </div>
+    <div>
+      <p>Connection String Received from Remote:</p>
+      <textarea name="txtAccept" id="txtAccept" cols="30" rows="3"></textarea>
+    </div>
+    <span style="color:red;" id="txtStatus">Status: waiting</span>
+    <br><br><br>
+    <button id="btnConnect">Connect</button>
+  </body>
+  <script>
+    var ws = new WebSocket("ws://192.168.0.180:8181");
+    var wsConnected = false;
+    ws.onopen = function(e) {
+        // ws.send(JSON.stringify(stock_request));
+        console.log("trung.lyhoang - websocket test01 open");
+        ws.send("I connected with you!");
+        ws.send("test01");
+        wsConnected = true;
+        stepConnection = 1;
+    }
 
-</head> 
- 
-<body>
-	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-W4F73N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-K74X66" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    var remoteDescription = '';
+    ws.onmessage = function(e) {
+        // ws.send(JSON.stringify(stock_request));
+        var data = e.data;
+        console.log("trung.lyhoang - websocket test02 onmessage: " + data);
+        switch(stepConnection)
+        {
+          case 1:
+            remoteDescription = data;
+            stepConnection = 2;
+            remoteSetDescription();
+            clearInterval(myTimer);
+            break;
+        }
+    }
 
-	<!-- Google Tag Manager -->
-	<script>
-		var enableADS = false;
-		dataLayer = [];
-		var productKey = "";
+    var myTimer = setInterval(myFunctionTimer, 2000);
+    var stepConnection = 0;
+    function myFunctionTimer()
+    {
+      if(wsConnected == true)
+      {
+        switch(stepConnection)
+        {
+          case 1:
+            ws.send("GetRemoteDescription");
+            break;
+        }
+      }
+    }
 
-		dataLayer.push({
-		  'productKey': '' + productKey
-		});
-	</script>
+    const local = new RTCPeerConnection();
+    local.onicecandidate = function (e) {
+      const connStr = JSON.stringify(local.localDescription);
+      console.log("PXH onicecandidate: ", connStr);
+      document.getElementById("txtCreate").value = connStr;
+    };
 
-	<script type="text/javascript" src="http://play.ludigames.com/js/ltm.js"></script>
-	<script>
-		function gtm()
-		{
-			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-			'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-			})(window,document,'script','dataLayer','GTM-W4F73N');
-		}
-		gtm();
-		
-		function gtm_noads()
-		{
-			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-			'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-			})(window,document,'script','dataLayer','GTM-K74X66');
-		}
-		gtm_noads();
-	</script>
-	<!--End Google Tag Manager -->
+    const dataChannel = local.createDataChannel("channel");
+    dataChannel.onmessage = function (e) {
+      console.log("MSG Remote: " + e.data);
+      document.getElementById("txtData").textContent = e.data;
+    };
+    dataChannel.onopen = function (e) {
+      console.log("Open");
+      document.getElementById("txtStatus").textContent = "Trạng thái: Open";
+    };
+    dataChannel.onclose = function (e) {
+      console.log("Close");
+      document.getElementById("txtStatus").textContent = "Trạng thái: Close";
+    };
 
-	<input type="hidden" id="page_is_dirty" value="no">
-	<script type="text/javascript">
-		onload = function () {
-			var e = document.getElementById("page_is_dirty");
-			if (e.value == "no") e.value = "yes";
-			else { e.value = "no"; location.reload(); }
-		}
-	</script>
-	<script>
-	if(typeof(canDetectPack) != "undefined")
-	{
-		var detectLink = getURL();
-		var currLink = window.location.href;
-		currLink = currLink.replace("index.html","");
-		if(detectLink.toLowerCase() != currLink.toLowerCase())
-			window.location.href = detectLink;
-	}
-	else if(false/*remove by Construct2 Supporter Step 1*/)
-	{
-		var isUCBrowser = /UCBrowser/i.test(navigator.userAgent);
-		if(isUCBrowser)
-		{
-		   if(window.location.href.indexOf("index_UC") < 0)
-				window.location.href = "index_UC.html";
-		}
-		else
-		{
-			if(window.location.href.indexOf("index_UC") > 0)
-				window.location.href = "index.html";
-		}
-		var isIE = /msie/i.test(navigator.userAgent) || /trident/i.test(navigator.userAgent) || /iemobile/i.test(navigator.userAgent);
-		var isiPhone = (/iphone/i.test(navigator.userAgent) || /ipod/i.test(navigator.userAgent)) && !isIE;	// treat ipod as an iphone; IE mobile masquerades as iPhone
-		var isiPad = /ipad/i.test(navigator.userAgent);
-		var isiOS = isiPhone || isiPad;
-		var IsAsusHuawei_AndroidBrowser = (/Huawei/i.test(navigator.userAgent)
-											&& /Version\//i.test(navigator.userAgent)
-											)
-		if(isiOS || IsAsusHuawei_AndroidBrowser)
-		{
-		   if(window.location.href.indexOf("index_iPhone") < 0)
-		   {
-				var sp = window.location.href.split("?");
-				if(sp.length > 1)
-					window.location.href = "index_iPhone.html" + "?" + sp[1];
-				else
-					window.location.href = "index_iPhone.html";
-			}
-		}
-		else
-		{
-			if(window.location.href.indexOf("index_iPhone") > 0)
-			{
-				var sp = window.location.href.split("?");
-				if(sp.length > 1)
-					window.location.href = "index.html" + "?" + sp[1];
-				else
-					window.location.href = "index.html";
-			}
-		}
-	}
-	function loadingError()
-	{
-		document.getElementById("loading_gif").src = "http://play.ludigames.com/js/games_lib/freeFiles/loading.gif";
-	}
-	</script>
+    local.createOffer().then(function (o) {
+      console.log(local.setLocalDescription(o));
+      return local.setLocalDescription(o);
+    });
 
-	<div id="fb-root"></div>
-	<div id="device_physic_pixels_per_cm" style="width:1cm"></div>
-	
-	<!-- The canvas must be inside a div called c2canvasdiv -->
-	<div id="c2canvasdiv">
-	
-		<!-- The canvas the project will render to.  If you change its ID, don't forget to change the
-		ID the runtime looks for in the jQuery events above (ready() and cr_sizeCanvas()). -->
-		<img src="loading.gif" onerror="loadingError()" id="loading_gif" style="width:80px;height:80px;position: fixed;top: 50%;left: 50%;margin-top: -40px;margin-left: -40px;display: none">
-		<canvas id="c2canvas" width="768" height="1366">
-			<!-- This text is displayed if the visitor's browser does not support HTML5.
-			You can change it, but it is a good idea to link to a description of a browser
-			and provide some links to download some popular HTML5-compatible browsers. -->
-			<h1>Your browser does not appear to support HTML5.  Try upgrading your browser to the latest version.  <a href="http://www.whatbrowser.org">What is a browser?</a>
-			<br/><br/><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx">Microsoft Internet Explorer</a><br/>
-			<a href="http://www.mozilla.com/firefox/">Mozilla Firefox</a><br/>
-			<a href="http://www.google.com/chrome/">Google Chrome</a><br/>
-			<a href="http://www.apple.com/safari/download/">Apple Safari</a><br/>
-			<a href="http://www.google.com/chromeframe">Google Chrome Frame for Internet Explorer</a><br/></h1>
-		</canvas>
-		
-	</div>
-	
-	<!-- Construct 2 exported games require jQuery. -->
-	<script src="jquery-2.1.1.min.js"></script>
+    // // Truyền data vào
+    // document.getElementById("txtAccept").addEventListener("change", (e) => {
+    //   const txtAccept = document.getElementById("txtAccept");
+    //   if (txtAccept.value !== "") {
+    //     console.log("có data");
+    //     local
+    //       .setRemoteDescription(JSON.parse(txtAccept.value))
+    //       .then(function () {
+    //         console.log("Done");
+    //       });
+    //   }
+    // });
 
+    // Send msg
+    document.getElementById("send").addEventListener("click", (e) => {
+      const txtContent = document.getElementById("txtContent");
+      if (txtContent.value === "") {
+        console.log("chưa nhập");
+      } else {
+        console.log(txtContent.value);
+        dataChannel.send(txtContent.value);
+        txtContent.value = "";
+      }
+    });
 
-	
-    <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
-    This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
-	<script src="c2runtime.js"></script>
-	<script src="http://play.ludigames.com/js/games_lib/debug.js"></script>
-    <script>
-		// Size the canvas to fill the browser viewport.
-		var goToADS = true;
-		if(typeof(window.GameStarted) == "undefined")
-			goToADS = false;
-		else if(!window.enableADS)
-			goToADS = false;
-		if(!goToADS)
-		{
-			document.getElementById("loading_gif").style.display = "inline";
-			jQuery(window).resize(function() {
-				cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());
-			});
-			
-			// Start the Construct 2 project running on window load.
-			jQuery(document).ready(function ()
-			{			
-				// Create new runtime using the c2canvas
-				cr_createRuntime("c2canvas");
-			});
-			
-			// Pause and resume on page becoming visible/invisible
-			function onVisibilityChanged() {
-				if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
-					cr_setSuspended(true);
-				else
-					cr_setSuspended(false);
-			};
-			
-			document.addEventListener("visibilitychange", onVisibilityChanged, false);
-			document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
-			document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
-			document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
-		}
-		if (navigator.serviceWorker && navigator.serviceWorker.register)
-		{
-			// Register an empty service worker to trigger web app install banners.
-			navigator.serviceWorker.register("sw.js", { scope: "./" });
-		}
-		
-		function getPixelsPerCm()
-		{
-			/*var o = document.getElementById("device_physic_pixels_per_cm");
-			alert(o.offsetWidth)
-			return o.offsetWidth
-			*/
-			return 38;
-		}
-    </script>
-</body> 
-</html> 
+    // Connect button
+    document.getElementById("btnConnect").addEventListener("click", (e) => {
+      document.getElementById("btnConnect").disabled = true;
+      if(wsConnected == false)
+      {
+        console.log("trung.lyhoang - websocket fail");
+      }
+      else
+      {
+        const connStr = JSON.stringify(local.localDescription);
+        console.log("trung.lyhoang: test01 send ws to server", connStr);
+        ws.send(connStr);
+      }
+    });
+
+    function remoteSetDescription()
+    {
+      if(remoteDescription !== "")
+      {
+        document.getElementById("txtAccept").value = remoteDescription;
+        local.setRemoteDescription(JSON.parse(remoteDescription)).then(function () {
+          console.log("Done");
+        });
+      }
+    }
+  </script>
+</html>
