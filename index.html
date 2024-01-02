@@ -9,7 +9,8 @@
         <p>Test WebSocket Client</p>
       </div>
 <script>
-    var ws = new WebSocket("wss://192.168.0.180:8443");
+    <!-- var ws = new WebSocket("ws://192.168.0.180:8443"); -->
+    var ws = new WebSocket("ws://10.219.234.252:8181");
     ws.onopen = function(e) {
         // ws.send(JSON.stringify(stock_request));
         console.log("trung.lyhoang - websocket open");
