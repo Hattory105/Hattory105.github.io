@@ -9,6 +9,11 @@
     <div>
       <p>Remote Connection</p>
     </div>
+    <div>
+      <input type="text" name="txtRandomCode" id="txtRandomCode" placeholder="input random code">
+      <button id="sendRandomCode">Send Random Code</button>
+      <br><br>
+    </div>
     <div style="display: flex">
       <div style="margin-right: 100px">
         <textarea
@@ -41,130 +46,5 @@
     
     <span style="color:red;" id="txtStatus">Status: waiting</span>
   </body>
-  <script>
-    // var ws = new WebSocket("ws://192.168.0.180:8181");
-    // var ws = new WebSocket("ws://10.219.234.252:8181");
-    var ws = new WebSocket("wss://gl-ws-test.glitch.me/");
-    var wsConnected = false;
-    ws.onopen = function(e) {
-        // ws.send(JSON.stringify(stock_request));
-        console.log("trung.lyhoang - websocket test02 open");
-        ws.send("I connected with you!");
-        ws.send("test02");
-        wsConnected = true;
-        stepConnection = 1;
-    }
-    
-    var localDescription = '';
-    ws.onmessage = function(e) {
-        // ws.send(JSON.stringify(stock_request));
-        var data = e.data;
-        console.log("trung.lyhoang - websocket test02 onmessage: " + data);
-        switch(stepConnection)
-        {
-          case 1:
-            localDescription = data;
-            stepConnection = 2;
-            remoteSetDescription();
-            clearInterval(myTimer);
-            break;
-        }
-    }
-
-    var myTimer = setInterval(myFunctionTimer, 2000);
-    var stepConnection = 0;
-    function myFunctionTimer()
-    {
-      if(wsConnected == true)
-      {
-        switch(stepConnection)
-        {
-          case 1:
-            ws.send("GetLocalDescription");
-            break;
-        }
-      }
-    }
-
-    const remote = new RTCPeerConnection();
-    remote.onicecandidate = function (e) {
-      const connStr = JSON.stringify(remote.localDescription);
-      console.log("PXH onicecandidate: ", JSON.stringify(connStr));
-      document.getElementById("txtCreate").value = connStr;
-      if(connStr !== "")
-      {
-        if(wsConnected == true && stepConnection == 2)
-        {
-          ws.send(connStr);
-        }
-      }
-    };
-
-    remote.ondatachannel = function ({ channel }) {
-      const receiveChannel = channel;
-      receiveChannel.onmessage = function (e) {
-        console.log("MSG Local: " + e.data);
-        document.getElementById("txtData").textContent = e.data;
-      };
-      receiveChannel.onopen = function (e) {
-        console.log("Open");
-        document.getElementById("txtStatus").textContent = "Trạng thái: Open";
-      };
-      receiveChannel.onclose = function (e) {
-        console.log("Close");
-        document.getElementById("txtStatus").textContent = "Trạng thái: Close";
-      };
-      remote.channel = receiveChannel;
-    };
-
-    // // Truyền data vào
-    // document.getElementById("txtAccept").addEventListener("change", (e) => {
-    //   const txtAccept = document.getElementById("txtAccept");
-    //   if (txtAccept.value !== "") {
-    //     console.log("có data");
-    //     remote
-    //       .setRemoteDescription(JSON.parse(txtAccept.value))
-    //       .then(function () {
-    //         console.log("Done");
-    //         remote
-    //           .createAnswer()
-    //           .then(function (a) {
-    //             remote.setLocalDescription(a);
-    //           })
-    //           .then(function (a) {
-    //             console.log(JSON.stringify(remote.localDescription));
-    //           });
-    //       });
-    //   }
-    // });
-
-    // send từ remote wa
-    document.getElementById("send").addEventListener("click", (e) => {
-      const txtContent = document.getElementById("txtContent");
-
-      if (txtContent.value === "") {
-        console.log("chưa nhập");
-      } else {
-        console.log(txtContent.value);
-        remote.channel.send(txtContent.value);
-        txtContent.value = "";
-      }
-    });
-
-    function remoteSetDescription()
-    {
-      if(localDescription !== "")
-      {
-        document.getElementById("txtAccept").value = localDescription;
-        remote.setRemoteDescription(JSON.parse(localDescription)).then(function () {
-          console.log("Done");
-          remote.createAnswer().then(function (a) {
-            remote.setLocalDescription(a);
-          }).then(function (a) {
-              console.log(JSON.stringify(remote.localDescription));
-            });
-        });
-      }
-    }
-  </script>
+  <script src="src/remote.js"></script>
 </html>
