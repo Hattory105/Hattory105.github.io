@@ -56,6 +56,11 @@ wss.on('connection', function connection(ws) {
                         {
                             sendDataJSON(ws, 'LocalDescription', localWS.localDescription);
                             ws.randomCode = obj.value;
+                            console.log("localWS.listCandidate.length: " + localWS.listCandidate.length);
+                            for(let i = 0; i < localWS.listCandidate.length; i++)
+                            {
+                                sendDataJSON(ws, 'LocalCandidate', localWS.listCandidate[i]);
+                            }
                         }
                         else
                         {
@@ -65,6 +70,23 @@ wss.on('connection', function connection(ws) {
                     else
                     {
                         sendDataJSON(ws, 'WrongRandomCode', '');
+                    }
+                    break;
+                
+                case 'LocalCandidate':
+                    //Add local candidate to array and will send it to remote in the future
+                    if(ws.listCandidate == undefined)
+                    {
+                        ws.listCandidate = [];
+                    }
+                    ws.listCandidate.push(obj.value);
+                    break;
+                case 'RemoteCandidate':
+                    //Send remote candidate to Local
+                    localWS = findLocalWebsocket(ws.randomCode);
+                    if(localWS != null)
+                    {
+                        sendDataJSON(localWS, 'RemoteCandidate', obj.value);
                     }
                     break;
                 

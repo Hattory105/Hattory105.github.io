@@ -42,6 +42,13 @@ ws.onmessage = function(e) {
                     state = remoteState.wsReceivedLocoDescription;
                     initRemoteWebRTC();
                 }
+            case remoteState.wsReceivedLocoDescription:
+            case remoteState.webrtcSentRemoteDescription:
+                if(obj.typeData == "LocalCandidate")
+                {
+                    console.log("trung.lyhoang - remote.js - websocket onmessage LocalCandidate");
+                    remoteWebRTC.addIceCandidate(JSON.parse(obj.value)).then(onAddIceCandidateSuccess, onAddIceCandidateError);
+                }
                 break;
         }
     } catch (err) {
@@ -49,7 +56,7 @@ ws.onmessage = function(e) {
     }
 }
 
-function sendRemoteDescription()
+function sendRemoteDescription(a)
 {
     if(wsConnected == false)
     {
@@ -57,7 +64,7 @@ function sendRemoteDescription()
     }
     else
     {
-        const connStr = JSON.stringify(remoteWebRTC.localDescription);
+        const connStr = JSON.stringify(a);
         console.log("trung.lyhoang - remote.js - sendRemoteDescription - connStr: ", connStr);
         sendDataJSON(ws, 'RemoteDescription', connStr);
         state = remoteState.webrtcSentRemoteDescription;
@@ -76,6 +83,7 @@ function sendDataJSON(websocket, type, value)
 
 //===================================//
 //WebRTC
+var listLocalDescription = [];
 const remoteWebRTC = new RTCPeerConnection();
 function initRemoteWebRTC() {
     remoteWebRTC.onicecandidate = function (e) {
@@ -83,8 +91,9 @@ function initRemoteWebRTC() {
         {
             const connStr = JSON.stringify(remoteWebRTC.localDescription);
             console.log("trung.lyhoang - remote.js - onicecandidate: ", connStr);
-            sendRemoteDescription();
-            document.getElementById("txtCreate").value = connStr;
+            // sendRemoteDescription();
+            // document.getElementById("txtCreate").value = connStr;
+            sendDataJSON(ws, 'RemoteCandidate', JSON.stringify(e.candidate));
         }
     };
 
@@ -115,6 +124,14 @@ function initRemoteWebRTC() {
     setLocalDescription();
 }
 
+function onAddIceCandidateSuccess() {
+    console.log('AddIceCandidate success.');
+}
+
+function onAddIceCandidateError(error) {
+    console.log(`Failed to add Ice Candidate: ${error.toString()}`);
+}
+
 function setLocalDescription()
 {
     if(remoteInformation.localDescription !== "")
@@ -125,6 +142,8 @@ function setLocalDescription()
             remoteWebRTC.createAnswer().then(function (a) {
                 console.log("trung.lyhoang - remote.js - setLocalDescription, createAnswer Success");
                 remoteWebRTC.setLocalDescription(a);
+                sendRemoteDescription(a);
+                document.getElementById("txtCreate").value = JSON.stringify(a);
             }).then(function (a) {
                 console.log("trung.lyhoang - remote.js - setLocalDescription, setLocalDescription DONE");
             });

@@ -54,6 +54,15 @@ ws.onmessage = function(e) {
                     state = localState.webrtcReceivedRemoteDescription;
                     setRemoteDescription();
                 }
+            case localState.webrtcReceivedRemoteDescription:
+            case localState.webrtcConnected:
+                if(obj.typeData == 'RemoteCandidate')
+                {
+                    console.log("trung.lyhoang - local.js - websocket onmessage RemoteCandidate");
+                    localWebRTC.addIceCandidate(JSON.parse(obj.value)).then(
+                        onAddIceCandidateSuccess, onAddIceCandidateError
+                        );
+                }
             break;
         }
     } catch (err) {
@@ -61,7 +70,7 @@ ws.onmessage = function(e) {
     }
 }
 
-function sendLocalDescription()
+function sendLocalDescription(description)
 {
     if(wsConnected == false)
     {
@@ -69,7 +78,7 @@ function sendLocalDescription()
     }
     else
     {
-        const connStr = JSON.stringify(localWebRTC.localDescription);
+        const connStr = JSON.stringify(description);
         console.log("trung.lyhoang - local.js - sendLocalDescription - connStr: ", connStr);
         // ws.send(connStr);
         sendDataJSON(ws, 'LocalDescription', connStr);
@@ -95,10 +104,12 @@ function initLocalWebRTC()
     localWebRTC.onicecandidate = function (e) {
         if(e.candidate != null)
         {
-            const connStr = JSON.stringify(localWebRTC.localDescription);
-            console.log("trung.lyhoang - local.js - onicecandidate: ", connStr);
-            sendLocalDescription();
-            document.getElementById("txtCreate").value = connStr;
+            // console.log("trung.lyhoang - local.js - onicecandidate e: ", e.candidate);
+            // const connStr = JSON.stringify(localWebRTC.localDescription);
+            // console.log("trung.lyhoang - local.js - onicecandidate: ", connStr);
+            // sendLocalDescription();
+            // document.getElementById("txtCreate").value = connStr;
+            sendDataJSON(ws, 'LocalCandidate', JSON.stringify(e.candidate));
         }
         else
         {
@@ -114,6 +125,14 @@ function initLocalWebRTC()
     //     console.log('trung.lyhoang - local.js - initLocalWebRTC - createOffer success');
     //     localWebRTC.setLocalDescription(o);
     // });
+}
+
+function onAddIceCandidateSuccess() {
+    console.log('AddIceCandidate success.');
+}
+
+function onAddIceCandidateError(error) {
+    console.log(`Failed to add Ice Candidate: ${error.toString()}`);
 }
 
 var dataChannel = null;
@@ -142,7 +161,9 @@ function initDataChannel()
 function createOffer()
 {
     localWebRTC.createOffer().then(function (o) {
-        console.log('trung.lyhoang - local.js - initLocalWebRTC - createOffer success');
+        // console.log('trung.lyhoang - local.js - initLocalWebRTC - createOffer success - o: ' + JSON.stringify(o));
+        sendLocalDescription(o);
+        document.getElementById("txtCreate").value = JSON.stringify(o);
         localWebRTC.setLocalDescription(o);
     });
 }
