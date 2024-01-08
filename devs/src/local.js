@@ -95,10 +95,13 @@ function sendDataJSON(websocket, type, value)
     websocket.send(objString);
 }
 //===================================//
+const iceConfiguration = {
+    iceServers: [{"urls":"stun:stun.relay.metered.ca:80"},{"urls":"turn:standard.relay.metered.ca:80","username":"05c26142d8a738415ff818cc","credential":"FHUUd4bsa5bQPUMq"},{"urls":"turn:standard.relay.metered.ca:80?transport=tcp","username":"05c26142d8a738415ff818cc","credential":"FHUUd4bsa5bQPUMq"},{"urls":"turn:standard.relay.metered.ca:443","username":"05c26142d8a738415ff818cc","credential":"FHUUd4bsa5bQPUMq"},{"urls":"turn:standard.relay.metered.ca:443?transport=tcp","username":"05c26142d8a738415ff818cc","credential":"FHUUd4bsa5bQPUMq"}]
+}
 
 //===================================//
 //WebRTC
-const localWebRTC = new RTCPeerConnection();
+const localWebRTC = new RTCPeerConnection(iceConfiguration);
 function initLocalWebRTC()
 {
     localWebRTC.onicecandidate = function (e) {
