@@ -74,6 +74,10 @@ ws.onmessage = function(e) {
             wsConnectWithoutWebRTC = true;
             document.getElementById("send").disabled = false;
         }
+        else if(obj.typeData == "RemoteData")
+        {
+            document.getElementById("txtData").textContent = data;
+        }
     } catch (err) {
         console.log(err.message);
     }

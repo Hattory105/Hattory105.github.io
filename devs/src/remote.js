@@ -178,7 +178,7 @@ document.getElementById("send").addEventListener("click", (e) => {
         }
         else if(wsConnectWithoutWebRTC)
         {
-            sendDataJSON(ws, "LocalData", txtContent.value);
+            sendDataJSON(ws, "RemoteData", txtContent.value);
         }
         txtContent.value = "";
     }

@@ -104,6 +104,10 @@ wss.on('connection', function connection(ws) {
                     }
                     break;
                 
+                case 'RemoteData':
+                    sendDataToLocal(ws, obj.value);
+                    break;
+                
             }
         } catch(err) {
             console.log(err.message);
@@ -195,6 +199,14 @@ function sendDataToRemote(websocket, data)
         {
             sendDataJSON(websocket.listRemoteWS[i], "LocalData", data);
         }
+    }
+}
+
+function sendDataToLocal(websocket, data)
+{
+    if(websocket.localWS != undefined && websocket.localWS != null)
+    {
+        sendDataJSON(websocket.localWS, "RemoteData", data);
     }
 }
 
