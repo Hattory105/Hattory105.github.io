@@ -11,6 +11,8 @@ var remoteInformation = {
     randomCode: ''
 };
 var state = remoteState.none;
+var wsConnectWithoutWebRTC = false;
+var wsConnectedWebRTC = false;
 
 //===================================//
 //WebSocket
@@ -50,6 +52,12 @@ ws.onmessage = function(e) {
                     remoteWebRTC.addIceCandidate(JSON.parse(obj.value)).then(onAddIceCandidateSuccess, onAddIceCandidateError);
                 }
                 break;
+        }
+
+        if(obj.typeData == "ConnectWithoutWebRTC")
+        {
+            wsConnectWithoutWebRTC = true;
+            document.getElementById("send").disabled = false;
         }
     } catch (err) {
         console.log(err.message);
@@ -112,6 +120,7 @@ function initRemoteWebRTC() {
             document.getElementById("send").disabled = false;
             document.getElementById("sendRandomCode").disabled = true;
             document.getElementById("txtRandomCode").disabled = true;
+            wsConnectedWebRTC = true;
         };
         receiveChannel.onclose = function (e) {
             console.log("Close");
@@ -120,6 +129,7 @@ function initRemoteWebRTC() {
             document.getElementById("sendRandomCode").disabled = false;
             document.getElementById("txtRandomCode").disabled = false;
             state = remoteState.wsConnected;
+            wsConnectedWebRTC = false;
         };
         remoteWebRTC.channel = receiveChannel;
     };
@@ -162,7 +172,14 @@ document.getElementById("send").addEventListener("click", (e) => {
         console.log("chưa nhập");
     } else {
         console.log(txtContent.value);
-        remoteWebRTC.channel.send(txtContent.value);
+        if(wsConnectedWebRTC)
+        {
+            remoteWebRTC.channel.send(txtContent.value);
+        }
+        else if(wsConnectWithoutWebRTC)
+        {
+            sendDataJSON(ws, "LocalData", txtContent.value);
+        }
         txtContent.value = "";
     }
 });

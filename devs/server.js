@@ -27,9 +27,19 @@ wss.on('connection', function connection(ws) {
                     ws.TypeConnection = obj.value;
                     if(ws.TypeConnection == 'Local')
                     {
+                        ws.localDescription = '';
                         ws.randomCode = '' + generateRandomCode();
                         sendDataJSON(ws, 'RandomCode', ws.randomCode);
                     }
+                    else
+                    {
+                        ws.remoteDescription = '';
+                    }
+                    break;
+                
+                //Local sent Data
+                case 'LocalData':
+                    sendDataToRemote(ws, obj.value);
                     break;
                 
                 //Local sent LocalDescription
@@ -52,6 +62,11 @@ wss.on('connection', function connection(ws) {
                     localWS = findLocalWebsocket(obj.value);
                     if(localWS != null)
                     {
+                        ws.localWS = localWS; //Save local WebSocket to remote WebSocket to send data later.
+                        addRemoteWebsocket(localWS, ws);
+                        sendDataJSON(ws, 'ConnectWithoutWebRTC', '');
+                        sendDataJSON(localWS, 'ConnectWithoutWebRTC', '');
+
                         if(localWS.localDescription != '')
                         {
                             sendDataJSON(ws, 'LocalDescription', localWS.localDescription);
@@ -61,10 +76,6 @@ wss.on('connection', function connection(ws) {
                             {
                                 sendDataJSON(ws, 'LocalCandidate', localWS.listCandidate[i]);
                             }
-                        }
-                        else
-                        {
-                            sendDataJSON(ws, 'WrongRandomCode', '');
                         }
                     }
                     else
@@ -83,10 +94,13 @@ wss.on('connection', function connection(ws) {
                     break;
                 case 'RemoteCandidate':
                     //Send remote candidate to Local
-                    localWS = findLocalWebsocket(ws.randomCode);
-                    if(localWS != null)
+                    if(ws.localWS == undefined || ws.localWS == null)
                     {
-                        sendDataJSON(localWS, 'RemoteCandidate', obj.value);
+                        ws.localWS = findLocalWebsocket(ws.randomCode);
+                    }
+                    if(ws.localWS != undefined && ws.localWS != null)
+                    {
+                        sendDataJSON(ws.localWS, 'RemoteCandidate', obj.value);
                     }
                     break;
                 
@@ -155,6 +169,33 @@ function findLocalWebsocket(randomCode)
         }
     }
     return null;
+}
+
+function addRemoteWebsocket(websocketLocal, websocketRemote)
+{
+    console.log("=== addRemoteWebsocket ===");
+    if(websocketLocal.listRemoteWS == undefined)
+    {
+        console.log("listRemoteWS == undefined");
+        websocketLocal.listRemoteWS = [];
+    }
+
+    if(websocketLocal.listRemoteWS.includes(websocketRemote) == false)
+    {
+        console.log("listRemoteWS pushed websocketRemote");
+        websocketLocal.listRemoteWS.push(websocketRemote);
+    }
+}
+
+function sendDataToRemote(websocket, data)
+{
+    if(websocket.listRemoteWS != undefined && websocket.listRemoteWS != null)
+    {
+        for(let i = 0; i < websocket.listRemoteWS.length; i++)
+        {
+            sendDataJSON(websocket.listRemoteWS[i], "LocalData", data);
+        }
+    }
 }
 
 console.log((new Date()) + " Server is listenning on port " + PORT);

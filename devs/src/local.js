@@ -11,6 +11,8 @@ var localInformation = {
     randomCode: ''
 };
 var state = localState.none;
+var wsConnectWithoutWebRTC = false;
+var wsConnectedWebRTC = false;
 
 //===================================//
 //WebSocket
@@ -29,6 +31,7 @@ ws.onclose = function(e) {
     wsConnected = false;
     state = localState.none;
     document.getElementById("btnConnect").disabled = false;
+    wsConnectWithoutWebRTC = false;
 }
 
 ws.onmessage = function(e) {
@@ -64,6 +67,12 @@ ws.onmessage = function(e) {
                         );
                 }
             break;
+        }
+
+        if(obj.typeData == "ConnectWithoutWebRTC")
+        {
+            wsConnectWithoutWebRTC = true;
+            document.getElementById("send").disabled = false;
         }
     } catch (err) {
         console.log(err.message);
@@ -151,6 +160,7 @@ function initDataChannel()
         console.log("trung.lyhoang - local.js - dataChannel.onopen");
         document.getElementById("txtStatus").textContent = "Trạng thái: Open";
         document.getElementById("send").disabled = false;
+        wsConnectedWebRTC = true;
     };
     dataChannel.onclose = function (e) {
         console.log("trung.lyhoang - local.js - dataChannel.onclose");
@@ -158,6 +168,7 @@ function initDataChannel()
         document.getElementById("send").disabled = true;
         document.getElementById("btnConnect").disabled = false;
         state = localState.webrtcSentLocalDescription;
+        wsConnectedWebRTC = false;
     };
 }
 
@@ -193,7 +204,14 @@ document.getElementById("send").addEventListener("click", (e) => {
         console.log("chưa nhập");
     } else {
         console.log(txtContent.value);
-        dataChannel.send(txtContent.value);
+        if(wsConnectedWebRTC)
+        {
+            dataChannel.send(txtContent.value);
+        }
+        else if(wsConnectWithoutWebRTC)
+        {
+            sendDataJSON(ws, "LocalData", txtContent.value);
+        }
         txtContent.value = "";
     }
 });
