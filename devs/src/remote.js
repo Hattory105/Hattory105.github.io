@@ -4,7 +4,7 @@ const remoteState = {
     wsSentRandomCode: 2,
     wsReceivedLocoDescription: 3,
     webrtcSentRemoteDescription: 4,
-}
+};
 
 var remoteInformation = {
     localDescription: '',

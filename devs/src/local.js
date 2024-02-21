@@ -4,7 +4,7 @@ const localState = {
     webrtcSentLocalDescription: 2,
     webrtcReceivedRemoteDescription: 3,
     webrtcConnected: 4
-}
+};
 
 var localInformation = {
     remoteDescription: '',
