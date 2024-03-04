@@ -35,12 +35,14 @@ websocket_instance.onopen = function(e) {
 }
 
 websocket_instance.onclose = function(e) {
+    console.log("trung.lyhoang - websocket_remote.js - websocket onclose");
     wsConnected = false;
     websocket_state = remoteState.none;
     wsConnectWithoutWebRTC = false;
 }
 
 websocket_instance.onerror = function(e) {
+    console.log("trung.lyhoang - websocket_remote.js - websocket onerror");
     wsConnected = false;
     wsConnectWithoutWebRTC = false;
 }
@@ -76,6 +78,11 @@ websocket_instance.onmessage = function(e) {
         if(obj.typeData == "ConnectWithoutWebRTC")
         {
             wsConnectWithoutWebRTC = true;
+        }
+        else if(obj.typeData == "LocalClosed")
+        {
+            console.log("trung.lyhoang - websocket_remote.js - websocket onmessage call close websocket");
+            websocket_instance.close();
         }
     } catch (err) {
         console.log(err.message);
