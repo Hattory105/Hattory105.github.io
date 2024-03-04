@@ -117,6 +117,7 @@ wss.on('connection', function connection(ws) {
     ws.on('close', function message(data) {
         console.log('====================');
         console.log('closed: %s', data);
+        handleEventWhenWebsocketIsClosed(ws);
         removeObjInArray(listWS, ws);
         console.log('listWS length: ' + listWS.length);
         console.log('Detail connection closed: ');
@@ -207,6 +208,39 @@ function sendDataToLocal(websocket, data)
     if(websocket.localWS != undefined && websocket.localWS != null)
     {
         sendDataJSON(websocket.localWS, "RemoteData", data);
+    }
+}
+
+function handleEventWhenWebsocketIsClosed(websocket)
+{
+    if(websocket.TypeConnection == 'Local') //Local peer is closed
+    {
+        sendDataToRemote(websocket, 'LocalIsClosed');
+    }
+    else
+    {
+        //Remote peer is closed
+        if(websocket.localWS != undefined && websocket.localWS != null)
+        {
+            if(websocket.localWS.listRemoteWS != undefined && websocket.localWS.listRemoteWS != null)
+            {
+                for(let i = 0; i < websocket.localWS.listRemoteWS.length; i++)
+                {
+                    if(websocket.localWS.listRemoteWS[i] == websocket)
+                    {
+                        if(websocket.localWS.listRemoteWS.length == 1) //If only 1 WVG (remote) connect to game (local)
+                        {
+                            sendDataToLocal(websocket, 'RemoteIsClosed');
+                        }
+                        else
+                        {
+                            websocket.localWS.listRemoteWS.splice(i, 1);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
