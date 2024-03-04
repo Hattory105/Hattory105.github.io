@@ -79,10 +79,13 @@ websocket_instance.onmessage = function(e) {
         {
             wsConnectWithoutWebRTC = true;
         }
-        else if(obj.typeData == "LocalClosed")
+        else if(obj.typeData == "LocalData")
         {
-            console.log("trung.lyhoang - websocket_remote.js - websocket onmessage call close websocket");
-            websocket_instance.close();
+            if(obj.value == "LocalIsClosed")
+            {
+                console.log("trung.lyhoang - websocket_remote.js - websocket onmessage call close websocket");
+                websocket_instance.close();
+            }
         }
     } catch (err) {
         console.log(err.message);
