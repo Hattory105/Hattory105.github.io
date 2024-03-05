@@ -101,7 +101,6 @@ function handleStart(event) {
                             if (isActionDown) {
                                 btnId = j;
                                 writeLog("handleStart!!! btnId "+ btnId);
-                                console.log("handleStart!!! btnId "+ btnId);
                                 // doActionPressed(j);
                                 actionArea[j].active = true;
                                 touchesAction.push({ id: changedTouches[i].identifier, buttonId: btnId, isDpad: false});
@@ -208,7 +207,7 @@ function handleEnd(event) {
                         if (index >= 0) {
                             let actionBtn = touchesAction[index].buttonId;
                             // doActionRelease(actionBtn);
-                            console.log("touch.js - actionBtn: " + actionBtn);
+                            writeLog("touch.js - actionBtn: " + actionBtn);
                             actionArea[actionBtn].active = false;
                             if(appLayoutCurrent != appLayout.layout3)
                             {

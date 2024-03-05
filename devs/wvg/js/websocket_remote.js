@@ -28,28 +28,28 @@ function initWebSocket()
 }
 
 websocket_instance.onopen = function(e) {
-    console.log("trung.lyhoang - websocket_remote.js - websocket open");
+    writeLog("trung.lyhoang - websocket_remote.js - websocket open");
     sendDataJSON(websocket_instance, 'LocalOrRemote', 'Remote');
     wsConnected = true;
     websocket_state = remoteState.wsConnected;
 }
 
 websocket_instance.onclose = function(e) {
-    console.log("trung.lyhoang - websocket_remote.js - websocket onclose");
+    writeLog("trung.lyhoang - websocket_remote.js - websocket onclose");
     wsConnected = false;
     websocket_state = remoteState.none;
     wsConnectWithoutWebRTC = false;
 }
 
 websocket_instance.onerror = function(e) {
-    console.log("trung.lyhoang - websocket_remote.js - websocket onerror");
+    writeLog("trung.lyhoang - websocket_remote.js - websocket onerror");
     wsConnected = false;
     wsConnectWithoutWebRTC = false;
 }
 
 websocket_instance.onmessage = function(e) {
     var data = e.data;
-    console.log("trung.lyhoang - websocket_remote.js - websocket onmessage: " + data);
+    writeLog("trung.lyhoang - websocket_remote.js - websocket onmessage: " + data);
     try
     {
         const obj = JSON.parse(data);
@@ -69,7 +69,7 @@ websocket_instance.onmessage = function(e) {
             case remoteState.webrtcSentRemoteDescription:
                 if(obj.typeData == "LocalCandidate")
                 {
-                    console.log("trung.lyhoang - websocket_remote.js - websocket onmessage LocalCandidate");
+                    writeLog("trung.lyhoang - websocket_remote.js - websocket onmessage LocalCandidate");
                     remoteWebRTC.addIceCandidate(JSON.parse(obj.value)).then(onAddIceCandidateSuccess, onAddIceCandidateError);
                 }
                 break;
@@ -83,12 +83,12 @@ websocket_instance.onmessage = function(e) {
         {
             if(obj.value == "LocalIsClosed")
             {
-                console.log("trung.lyhoang - websocket_remote.js - websocket onmessage call close websocket");
+                writeLog("trung.lyhoang - websocket_remote.js - websocket onmessage call close websocket");
                 websocket_instance.close();
             }
         }
     } catch (err) {
-        console.log(err.message);
+        writeLog(err.message);
     }
 }
 
@@ -96,12 +96,12 @@ function sendRemoteDescription(a)
 {
     if(wsConnected == false)
     {
-        console.log("trung.lyhoang - websocket fail");
+        writeLog("trung.lyhoang - websocket fail");
     }
     else
     {
         const connStr = JSON.stringify(a);
-        console.log("trung.lyhoang - websocket_remote.js - sendRemoteDescription - connStr: ", connStr);
+        writeLog("trung.lyhoang - websocket_remote.js - sendRemoteDescription - connStr: ", connStr);
         sendDataJSON(websocket_instance, 'RemoteDescription', connStr);
         websocket_state = remoteState.webrtcSentRemoteDescription;
     }
@@ -129,7 +129,7 @@ function initRemoteWebRTC() {
         if(e.candidate != null)
         {
             const connStr = JSON.stringify(remoteWebRTC.localDescription);
-            console.log("trung.lyhoang - websocket_remote.js - onicecandidate: ", connStr);
+            writeLog("trung.lyhoang - websocket_remote.js - onicecandidate: ", connStr);
             sendDataJSON(websocket_instance, 'RemoteCandidate', JSON.stringify(e.candidate));
         }
     };
@@ -137,14 +137,14 @@ function initRemoteWebRTC() {
     remoteWebRTC.ondatachannel = function ({ channel }) {
         const receiveChannel = channel;
         receiveChannel.onmessage = function (e) {
-            console.log("MSG Local: " + e.data);
+            writeLog("MSG Local: " + e.data);
         };
         receiveChannel.onopen = function (e) {
-            console.log("trung.lyhoang - websocket_remote.js - ondatachannel: Open");
+            writeLog("trung.lyhoang - websocket_remote.js - ondatachannel: Open");
             wsConnectedWebRTC = true;
         };
         receiveChannel.onclose = function (e) {
-            console.log("trung.lyhoang - websocket_remote.js - ondatachannel: Close");
+            writeLog("trung.lyhoang - websocket_remote.js - ondatachannel: Close");
             websocket_state = remoteState.wsConnected;
             wsConnectedWebRTC = false;
         };
@@ -155,11 +155,11 @@ function initRemoteWebRTC() {
 }
 
 function onAddIceCandidateSuccess() {
-    console.log('AddIceCandidate success.');
+    writeLog('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-    console.log(`Failed to add Ice Candidate: ${error.toString()}`);
+    writeLog(`Failed to add Ice Candidate: ${error.toString()}`);
 }
 
 function setLocalDescription()
@@ -167,13 +167,13 @@ function setLocalDescription()
     if(remoteInformation.localDescription !== "")
     {
         remoteWebRTC.setRemoteDescription(JSON.parse(remoteInformation.localDescription)).then(function () {
-            console.log("trung.lyhoang - websocket_remote.js - setLocalDescription, setRemoteDescription Success");
+            writeLog("trung.lyhoang - websocket_remote.js - setLocalDescription, setRemoteDescription Success");
             remoteWebRTC.createAnswer().then(function (a) {
-                console.log("trung.lyhoang - websocket_remote.js - setLocalDescription, createAnswer Success");
+                writeLog("trung.lyhoang - websocket_remote.js - setLocalDescription, createAnswer Success");
                 remoteWebRTC.setLocalDescription(a);
                 sendRemoteDescription(a);
             }).then(function (a) {
-                console.log("trung.lyhoang - websocket_remote.js - setLocalDescription, setLocalDescription DONE");
+                writeLog("trung.lyhoang - websocket_remote.js - setLocalDescription, setLocalDescription DONE");
             });
         });
     }
@@ -183,9 +183,9 @@ function sendRandomCode(value)
 {
     let randomCode = "" + value;
     if (randomCode === "" || randomCode === "0") {
-        console.log("chưa nhập");
+        writeLog("chưa nhập");
     } else {
-        console.log(randomCode);
+        writeLog(randomCode);
         sendDataJSON(websocket_instance, 'RandomCode', randomCode);
         websocket_state = remoteState.wsSentRandomCode;
     }

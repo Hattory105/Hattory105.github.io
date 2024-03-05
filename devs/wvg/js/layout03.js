@@ -46,7 +46,7 @@ function loadImages_03()
 }
 
 function loadLayout03() {
-    console.log("==== loadLayer03");
+    writeLog("==== loadLayer03");
     actionArea = [];
     if(!isPortraitMode()) {
         // console.log("DDDFDFDFD");
@@ -104,7 +104,7 @@ function loadLayout03() {
 
 function drawLayout03()
 {
-    console.log("drawLayout03");
+    writeLog("drawLayout03");
     //Draw background
     if(!isPortraitMode()) {
         drawImageRotate(ctx, imgMenuBG, false, 0, 0, canvasW, canvasH);
@@ -144,7 +144,7 @@ function drawLayout03()
 
 function layout03Action(keyCode)
 {
-    console.log("keycode: " + keyCode);
+    writeLog("keycode: " + keyCode);
     switch(keyCode)
     {
         case 0:
