@@ -39,6 +39,7 @@ function handleStart(event) {
     writeLog("x: " + x + ", y: " + y);
     writeLog("pageX: " + event.changedTouches[0].pageX + ", pageY: " + event.changedTouches[0].pageY);
     writeLog("left: " + el.getBoundingClientRect().left + ", top: " + el.getBoundingClientRect().top);
+    writeLog("testUILayout: " + testUILayout + ", appLayoutCurrent: " + appLayoutCurrent + ", isLocked: " + isLocked);
 
     if(testUILayout)
     {
@@ -55,6 +56,7 @@ function handleStart(event) {
             {
                 event.preventDefault();
                 var changedTouches = event.changedTouches;
+                writeLog("changedTouches.length: " + changedTouches.length);
                 for (var i = 0; i < changedTouches.length; i++) {
                     var touch = changedTouches[i];
                     var btnId = -1;
@@ -64,6 +66,7 @@ function handleStart(event) {
                     var extendTouch = 1.0;
                     // var pX = touch.pageX;
                     // var pY = touch.pageY;
+                    writeLog("actionArea.length: " + actionArea.length);
                     for (var j = 0; j < actionArea.length; j++) {
                         isActionDown = false;
                         extendTouch = 1.0;
