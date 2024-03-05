@@ -41,7 +41,7 @@ window.onload = function() {
             el.addEventListener("touchend", handleEnd, false);
             el.addEventListener("touchcancel", handleCancel, false);
 
-            if ((getOperatingSystem()=="iPad") || (getOperatingSystem()=="iPhone")) {
+            if ((getOperatingSystem()=="iPad") || (getOperatingSystem()=="iPhone") || (getOperatingSystem()=="unknown")) {
                 //console.log('lock true');
                 isLocked = true;
                 // switchLayout(appLayout.layout1);

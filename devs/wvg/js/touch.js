@@ -11,12 +11,12 @@ function handleClick(event) {
             switch(currentLayout0Substate)
             {
                 case layout0Substate.stateIconFullScreen:
-                    if (getOperatingSystem()!="iPad" || getOperatingSystem()!="iPhone") {
+                    // if (getOperatingSystem()!="iPad" || getOperatingSystem()!="iPhone") {
                         // if (isInsideActionRect(x, y, iconFullScreenInfo.x, iconFullScreenInfo.y, iconFullScreenInfo.w, iconFullScreenInfo.h)) {
                             lockFullscreen();
                             currentLayout0Substate = layout0Substate.stateIconTouchScreen;
                         // }
-                    }
+                    // }
                     break;
                 case layout0Substate.stateIconTouchScreen:
                     // if (getOperatingSystem()!="iPad" || getOperatingSystem()!="iPhone") {
