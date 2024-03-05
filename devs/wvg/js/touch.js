@@ -36,6 +36,9 @@ function handleStart(event) {
     writeLog("handleStart");
     var x = event.changedTouches[0].pageX - el.getBoundingClientRect().left;
     var y = event.changedTouches[0].pageY - el.getBoundingClientRect().top;
+    writeLog("x: " + x + ", y: " + y);
+    writeLog("pageX: " + event.changedTouches[0].pageX + ", pageY: " + event.changedTouches[0].pageY);
+    writeLog("left: " + el.getBoundingClientRect().left + ", top: " + el.getBoundingClientRect().top);
 
     if(testUILayout)
     {
@@ -64,11 +67,14 @@ function handleStart(event) {
                     for (var j = 0; j < actionArea.length; j++) {
                         isActionDown = false;
                         extendTouch = 1.0;
+                        writeLog("j: " + j + ", actionArea[j].touchEnable: " + actionArea[j].touchEnable + ", actionArea[j].active: " + actionArea[j].active);
                         if(actionArea[j]['touchEnable'] != undefined && actionArea[j].touchEnable && !actionArea[j].active) {
+                            writeLog("extendTouch: " + actionArea[j]['extendTouch'] + ", isCircle: " + actionArea[j]['isCircle']);
                             if(actionArea[j]['extendTouch'] != undefined) {
                                 extendTouch = actionArea[j].extendTouch;
                             }
                             if(actionArea[j]['isCircle'] != undefined && actionArea[j].isCircle) {
+                                writeLog("pX: " + pX + ", pY: " + pY + ", cx: " + actionArea[j].cx + ", cy: " + actionArea[j].cy + ", r: " + actionArea[j].r);
                                 if(isPointInCircle(pX, pY, actionArea[j].cx, actionArea[j].cy, actionArea[j].r * extendTouch)) {
                                     isActionDown = true;
                                 }
@@ -83,21 +89,23 @@ function handleStart(event) {
                                     actionX = actionX - (actionW - actionArea[j].w) / 2;
                                     actionY = actionY - (actionH - actionArea[j].h) / 2;
                                 }
+                                writeLog("pX: " + pX + ", pY: " + pY + ", actionX: " + actionX + ", actionY: " + actionY + ", actionW: " + actionW + ", actionH: " + actionH);
                                 if(isInsideActionRect(pX, pY, actionX, actionY, actionW, actionH)) {
                                     isActionDown = true;
                                 }
                             }
                             if(!isActionDown && actionArea[j]['arrTouch'] != undefined && actionArea[j].arrTouch.length > 0) {
-                                // console.log("checking arrTouch, length: " + actionArea[j].arrTouch.length + ", pX: " + pX + ", pY: " + pY);
+                                console.log("checking arrTouch, length: " + actionArea[j].arrTouch.length + ", pX: " + pX + ", pY: " + pY);
                                 for(var ii = 0; ii < actionArea[j].arrTouch.length; ii++) {
                                     var touchTmp = actionArea[j].arrTouch[ii];
-                                    // console.log("touchTmp, x: " + touchTmp.x + ", y: " + touchTmp.y + ", w: " + touchTmp.w + ", h: " + touchTmp.h);
+                                    console.log("touchTmp, x: " + touchTmp.x + ", y: " + touchTmp.y + ", w: " + touchTmp.w + ", h: " + touchTmp.h);
                                     if(isInsideActionRect(pX, pY, touchTmp.x, touchTmp.y, touchTmp.w, touchTmp.h)) {
                                         isActionDown = true;
                                         break;
                                     }
                                 }
                             }
+                            writeLog("isActionDown: " + isActionDown);
                             if (isActionDown) {
                                 btnId = j;
                                 writeLog("handleStart!!! btnId "+ btnId);
