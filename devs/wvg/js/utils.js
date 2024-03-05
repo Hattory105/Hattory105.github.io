@@ -49,7 +49,6 @@ function isLandscapeIOS() {
 
 function getOperatingSystem() {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    writeLog("userAgent: " + userAgent);
     if (/android/i.test(userAgent) || /X11; Linux x86_64/.test(userAgent))
         return "Android";
     if (/iPhone/.test(userAgent) && !window.MSStream)

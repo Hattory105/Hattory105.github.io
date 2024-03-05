@@ -14,7 +14,7 @@ var ctx = el.getContext("2d");
 
 var testUILayout = !true;
 var useWebSocketTransfer = true;
-var enableLog = !false;
+var enableLog = false;
 
 document.addEventListener("DOMContentLoaded",startup());
 
@@ -24,7 +24,7 @@ function startup() {
 }
 
 window.onload = function() {
-    console.log('onload');
+    //console.log('onload');
     //initHttpPool();
     switch (document.readyState) {
         case "loading":
