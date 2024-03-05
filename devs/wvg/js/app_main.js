@@ -24,8 +24,8 @@ function startup() {
 }
 
 window.onload = function() {
-    //console.log('onload');
-    initHttpPool();
+    console.log('onload');
+    //initHttpPool();
     switch (document.readyState) {
         case "loading":
             writeLog("onload - The document is loading.");
