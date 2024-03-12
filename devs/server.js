@@ -47,6 +47,11 @@ wss.on('connection', function connection(ws) {
                     ws.localDescription = obj.value;
                     break;
                 
+                //Local sent LocalPingServer
+                case 'LocalPingServer':
+                    sendDataJSON(ws, 'ServerPingLocal', "Pong");
+                    break;
+                
                 //Remote sent RemoteDescription
                 case 'RemoteDescription':
                     ws.remoteDescription = obj.value;
