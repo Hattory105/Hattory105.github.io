@@ -189,19 +189,28 @@ function wsServerCreateJsonString(type, data) {
 
 function wsServerSendData(type, data)
 {
+    let obj = {};
+    obj.typeData = type;
+    obj.value = data;
+    let objString = JSON.stringify(obj);
     if(wsConnected == true)
     {
-        let obj = {};
-        obj.typeData = type;
-        obj.value = data;
-        let objString = JSON.stringify(obj);
         if(wsConnectedWebRTC == true)
         {
+            writeLog("wsServerSendData1 - wsConnectedWebRTC");
             remoteWebRTC.channel.send(objString);
         }
         else if(wsConnectWithoutWebRTC == true)
         {
             websocket_instance.send(objString);
+        }
+    }
+    else
+    {
+        if(wsConnectedWebRTC == true)
+        {
+            writeLog("wsServerSendData2 - wsConnectedWebRTC");
+            remoteWebRTC.channel.send(objString);
         }
     }
 }

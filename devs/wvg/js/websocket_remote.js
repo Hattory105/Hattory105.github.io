@@ -138,6 +138,22 @@ function initRemoteWebRTC() {
         const receiveChannel = channel;
         receiveChannel.onmessage = function (e) {
             writeLog("MSG Local: " + e.data);
+            var data = e.data;
+            try
+            {
+                const obj = JSON.parse(data);
+                if(obj.typeData == "LocalPingRemoteWebRTC")
+                {
+                    let obj2 = {};
+                    obj2.typeData = "RemoteData";
+                    obj2.value = "Pong";
+                    let objString = JSON.stringify(obj2);
+                    receiveChannel.send(objString);
+                }
+            }catch(err)
+            {
+                writeLog(err.message);
+            }   
         };
         receiveChannel.onopen = function (e) {
             writeLog("trung.lyhoang - websocket_remote.js - ondatachannel: Open");
